@@ -1,9 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduCall Windows app OCW (One Computer Work)", "EduCall Windows app OCW (One Computer Work)\EduCall Windows app OCW (One Computer Work).csproj", "{38FF748A-FAED-43CB-B5EA-040A1B8A111A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Request Refill", "Request Refill\Request Refill.csproj", "{8E12C380-F11E-4BDD-839A-0B1372591405}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38FF748A-FAED-43CB-B5EA-040A1B8A111A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38FF748A-FAED-43CB-B5EA-040A1B8A111A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38FF748A-FAED-43CB-B5EA-040A1B8A111A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38FF748A-FAED-43CB-B5EA-040A1B8A111A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E12C380-F11E-4BDD-839A-0B1372591405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E12C380-F11E-4BDD-839A-0B1372591405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E12C380-F11E-4BDD-839A-0B1372591405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E12C380-F11E-4BDD-839A-0B1372591405}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
