@@ -11,7 +11,8 @@
 		WindowStyle="None" 
 		Background="{x:Null}" 
 		SizeToContent="WidthAndHeight" Title="Настройки"
-		>
+		
+	xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 	<Window.Resources>
 		<Style x:Key="FocusVisual">
 			<Setter Property="Control.Template">
@@ -22,9 +23,9 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<SolidColorBrush x:Key="Button.Static.Background" Color="#d3d3d3"/>
-		<SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
-		<SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+		<SolidColorBrush x:Key="Button.Static.Background" Color="#6980f7"/>
+		<SolidColorBrush x:Key="Button.MouseOver.Background" Color="#3b62ed"/>
+		<SolidColorBrush x:Key="Button.Pressed.Background" Color="#1946bb"/>
 
 		<Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
 			<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
@@ -64,13 +65,13 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<SolidColorBrush x:Key="Button.Static.Background1" Color="#FFDDDDDD"/>
-		<SolidColorBrush x:Key="Button.MouseOver.Background1" Color="#FFBEE6FD"/>
-		<SolidColorBrush x:Key="Button.Pressed.Background1" Color="#FFC4E5F6"/>
+		<SolidColorBrush x:Key="Button.Static.Background1" Color="#6980f7"/>
+		<SolidColorBrush x:Key="Button.MouseOver.Background1" Color="#1946bb"/>
+		<SolidColorBrush x:Key="Button.Pressed.Background1" Color="#0a358a"/>
 		<Style x:Key="ButtonSaveStyle" TargetType="{x:Type Button}">
 			<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
 			<Setter Property="Background" Value="{StaticResource Button.Static.Background1}"/>
-			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+			<Setter Property="Foreground" Value="#FFFFFF"/>
 			<Setter Property="HorizontalContentAlignment" Value="Center"/>
 			<Setter Property="VerticalContentAlignment" Value="Center"/>
 			<Setter Property="Padding" Value="1"/>
@@ -104,9 +105,9 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<SolidColorBrush x:Key="Button.Static.Background2" Color="#FFDDDDDD"/>
-		<SolidColorBrush x:Key="Button.MouseOver.Background2" Color="#FFBEE6FD"/>
-		<SolidColorBrush x:Key="Button.Pressed.Background2" Color="#FFC4E5F6"/>
+		<SolidColorBrush x:Key="Button.Static.Background2" Color="#c5c8ff"/>
+		<SolidColorBrush x:Key="Button.MouseOver.Background2" Color="#98a2fd"/>
+		<SolidColorBrush x:Key="Button.Pressed.Background2" Color="#6980f7"/>
 		<Style x:Key="ButtonCancelStyle" TargetType="{x:Type Button}">
 			<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual2}"/>
 			<Setter Property="Background" Value="{StaticResource Button.Static.Background2}"/>
@@ -135,6 +136,16 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+		<Style x:Key="FocusVisual3">
+			<Setter Property="Control.Template">
+				<Setter.Value>
+					<ControlTemplate>
+						<Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" RadiusX="4" RadiusY="4" SnapsToDevicePixels="true" StrokeThickness="1"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
 	</Window.Resources>
 
 	<Border Background="White" CornerRadius="16" Width="480" Height="343" Margin="20,20,20,30" RenderTransformOrigin="0.5,0.5">
@@ -147,7 +158,7 @@
 			</TransformGroup>
 		</Border.RenderTransform>
 		<Border.Effect>
-			<DropShadowEffect Direction="270" Opacity="0.25" Color="Gray" BlurRadius="20" ShadowDepth="10"/>
+			<DropShadowEffect Direction="270" Opacity="0.25" Color="#808080" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
 
 		<Grid ClipToBounds="True">
@@ -157,7 +168,7 @@
 				<RowDefinition Height="71"/>
 			</Grid.RowDefinitions>
 
-			<Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#FFE2E2E2">
+			<Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#6980f7">
 				<Grid Margin="0,0,0,-1" >
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="16"/>
@@ -167,17 +178,49 @@
 					</Grid.ColumnDefinitions>
 
 
-					<Border Grid.Column="1" BorderThickness="0,4,0,0" BorderBrush="Gray" HorizontalAlignment="Left" Padding="10,0,10,4">
-						<TextBlock Grid.Column="1" Text="Настройки" FontSize="24" FontFamily="TeX Gyre Adventor" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					<Border Grid.Column="1" BorderThickness="0,4,0,0" BorderBrush="#3b62ed" HorizontalAlignment="Left" Padding="10,0,10,4">
+						<TextBlock Grid.Column="1" Text="Настройки" FontSize="24" FontFamily="{StaticResource Tex Gyre}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 
-					<Button Style="{DynamicResource ButtonCloseStyle}" Grid.Column="3" Background="#FFE2E2E2" >
+					<Button Style="{DynamicResource ButtonCloseStyle}" Grid.Column="3" Click="ClickCloseWindow">
 						<Image Source="/Resources/X.png" Width="32"/>
 					</Button>
 				</Grid>
 			</Border>
 
-			<Border Grid.Row="2" BorderThickness="0,1,0,0" BorderBrush="#FFE2E2E2">
+			<Grid Grid.Row="1" Margin="16">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid Margin="10" Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Grid.Column="0" Text="Кабинет" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+				</Grid>
+				<Grid Margin="10" Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Grid.Column="0" Text="От кого по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+				</Grid>
+				<Grid Margin="10" Grid.Row="2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Grid.Column="0" Text="Принтер по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxPrinterDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+				</Grid>
+			</Grid>
+			
+			<Border Grid.Row="2" BorderThickness="0,1,0,0" BorderBrush="#6980f7">
 				<Grid Margin="0,-1,0,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>
@@ -187,8 +230,8 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 
-					<Button Style="{DynamicResource ButtonSaveStyle}" Content="Сохранить" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" FontFamily="TeX Gyre Adventor" FontSize="16"/>
-					<Button Style="{DynamicResource ButtonCancelStyle}" Content="Отмена" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" FontFamily="TeX Gyre Adventor" FontSize="16"/>
+					<Button Style="{DynamicResource ButtonSaveStyle}" Content="Сохранить" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+					<Button Style="{DynamicResource ButtonCancelStyle}" Content="Отмена" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" FontFamily="{StaticResource Tex Gyre}" FontSize="16" Click="ClickCloseWindow"/>
 				</Grid>
 			</Border>
 		</Grid>

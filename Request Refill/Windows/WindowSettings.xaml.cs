@@ -23,5 +23,10 @@ namespace Request_Refill.Windows
         {
             InitializeComponent();
         }
+
+        private void ClickCloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
