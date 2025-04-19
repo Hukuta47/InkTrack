@@ -38,7 +38,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>2</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Printer.ico</ApplicationIcon>
+    <ApplicationIcon>Printer W.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework.Aero2" />
@@ -121,7 +121,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\X.png" />
+    <Resource Include="Resources\32\X.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Windows\WindowCreateRequestRefill.xaml">
@@ -150,10 +150,24 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Chevron down.png" />
+    <Resource Include="Resources\32\Chevron down.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Printer.ico" />
+    <Resource Include="Resources\16\Printer W.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\16\File B.png" />
+    <Resource Include="Resources\16\File B.ico" />
+    <Resource Include="Resources\16\Settings B.png" />
+    <Resource Include="Resources\16\Settings B.ico" />
+    <Resource Include="Resources\16\Shutdown B.png" />
+    <Resource Include="Resources\16\Shutdown B.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\32\Printer W.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Printer W.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
