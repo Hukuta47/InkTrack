@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Request_Refill"
-			 StartupUri="Windows/WindowSettings.xaml"
 	xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 	<Application.Resources>
 		<FontFamily x:Key="Tex Gyre">

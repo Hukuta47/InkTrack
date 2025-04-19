@@ -15,17 +15,13 @@ using System.Windows.Shapes;
 namespace Request_Refill.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для WindowCreateRequestRefill.xaml
+    /// Логика взаимодействия для WindowTraySelectFuntion.xaml
     /// </summary>
-    public partial class WindowCreateRequestRefill : Window
+    public partial class WindowTraySelectFuntion : Window
     {
-        public WindowCreateRequestRefill()
+        public WindowTraySelectFuntion()
         {
             InitializeComponent();
-        }
-        private void ClickCloseWindow(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

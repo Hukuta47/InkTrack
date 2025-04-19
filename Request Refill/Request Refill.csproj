@@ -49,10 +49,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Printer.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -80,6 +85,9 @@
     </Compile>
     <Compile Include="Windows\WindowSettings.xaml.cs">
       <DependentUpon>WindowSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WindowTraySelectFuntion.xaml.cs">
+      <DependentUpon>WindowTraySelectFuntion.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +132,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\WindowTraySelectFuntion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
@@ -139,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Chevron down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Printer.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
