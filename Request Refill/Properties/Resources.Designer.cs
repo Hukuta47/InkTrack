@@ -59,15 +59,5 @@ namespace Request_Refill.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Byte[].
-        /// </summary>
-        internal static byte[] File_B {
-            get {
-                object obj = ResourceManager.GetObject("File B", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

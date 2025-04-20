@@ -1,16 +1,11 @@
-﻿using System;
+﻿using Request_Refill.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Request_Refill.Windows
 {
@@ -22,11 +17,17 @@ namespace Request_Refill.Windows
         public WindowSettings()
         {
             InitializeComponent();
+            ComboboxCabinetSelect.ItemsSource = App.dBEntities.Cabinet.ToList();
         }
-
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            ComboboxFromWhoDefaultSelect.ItemsSource = ((Cabinet)ComboboxCabinetSelect.SelectedItem).Employee.ToList();
         }
     }
 }

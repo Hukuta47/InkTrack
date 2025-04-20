@@ -200,7 +200,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="Кабинет" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="Cabinet_Name" SelectedValuePath="Cabinet_ID" SelectionChanged="ComboboxCabinetSelect_SelectionChanged"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="1">
 					<Grid.ColumnDefinitions>
@@ -208,7 +208,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="От кого по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="FIO.Name" SelectedValuePath="Employee_ID"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="2">
 					<Grid.ColumnDefinitions>

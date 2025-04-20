@@ -6,13 +6,14 @@ using System.IO;
 using Request_Refill.Windows;
 using System.Windows.Resources;
 using System.Windows.Media.Imaging;
+using Request_Refill.Database;
 
 namespace Request_Refill
 {
     public partial class App : System.Windows.Application
     {
         private NotifyIcon notifyIcon;
-
+        static public InventoryDeviceDBEntities dBEntities = new InventoryDeviceDBEntities();
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
