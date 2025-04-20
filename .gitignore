@@ -396,3 +396,30 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Request Refill/Database/Cabinet.cs
+/Request Refill/Database/Cartridge.cs
+/Request Refill/Database/Employee.cs
+/Request Refill/Database/Model.Context.cs
+/Request Refill/Database/Model.Context.tt
+/Request Refill/Database/Model.cs
+/Request Refill/Database/Model.Designer.cs
+/Request Refill/Database/Model.edmx
+/Request Refill/Database/Model.edmx.diagram
+/Request Refill/Database/Model.tt
+/Request Refill/Database/Printer.cs
+/Request Refill/Database/sysdiagrams.cs
+/Request Refill/Database/Cabinet.cs
+/Request Refill/Database/Cartridge.cs
+/Request Refill/Database/Employee.cs
+/Request Refill/Database/FIO.cs
+/Request Refill/Database/Model.Context.cs
+/Request Refill/Database/Model.Context.tt
+/Request Refill/Database/Model.cs
+/Request Refill/Database/Model.Designer.cs
+/Request Refill/Database/Model.edmx
+/Request Refill/Database/Model.edmx.diagram
+/Request Refill/Database/Model.tt
+/Request Refill/Database/Printer.cs
+/Request Refill/Database/sp_helpdiagramdefinition_Result.cs
+/Request Refill/Database/sp_helpdiagrams_Result.cs
+/Request Refill/Database/sysdiagrams.cs
