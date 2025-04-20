@@ -200,7 +200,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="Кабинет" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="Cabinet_Name" SelectedValuePath="Cabinet_ID" SelectionChanged="ComboboxCabinetSelect_SelectionChanged"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="CabinetName" SelectedValuePath="CabinetID" SelectionChanged="ComboboxCabinetSelect_SelectionChanged"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="1">
 					<Grid.ColumnDefinitions>
