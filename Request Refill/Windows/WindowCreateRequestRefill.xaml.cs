@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Request_Refill.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +15,18 @@ using System.Windows.Shapes;
 
 namespace Request_Refill.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowCreateRequestRefill.xaml
-    /// </summary>
     public partial class WindowCreateRequestRefill : Window
     {
+        List<PrintedDocument> listOfPrintedDocuments = new List<PrintedDocument>();
         public WindowCreateRequestRefill()
         {
             InitializeComponent();
+            DataGridListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
     }
 }

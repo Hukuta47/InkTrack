@@ -1,0 +1,862 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище InventoryDeviceDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bulding">
+          <Key>
+            <PropertyRef Name="BuldingID" />
+          </Key>
+          <Property Name="BuldingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cabinet">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuldingID" Type="int" Nullable="false" />
+          <Property Name="CabinetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cabinet_Device">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cabinet_Employee">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cartridge">
+          <Key>
+            <PropertyRef Name="CartridgeID" />
+          </Key>
+          <Property Name="CartridgeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrinterID" Type="int" />
+          <Property Name="CartridgeModelID" Type="int" Nullable="false" />
+          <Property Name="CartridgeNumber" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="CartridgeTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartridgeCompatibility">
+          <Key>
+            <PropertyRef Name="CartridgeModelID" />
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="CartridgeModelID" Type="int" Nullable="false" />
+          <Property Name="PrinterID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartridgeModel">
+          <Key>
+            <PropertyRef Name="CartridgeModelID" />
+          </Key>
+          <Property Name="CartridgeModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CartridgeStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="CartridgeType">
+          <Key>
+            <PropertyRef Name="CartridgeTypeID" />
+          </Key>
+          <Property Name="CartridgeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceTypeID" Type="int" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" />
+          <Property Name="Characteristics" Type="xml" />
+          <Property Name="InventoryNumber" Type="nchar" MaxLength="10" />
+          <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeID" />
+          </Key>
+          <Property Name="DeviceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Printer">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="int" Nullable="false" />
+          <Property Name="PrinterModelID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Cabinet__Bulding__5535A963">
+          <End Role="Bulding" Type="Self.Bulding" Multiplicity="1" />
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bulding">
+              <PropertyRef Name="BuldingID" />
+            </Principal>
+            <Dependent Role="Cabinet">
+              <PropertyRef Name="BuldingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_D__Cabin__5812160E">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
+          <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cabinet">
+              <PropertyRef Name="CabinetID" />
+            </Principal>
+            <Dependent Role="Cabinet_Device">
+              <PropertyRef Name="CabinetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_D__Devic__59063A47">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Cabinet_Device">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_E__Cabin__5BE2A6F2">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
+          <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cabinet">
+              <PropertyRef Name="CabinetID" />
+            </Principal>
+            <Dependent Role="Cabinet_Employee">
+              <PropertyRef Name="CabinetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_E__Emplo__5CD6CB2B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Cabinet_Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Cartr__46E78A0C">
+          <End Role="CartridgeModel" Type="Self.CartridgeModel" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeModel">
+              <PropertyRef Name="CartridgeModelID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Cartr__4AB81AF0">
+          <End Role="CartridgeModel" Type="Self.CartridgeModel" Multiplicity="1" />
+          <End Role="CartridgeCompatibility" Type="Self.CartridgeCompatibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeModel">
+              <PropertyRef Name="CartridgeModelID" />
+            </Principal>
+            <Dependent Role="CartridgeCompatibility">
+              <PropertyRef Name="CartridgeModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Print__45F365D3">
+          <End Role="Printer" Type="Self.Printer" Multiplicity="0..1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Print__4BAC3F29">
+          <End Role="Printer" Type="Self.Printer" Multiplicity="1" />
+          <End Role="CartridgeCompatibility" Type="Self.CartridgeCompatibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Principal>
+            <Dependent Role="CartridgeCompatibility">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Statu__47DBAE45">
+          <End Role="CartridgeStatus" Type="Self.CartridgeStatus" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Device__DeviceTy__398D8EEE">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceTypeID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Printer__Printer__3C69FB99">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cartridge_CartridgeType">
+          <End Role="CartridgeType" Type="Self.CartridgeType" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeType">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище InventoryDeviceDBModelContainer">
+          <EntitySet Name="Bulding" EntityType="Self.Bulding" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet" EntityType="Self.Cabinet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet_Device" EntityType="Self.Cabinet_Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet_Employee" EntityType="Self.Cabinet_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cartridge" EntityType="Self.Cartridge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeCompatibility" EntityType="Self.CartridgeCompatibility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeModel" EntityType="Self.CartridgeModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeStatus" EntityType="Self.CartridgeStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeType" EntityType="Self.CartridgeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Printer" EntityType="Self.Printer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cabinet__Bulding__5535A963" Association="Self.FK__Cabinet__Bulding__5535A963">
+            <End Role="Bulding" EntitySet="Bulding" />
+            <End Role="Cabinet" EntitySet="Cabinet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_D__Cabin__5812160E" Association="Self.FK__Cabinet_D__Cabin__5812160E">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_D__Devic__59063A47" Association="Self.FK__Cabinet_D__Devic__59063A47">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_E__Cabin__5BE2A6F2" Association="Self.FK__Cabinet_E__Cabin__5BE2A6F2">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_E__Emplo__5CD6CB2B" Association="Self.FK__Cabinet_E__Emplo__5CD6CB2B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Cartr__46E78A0C" Association="Self.FK__Cartridge__Cartr__46E78A0C">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Cartr__4AB81AF0" Association="Self.FK__Cartridge__Cartr__4AB81AF0">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="CartridgeCompatibility" EntitySet="CartridgeCompatibility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Print__45F365D3" Association="Self.FK__Cartridge__Print__45F365D3">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Print__4BAC3F29" Association="Self.FK__Cartridge__Print__4BAC3F29">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="CartridgeCompatibility" EntitySet="CartridgeCompatibility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Statu__47DBAE45" Association="Self.FK__Cartridge__Statu__47DBAE45">
+            <End Role="CartridgeStatus" EntitySet="CartridgeStatus" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Device__DeviceTy__398D8EEE" Association="Self.FK__Device__DeviceTy__398D8EEE">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Printer__Printer__3C69FB99" Association="Self.FK__Printer__Printer__3C69FB99">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cartridge_CartridgeType" Association="Self.FK_Cartridge_CartridgeType">
+            <End Role="CartridgeType" EntitySet="CartridgeType" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InventoryDeviceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="InventoryDeviceDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(InventoryDeviceDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(InventoryDeviceDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Bulding" EntityType="InventoryDeviceDBModel.Bulding" />
+          <EntitySet Name="Cabinet" EntityType="InventoryDeviceDBModel.Cabinet" />
+          <EntitySet Name="Cartridge" EntityType="InventoryDeviceDBModel.Cartridge" />
+          <EntitySet Name="CartridgeModel" EntityType="InventoryDeviceDBModel.CartridgeModel" />
+          <EntitySet Name="CartridgeStatus" EntityType="InventoryDeviceDBModel.CartridgeStatus" />
+          <EntitySet Name="CartridgeType" EntityType="InventoryDeviceDBModel.CartridgeType" />
+          <EntitySet Name="Device" EntityType="InventoryDeviceDBModel.Device" />
+          <EntitySet Name="DeviceType" EntityType="InventoryDeviceDBModel.DeviceType" />
+          <EntitySet Name="Employee" EntityType="InventoryDeviceDBModel.Employee" />
+          <EntitySet Name="Printer" EntityType="InventoryDeviceDBModel.Printer" />
+          <EntitySet Name="sysdiagrams" EntityType="InventoryDeviceDBModel.sysdiagrams" />
+          <AssociationSet Name="FK__Cabinet__Bulding__5535A963" Association="InventoryDeviceDBModel.FK__Cabinet__Bulding__5535A963">
+            <End Role="Bulding" EntitySet="Bulding" />
+            <End Role="Cabinet" EntitySet="Cabinet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Cartr__46E78A0C" Association="InventoryDeviceDBModel.FK__Cartridge__Cartr__46E78A0C">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Print__45F365D3" Association="InventoryDeviceDBModel.FK__Cartridge__Print__45F365D3">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Statu__47DBAE45" Association="InventoryDeviceDBModel.FK__Cartridge__Statu__47DBAE45">
+            <End Role="CartridgeStatus" EntitySet="CartridgeStatus" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cartridge_CartridgeType" Association="InventoryDeviceDBModel.FK_Cartridge_CartridgeType">
+            <End Role="CartridgeType" EntitySet="CartridgeType" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Device__DeviceTy__398D8EEE" Association="InventoryDeviceDBModel.FK__Device__DeviceTy__398D8EEE">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Printer__Printer__3C69FB99" Association="InventoryDeviceDBModel.FK__Printer__Printer__3C69FB99">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="Cabinet_Device" Association="InventoryDeviceDBModel.Cabinet_Device">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="Cabinet_Employee" Association="InventoryDeviceDBModel.Cabinet_Employee">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="CartridgeCompatibility" Association="InventoryDeviceDBModel.CartridgeCompatibility">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Bulding">
+          <Key>
+            <PropertyRef Name="BuldingID" />
+          </Key>
+          <Property Name="BuldingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cabinet" Relationship="InventoryDeviceDBModel.FK__Cabinet__Bulding__5535A963" FromRole="Bulding" ToRole="Cabinet" />
+        </EntityType>
+        <EntityType Name="Cabinet">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+          </Key>
+          <Property Name="CabinetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuldingID" Type="Int32" Nullable="false" />
+          <Property Name="CabinetName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bulding" Relationship="InventoryDeviceDBModel.FK__Cabinet__Bulding__5535A963" FromRole="Cabinet" ToRole="Bulding" />
+          <NavigationProperty Name="Device" Relationship="InventoryDeviceDBModel.Cabinet_Device" FromRole="Cabinet" ToRole="Device" />
+          <NavigationProperty Name="Employee" Relationship="InventoryDeviceDBModel.Cabinet_Employee" FromRole="Cabinet" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Cartridge">
+          <Key>
+            <PropertyRef Name="CartridgeID" />
+          </Key>
+          <Property Name="CartridgeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrinterID" Type="Int32" />
+          <Property Name="CartridgeModelID" Type="Int32" Nullable="false" />
+          <Property Name="CartridgeNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="CartridgeTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CartridgeModel" Relationship="InventoryDeviceDBModel.FK__Cartridge__Cartr__46E78A0C" FromRole="Cartridge" ToRole="CartridgeModel" />
+          <NavigationProperty Name="Printer" Relationship="InventoryDeviceDBModel.FK__Cartridge__Print__45F365D3" FromRole="Cartridge" ToRole="Printer" />
+          <NavigationProperty Name="CartridgeStatus" Relationship="InventoryDeviceDBModel.FK__Cartridge__Statu__47DBAE45" FromRole="Cartridge" ToRole="CartridgeStatus" />
+          <NavigationProperty Name="CartridgeType" Relationship="InventoryDeviceDBModel.FK_Cartridge_CartridgeType" FromRole="Cartridge" ToRole="CartridgeType" />
+        </EntityType>
+        <EntityType Name="CartridgeModel">
+          <Key>
+            <PropertyRef Name="CartridgeModelID" />
+          </Key>
+          <Property Name="CartridgeModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="InventoryDeviceDBModel.FK__Cartridge__Cartr__46E78A0C" FromRole="CartridgeModel" ToRole="Cartridge" />
+          <NavigationProperty Name="Printer" Relationship="InventoryDeviceDBModel.CartridgeCompatibility" FromRole="CartridgeModel" ToRole="Printer" />
+        </EntityType>
+        <EntityType Name="CartridgeStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="InventoryDeviceDBModel.FK__Cartridge__Statu__47DBAE45" FromRole="CartridgeStatus" ToRole="Cartridge" />
+        </EntityType>
+        <EntityType Name="CartridgeType">
+          <Key>
+            <PropertyRef Name="CartridgeTypeID" />
+          </Key>
+          <Property Name="CartridgeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="InventoryDeviceDBModel.FK_Cartridge_CartridgeType" FromRole="CartridgeType" ToRole="Cartridge" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Characteristics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InventoryNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DeviceType" Relationship="InventoryDeviceDBModel.FK__Device__DeviceTy__398D8EEE" FromRole="Device" ToRole="DeviceType" />
+          <NavigationProperty Name="Printer" Relationship="InventoryDeviceDBModel.FK__Printer__Printer__3C69FB99" FromRole="Device" ToRole="Printer" />
+          <NavigationProperty Name="Cabinet" Relationship="InventoryDeviceDBModel.Cabinet_Device" FromRole="Device" ToRole="Cabinet" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeID" />
+          </Key>
+          <Property Name="DeviceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Device" Relationship="InventoryDeviceDBModel.FK__Device__DeviceTy__398D8EEE" FromRole="DeviceType" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cabinet" Relationship="InventoryDeviceDBModel.Cabinet_Employee" FromRole="Employee" ToRole="Cabinet" />
+        </EntityType>
+        <EntityType Name="Printer">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="Int32" Nullable="false" />
+          <Property Name="PrinterModelID" Type="Int32" />
+          <NavigationProperty Name="Cartridge" Relationship="InventoryDeviceDBModel.FK__Cartridge__Print__45F365D3" FromRole="Printer" ToRole="Cartridge" />
+          <NavigationProperty Name="Device" Relationship="InventoryDeviceDBModel.FK__Printer__Printer__3C69FB99" FromRole="Printer" ToRole="Device" />
+          <NavigationProperty Name="CartridgeModel" Relationship="InventoryDeviceDBModel.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Cabinet__Bulding__5535A963">
+          <End Type="InventoryDeviceDBModel.Bulding" Role="Bulding" Multiplicity="1" />
+          <End Type="InventoryDeviceDBModel.Cabinet" Role="Cabinet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bulding">
+              <PropertyRef Name="BuldingID" />
+            </Principal>
+            <Dependent Role="Cabinet">
+              <PropertyRef Name="BuldingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Cartr__46E78A0C">
+          <End Type="InventoryDeviceDBModel.CartridgeModel" Role="CartridgeModel" Multiplicity="1" />
+          <End Type="InventoryDeviceDBModel.Cartridge" Role="Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeModel">
+              <PropertyRef Name="CartridgeModelID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Print__45F365D3">
+          <End Type="InventoryDeviceDBModel.Printer" Role="Printer" Multiplicity="0..1" />
+          <End Type="InventoryDeviceDBModel.Cartridge" Role="Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Statu__47DBAE45">
+          <End Type="InventoryDeviceDBModel.CartridgeStatus" Role="CartridgeStatus" Multiplicity="1" />
+          <End Type="InventoryDeviceDBModel.Cartridge" Role="Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cartridge_CartridgeType">
+          <End Type="InventoryDeviceDBModel.CartridgeType" Role="CartridgeType" Multiplicity="1" />
+          <End Type="InventoryDeviceDBModel.Cartridge" Role="Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeType">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Device__DeviceTy__398D8EEE">
+          <End Type="InventoryDeviceDBModel.DeviceType" Role="DeviceType" Multiplicity="1" />
+          <End Type="InventoryDeviceDBModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceTypeID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Printer__Printer__3C69FB99">
+          <End Type="InventoryDeviceDBModel.Device" Role="Device" Multiplicity="1" />
+          <End Type="InventoryDeviceDBModel.Printer" Role="Printer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cabinet_Device">
+          <End Type="InventoryDeviceDBModel.Cabinet" Role="Cabinet" Multiplicity="*" />
+          <End Type="InventoryDeviceDBModel.Device" Role="Device" Multiplicity="*" />
+        </Association>
+        <Association Name="Cabinet_Employee">
+          <End Type="InventoryDeviceDBModel.Cabinet" Role="Cabinet" Multiplicity="*" />
+          <End Type="InventoryDeviceDBModel.Employee" Role="Employee" Multiplicity="*" />
+        </Association>
+        <Association Name="CartridgeCompatibility">
+          <End Type="InventoryDeviceDBModel.CartridgeModel" Role="CartridgeModel" Multiplicity="*" />
+          <End Type="InventoryDeviceDBModel.Printer" Role="Printer" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище InventoryDeviceDBModelContainer" CdmEntityContainer="InventoryDeviceDBEntities">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище InventoryDeviceDBModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище InventoryDeviceDBModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище InventoryDeviceDBModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище InventoryDeviceDBModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventoryDeviceDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище InventoryDeviceDBModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventoryDeviceDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище InventoryDeviceDBModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище InventoryDeviceDBModel.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Bulding">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.Bulding">
+              <MappingFragment StoreEntitySet="Bulding">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BuldingID" ColumnName="BuldingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cabinet">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.Cabinet">
+              <MappingFragment StoreEntitySet="Cabinet">
+                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
+                <ScalarProperty Name="BuldingID" ColumnName="BuldingID" />
+                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cartridge">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.Cartridge">
+              <MappingFragment StoreEntitySet="Cartridge">
+                <ScalarProperty Name="CartridgeTypeID" ColumnName="CartridgeTypeID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
+                <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeModel">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.CartridgeModel">
+              <MappingFragment StoreEntitySet="CartridgeModel">
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeStatus">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.CartridgeStatus">
+              <MappingFragment StoreEntitySet="CartridgeStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeType">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.CartridgeType">
+              <MappingFragment StoreEntitySet="CartridgeType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CartridgeTypeID" ColumnName="CartridgeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Device">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
+                <ScalarProperty Name="Characteristics" ColumnName="Characteristics" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceType">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.DeviceType">
+              <MappingFragment StoreEntitySet="DeviceType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Printer">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.Printer">
+              <MappingFragment StoreEntitySet="Printer">
+                <ScalarProperty Name="PrinterModelID" ColumnName="PrinterModelID" />
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="InventoryDeviceDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Cabinet_Device" TypeName="InventoryDeviceDBModel.Cabinet_Device" StoreEntitySet="Cabinet_Device">
+            <EndProperty Name="Device">
+              <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+            </EndProperty>
+            <EndProperty Name="Cabinet">
+              <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Cabinet_Employee" TypeName="InventoryDeviceDBModel.Cabinet_Employee" StoreEntitySet="Cabinet_Employee">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+            </EndProperty>
+            <EndProperty Name="Cabinet">
+              <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="CartridgeCompatibility" TypeName="InventoryDeviceDBModel.CartridgeCompatibility" StoreEntitySet="CartridgeCompatibility">
+            <EndProperty Name="Printer">
+              <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+            </EndProperty>
+            <EndProperty Name="CartridgeModel">
+              <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a7497f1a797d46efbae141e45ffa7ad3" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.Bulding" Width="1.5" PointX="1.5" PointY="13.125" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.Cabinet" Width="1.5" PointX="1.5" PointY="9.75" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.Cartridge" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.CartridgeModel" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.CartridgeStatus" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.CartridgeType" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.Device" Width="1.5" PointX="3.75" PointY="10.625" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.DeviceType" Width="1.5" PointX="1.5" PointY="15.75" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.Employee" Width="1.5" PointX="3.75" PointY="8.125" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.Printer" Width="1.5" PointX="6" PointY="4.125" />
+        <EntityTypeShape EntityType="InventoryDeviceDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="6.875" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cabinet__Bulding__5535A963" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cartridge__Cartr__46E78A0C" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cartridge__Print__45F365D3" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cartridge__Statu__47DBAE45" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK_Cartridge_CartridgeType" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK__Device__DeviceTy__398D8EEE" />
+        <AssociationConnector Association="InventoryDeviceDBModel.FK__Printer__Printer__3C69FB99" />
+        <AssociationConnector Association="InventoryDeviceDBModel.Cabinet_Device" />
+        <AssociationConnector Association="InventoryDeviceDBModel.Cabinet_Employee" />
+        <AssociationConnector Association="InventoryDeviceDBModel.CartridgeCompatibility" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

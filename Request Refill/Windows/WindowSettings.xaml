@@ -208,7 +208,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="От кого по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="FIO.Name" SelectedValuePath="Employee_ID"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="FIO" SelectedValuePath="Employee_ID"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="2">
 					<Grid.ColumnDefinitions>

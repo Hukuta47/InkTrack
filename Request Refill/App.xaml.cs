@@ -7,6 +7,7 @@ using Request_Refill.Windows;
 using System.Windows.Resources;
 using System.Windows.Media.Imaging;
 using Request_Refill.Database;
+using Request_Refill.Classes;
 
 namespace Request_Refill
 {
@@ -23,7 +24,15 @@ namespace Request_Refill
             // Создаем иконку в трее
             notifyIcon = new NotifyIcon();
             notifyIcon.MouseClick += NotifyIcon_MouseClick;
-            notifyIcon.Icon = SelectIcon("16\\Printer W.ico");
+            if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+            {
+                notifyIcon.Icon = SelectIcon("16/IconB.ico");
+            }
+            else
+            {
+                notifyIcon.Icon = SelectIcon("16/IconW.ico");
+            }
+                
             notifyIcon.Visible = true;
 
             // Создаем контекстное меню
