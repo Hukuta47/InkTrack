@@ -14,7 +14,7 @@ namespace Request_Refill
     public partial class App : System.Windows.Application
     {
         private NotifyIcon notifyIcon;
-        static public InventoryDeviceDBEntities dBEntities = new InventoryDeviceDBEntities();
+        static public LitDBEntities dBEntities = new LitDBEntities();
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

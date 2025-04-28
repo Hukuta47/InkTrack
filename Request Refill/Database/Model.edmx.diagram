@@ -4,28 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a7497f1a797d46efbae141e45ffa7ad3" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.Bulding" Width="1.5" PointX="1.5" PointY="13.125" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.Cabinet" Width="1.5" PointX="1.5" PointY="9.75" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.Cartridge" Width="1.5" PointX="3" PointY="3.625" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.CartridgeModel" Width="1.5" PointX="0.75" PointY="4.125" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.CartridgeStatus" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.CartridgeType" Width="1.5" PointX="0.75" PointY="7.375" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.Device" Width="1.5" PointX="3.75" PointY="10.625" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.DeviceType" Width="1.5" PointX="1.5" PointY="15.75" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.Employee" Width="1.5" PointX="3.75" PointY="8.125" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.Printer" Width="1.5" PointX="6" PointY="4.125" />
-        <EntityTypeShape EntityType="InventoryDeviceDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="6.875" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cabinet__Bulding__5535A963" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cartridge__Cartr__46E78A0C" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cartridge__Print__45F365D3" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK__Cartridge__Statu__47DBAE45" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK_Cartridge_CartridgeType" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK__Device__DeviceTy__398D8EEE" />
-        <AssociationConnector Association="InventoryDeviceDBModel.FK__Printer__Printer__3C69FB99" />
-        <AssociationConnector Association="InventoryDeviceDBModel.Cabinet_Device" />
-        <AssociationConnector Association="InventoryDeviceDBModel.Cabinet_Employee" />
-        <AssociationConnector Association="InventoryDeviceDBModel.CartridgeCompatibility" />
+      <Diagram DiagramId="f88f1f90c02747fc8504083867a9b1cd" Name="Diagram1">
+        <EntityTypeShape EntityType="LitDBModel.Bulding" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Cabinet" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Cartridge" Width="1.5" PointX="9.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.CartridgeModel" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.CartridgeStatus" Width="1.5" PointX="7.5" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.CartridgeType" Width="1.5" PointX="7.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Computer" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Device" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.DeviceType" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Employee" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.EmployeePosition" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.LaptopIssuance" Width="1.5" PointX="10.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Printer" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.vCabinetPrinters" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.vCartridgeReport" Width="1.5" PointX="11.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="LitDBModel.FK__Cabinet__Bulding__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK__Cartridge__Cartr__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK__Cartridge__Print__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK__Cartridge__Statu__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK_Cartridge_CartridgeType" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK_Printer_Cartridge" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK_Computer_Device" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK__Device__DeviceTy__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK__Printer__Printer__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK_LaptopIssuance_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.Cabinet_Device" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.Cabinet_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.CartridgeCompatibility" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.Device_LaptopIssuance" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.Employee_EmployeePosition" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

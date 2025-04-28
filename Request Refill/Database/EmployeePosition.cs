@@ -12,24 +12,19 @@ namespace Request_Refill.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Printer
+    public partial class EmployeePosition
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Printer()
+        public EmployeePosition()
         {
-            this.Cartridge = new HashSet<Cartridge>();
-            this.CartridgeModel = new HashSet<CartridgeModel>();
+            this.Employee = new HashSet<Employee>();
         }
     
-        public int PrinterID { get; set; }
-        public int NumbersOfRepairs { get; set; }
-        public Nullable<int> CartridgeID { get; set; }
+        public int EmployeePositionID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cartridge> Cartridge { get; set; }
-        public virtual Cartridge Cartridge1 { get; set; }
-        public virtual Device Device { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartridgeModel> CartridgeModel { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

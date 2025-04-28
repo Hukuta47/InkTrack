@@ -14,16 +14,27 @@ namespace Request_Refill.Database
     
     public partial class Cartridge
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cartridge()
+        {
+            this.Printer1 = new HashSet<Printer>();
+        }
+    
         public int CartridgeID { get; set; }
         public Nullable<int> PrinterID { get; set; }
         public int CartridgeModelID { get; set; }
         public string CartridgeNumber { get; set; }
         public int StatusID { get; set; }
         public int CartridgeTypeID { get; set; }
+        public Nullable<int> Capacity { get; set; }
+        public Nullable<int> NumberOfRefills { get; set; }
+        public Nullable<System.DateTime> LastDateOfRefill { get; set; }
     
         public virtual CartridgeModel CartridgeModel { get; set; }
         public virtual Printer Printer { get; set; }
         public virtual CartridgeStatus CartridgeStatus { get; set; }
         public virtual CartridgeType CartridgeType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Printer> Printer1 { get; set; }
     }
 }

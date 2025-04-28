@@ -15,10 +15,10 @@ namespace Request_Refill.Database
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class InventoryDeviceDBEntities : DbContext
+    public partial class LitDBEntities : DbContext
     {
-        public InventoryDeviceDBEntities()
-            : base("name=InventoryDeviceDBEntities")
+        public LitDBEntities()
+            : base("name=LitDBEntities")
         {
         }
     
@@ -33,11 +33,46 @@ namespace Request_Refill.Database
         public virtual DbSet<CartridgeModel> CartridgeModel { get; set; }
         public virtual DbSet<CartridgeStatus> CartridgeStatus { get; set; }
         public virtual DbSet<CartridgeType> CartridgeType { get; set; }
+        public virtual DbSet<Computer> Computer { get; set; }
         public virtual DbSet<Device> Device { get; set; }
         public virtual DbSet<DeviceType> DeviceType { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<EmployeePosition> EmployeePosition { get; set; }
+        public virtual DbSet<LaptopIssuance> LaptopIssuance { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<vCabinetPrinters> vCabinetPrinters { get; set; }
+        public virtual DbSet<vCartridgeReport> vCartridgeReport { get; set; }
+    
+        public virtual int AddCartridge(Nullable<int> cartridgeModelID, string cartridgeNumber, Nullable<int> statusID, Nullable<int> cartridgeTypeID)
+        {
+            var cartridgeModelIDParameter = cartridgeModelID.HasValue ?
+                new ObjectParameter("CartridgeModelID", cartridgeModelID) :
+                new ObjectParameter("CartridgeModelID", typeof(int));
+    
+            var cartridgeNumberParameter = cartridgeNumber != null ?
+                new ObjectParameter("CartridgeNumber", cartridgeNumber) :
+                new ObjectParameter("CartridgeNumber", typeof(string));
+    
+            var statusIDParameter = statusID.HasValue ?
+                new ObjectParameter("StatusID", statusID) :
+                new ObjectParameter("StatusID", typeof(int));
+    
+            var cartridgeTypeIDParameter = cartridgeTypeID.HasValue ?
+                new ObjectParameter("CartridgeTypeID", cartridgeTypeID) :
+                new ObjectParameter("CartridgeTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCartridge", cartridgeModelIDParameter, cartridgeNumberParameter, statusIDParameter, cartridgeTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<GetPrintersByCabinet_Result> GetPrintersByCabinet(Nullable<int> cabinetID)
+        {
+            var cabinetIDParameter = cabinetID.HasValue ?
+                new ObjectParameter("CabinetID", cabinetID) :
+                new ObjectParameter("CabinetID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPrintersByCabinet_Result>("GetPrintersByCabinet", cabinetIDParameter);
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
