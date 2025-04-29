@@ -1,23 +1,16 @@
 ﻿using Request_Refill.Database;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Request_Refill.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowSettings.xaml
-    /// </summary>
     public partial class WindowSettings : Window
     {
         public WindowSettings()
         {
             InitializeComponent();
-            ComboboxCabinetSelect.ItemsSource = App.dBEntities.vCabinetPrinters.ToList();
+            ComboboxCabinetSelect.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
@@ -26,9 +19,17 @@ namespace Request_Refill.Windows
 
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int SelectedCabinetID = ((GetCabinetsWithPrinters_Result)ComboboxCabinetSelect.SelectedValue).CabinetID;
+            int CountEmployees = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID).Count();
+            int CountPrinters = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID).Count();
 
-            MessageBox.Show(ComboboxCabinetSelect.SelectedValuePath);
-            //ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesByCabinet(ComboboxCabinetSelect.SelectedItem);
+            ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID);
+            ComboboxFromWhoDefaultSelect.SelectedIndex = 0;
+            ComboboxFromWhoDefaultSelect.IsEnabled = CountEmployees == 1 ? false : true;
+
+            ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID);
+            ComboboxPrinterDefaultSelect.SelectedIndex = 0;
+            ComboboxPrinterDefaultSelect.IsEnabled = CountPrinters == 1 ? false : true;
         }
     }
 }

@@ -17,19 +17,13 @@ namespace Request_Refill.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.LaptopIssuance = new HashSet<LaptopIssuance>();
             this.Cabinet = new HashSet<Cabinet>();
-            this.EmployeePosition = new HashSet<EmployeePosition>();
         }
     
         public int EmployeeID { get; set; }
         public string FIO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LaptopIssuance> LaptopIssuance { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cabinet> Cabinet { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeePosition> EmployeePosition { get; set; }
     }
 }

@@ -10,14 +10,10 @@
 namespace Request_Refill.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Computer
+    public partial class GetPrintersInCabinet_Result
     {
-        public int ComputerID { get; set; }
-        public string ComputerName { get; set; }
-        public string IPAddress { get; set; }
-    
-        public virtual Device Device { get; set; }
+        public int PrinterID { get; set; }
+        public string PrinterInfo { get; set; }
     }
 }

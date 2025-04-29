@@ -25,7 +25,6 @@ namespace Request_Refill.Database
         public int BuldingID { get; set; }
         public string CabinetName { get; set; }
     
-        public virtual Bulding Bulding { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Device> Device { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -18,7 +18,6 @@ namespace Request_Refill.Database
         public Device()
         {
             this.Cabinet = new HashSet<Cabinet>();
-            this.LaptopIssuance = new HashSet<LaptopIssuance>();
         }
     
         public int DeviceID { get; set; }
@@ -29,12 +28,8 @@ namespace Request_Refill.Database
         public string InventoryNumber { get; set; }
         public string SerialNumber { get; set; }
     
-        public virtual Computer Computer { get; set; }
-        public virtual DeviceType DeviceType { get; set; }
         public virtual Printer Printer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cabinet> Cabinet { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LaptopIssuance> LaptopIssuance { get; set; }
     }
 }

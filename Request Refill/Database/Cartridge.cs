@@ -17,7 +17,7 @@ namespace Request_Refill.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cartridge()
         {
-            this.Printer1 = new HashSet<Printer>();
+            this.Printer = new HashSet<Printer>();
         }
     
         public int CartridgeID { get; set; }
@@ -30,11 +30,8 @@ namespace Request_Refill.Database
         public Nullable<int> NumberOfRefills { get; set; }
         public Nullable<System.DateTime> LastDateOfRefill { get; set; }
     
-        public virtual CartridgeModel CartridgeModel { get; set; }
-        public virtual Printer Printer { get; set; }
         public virtual CartridgeStatus CartridgeStatus { get; set; }
-        public virtual CartridgeType CartridgeType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Printer> Printer1 { get; set; }
+        public virtual ICollection<Printer> Printer { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "D:\winda\Рабочий стол\LIT Program solution\Request Refill\Database\Model.edmx" включено. 
+﻿// Создание кода T4 для модели "D:\Винда\Desktop\LIT-Program-solution\Request Refill\Database\Model.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

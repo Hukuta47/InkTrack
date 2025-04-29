@@ -27,162 +27,36 @@ namespace Request_Refill.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Bulding> Bulding { get; set; }
         public virtual DbSet<Cabinet> Cabinet { get; set; }
         public virtual DbSet<Cartridge> Cartridge { get; set; }
-        public virtual DbSet<CartridgeModel> CartridgeModel { get; set; }
         public virtual DbSet<CartridgeStatus> CartridgeStatus { get; set; }
-        public virtual DbSet<CartridgeType> CartridgeType { get; set; }
-        public virtual DbSet<Computer> Computer { get; set; }
         public virtual DbSet<Device> Device { get; set; }
-        public virtual DbSet<DeviceType> DeviceType { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<EmployeePosition> EmployeePosition { get; set; }
-        public virtual DbSet<LaptopIssuance> LaptopIssuance { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
         public virtual DbSet<vCabinetPrinters> vCabinetPrinters { get; set; }
         public virtual DbSet<vCartridgeReport> vCartridgeReport { get; set; }
     
-        public virtual int AddCartridge(Nullable<int> cartridgeModelID, string cartridgeNumber, Nullable<int> statusID, Nullable<int> cartridgeTypeID)
+        public virtual ObjectResult<GetCabinetsWithPrinters_Result> GetCabinetsWithPrinters()
         {
-            var cartridgeModelIDParameter = cartridgeModelID.HasValue ?
-                new ObjectParameter("CartridgeModelID", cartridgeModelID) :
-                new ObjectParameter("CartridgeModelID", typeof(int));
-    
-            var cartridgeNumberParameter = cartridgeNumber != null ?
-                new ObjectParameter("CartridgeNumber", cartridgeNumber) :
-                new ObjectParameter("CartridgeNumber", typeof(string));
-    
-            var statusIDParameter = statusID.HasValue ?
-                new ObjectParameter("StatusID", statusID) :
-                new ObjectParameter("StatusID", typeof(int));
-    
-            var cartridgeTypeIDParameter = cartridgeTypeID.HasValue ?
-                new ObjectParameter("CartridgeTypeID", cartridgeTypeID) :
-                new ObjectParameter("CartridgeTypeID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCartridge", cartridgeModelIDParameter, cartridgeNumberParameter, statusIDParameter, cartridgeTypeIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCabinetsWithPrinters_Result>("GetCabinetsWithPrinters");
         }
     
-        public virtual ObjectResult<GetEmployeesByCabinet_Result> GetEmployeesByCabinet(Nullable<int> cabinetID)
+        public virtual ObjectResult<GetEmployeesInCabinet_Result> GetEmployeesInCabinet(Nullable<int> cabinetID)
         {
             var cabinetIDParameter = cabinetID.HasValue ?
                 new ObjectParameter("CabinetID", cabinetID) :
                 new ObjectParameter("CabinetID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeesByCabinet_Result>("GetEmployeesByCabinet", cabinetIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeesInCabinet_Result>("GetEmployeesInCabinet", cabinetIDParameter);
         }
     
-        public virtual ObjectResult<GetPrintersByCabinet_Result> GetPrintersByCabinet(Nullable<int> cabinetID)
+        public virtual ObjectResult<GetPrintersInCabinet_Result> GetPrintersInCabinet(Nullable<int> cabinetID)
         {
             var cabinetIDParameter = cabinetID.HasValue ?
                 new ObjectParameter("CabinetID", cabinetID) :
                 new ObjectParameter("CabinetID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPrintersByCabinet_Result>("GetPrintersByCabinet", cabinetIDParameter);
-        }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPrintersInCabinet_Result>("GetPrintersInCabinet", cabinetIDParameter);
         }
     }
 }

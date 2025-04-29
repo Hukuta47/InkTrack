@@ -10,20 +10,10 @@
 namespace Request_Refill.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class CartridgeType
+    public partial class GetCabinetsWithPrinters_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CartridgeType()
-        {
-            this.Cartridge = new HashSet<Cartridge>();
-        }
-    
-        public int CartridgeTypeID { get; set; }
-        public string Name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cartridge> Cartridge { get; set; }
+        public int CabinetID { get; set; }
+        public string CabinetName { get; set; }
     }
 }

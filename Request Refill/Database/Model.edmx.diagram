@@ -4,37 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3aba2a51a71448979f97c6e6bedafb0e" Name="Diagram1">
-        <EntityTypeShape EntityType="LitDBModel.Bulding" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.Cabinet" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.Cartridge" Width="1.5" PointX="9.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.CartridgeModel" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.CartridgeStatus" Width="1.5" PointX="7.5" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.CartridgeType" Width="1.5" PointX="7.5" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.Computer" Width="1.5" PointX="7.5" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.Device" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.DeviceType" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.Employee" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.EmployeePosition" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.LaptopIssuance" Width="1.5" PointX="10.5" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.Printer" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.vCabinetPrinters" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.vCartridgeReport" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
-        <AssociationConnector Association="LitDBModel.FK__Cabinet__Bulding__5812160E" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK__Cartridge__Cartr__46E78A0C" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK__Cartridge__Print__45F365D3" ManuallyRouted="false" />
+      <Diagram DiagramId="47db47c1c0b7485ead66da389eec21b8" Name="Diagram1">
+        <EntityTypeShape EntityType="LitDBModel.Cabinet" Width="1.5" PointX="9.875" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Cartridge" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.CartridgeStatus" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Device" Width="1.5" PointX="8" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Employee" Width="1.5" PointX="11.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.Printer" Width="1.5" PointX="5.875" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.vCabinetPrinters" Width="1.5" PointX="7.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.vCartridgeReport" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="LitDBModel.FK__Cartridge__Statu__47DBAE45" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK_Cartridge_CartridgeType" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK_Printer_Cartridge" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK_Computer_Device" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK__Device__DeviceTy__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="LitDBModel.FK_Printer_Cartridge" ManuallyRouted="false" ></AssociationConnector>
         <AssociationConnector Association="LitDBModel.FK__Printer__Printer__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.FK_LaptopIssuance_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="LitDBModel.Cabinet_Device" ManuallyRouted="false" />
         <AssociationConnector Association="LitDBModel.Cabinet_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.CartridgeCompatibility" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.Device_LaptopIssuance" ManuallyRouted="false" />
-        <AssociationConnector Association="LitDBModel.Employee_EmployeePosition" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
