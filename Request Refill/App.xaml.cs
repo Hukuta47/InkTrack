@@ -19,7 +19,7 @@ namespace Request_Refill
         {
             base.OnStartup(e);
             this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            
+
 
             // Создаем иконку в трее
             notifyIcon = new NotifyIcon();

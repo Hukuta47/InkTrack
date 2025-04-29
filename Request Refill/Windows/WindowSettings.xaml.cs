@@ -17,7 +17,7 @@ namespace Request_Refill.Windows
         public WindowSettings()
         {
             InitializeComponent();
-            ComboboxCabinetSelect.ItemsSource = App.dBEntities.Cabinet.ToList();
+            ComboboxCabinetSelect.ItemsSource = App.dBEntities.vCabinetPrinters.ToList();
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
@@ -27,7 +27,8 @@ namespace Request_Refill.Windows
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            ComboboxFromWhoDefaultSelect.ItemsSource = ((Cabinet)ComboboxCabinetSelect.SelectedItem).Employee.ToList();
+            MessageBox.Show(ComboboxCabinetSelect.SelectedValuePath);
+            //ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesByCabinet(ComboboxCabinetSelect.SelectedItem);
         }
     }
 }

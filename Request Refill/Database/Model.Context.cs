@@ -40,7 +40,6 @@ namespace Request_Refill.Database
         public virtual DbSet<EmployeePosition> EmployeePosition { get; set; }
         public virtual DbSet<LaptopIssuance> LaptopIssuance { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<vCabinetPrinters> vCabinetPrinters { get; set; }
         public virtual DbSet<vCartridgeReport> vCartridgeReport { get; set; }
     
@@ -63,6 +62,15 @@ namespace Request_Refill.Database
                 new ObjectParameter("CartridgeTypeID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCartridge", cartridgeModelIDParameter, cartridgeNumberParameter, statusIDParameter, cartridgeTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<GetEmployeesByCabinet_Result> GetEmployeesByCabinet(Nullable<int> cabinetID)
+        {
+            var cabinetIDParameter = cabinetID.HasValue ?
+                new ObjectParameter("CabinetID", cabinetID) :
+                new ObjectParameter("CabinetID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeesByCabinet_Result>("GetEmployeesByCabinet", cabinetIDParameter);
         }
     
         public virtual ObjectResult<GetPrintersByCabinet_Result> GetPrintersByCabinet(Nullable<int> cabinetID)

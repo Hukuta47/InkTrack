@@ -10,14 +10,11 @@
 namespace Request_Refill.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class GetEmployeesByCabinet_Result
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Идентификатор_сотрудника { get; set; }
+        public string ФИО_сотрудника { get; set; }
+        public string Должности { get; set; }
     }
 }

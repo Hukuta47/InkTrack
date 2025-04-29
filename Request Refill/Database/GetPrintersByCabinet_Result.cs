@@ -13,8 +13,8 @@ namespace Request_Refill.Database
     
     public partial class GetPrintersByCabinet_Result
     {
-        public string Производитель { get; set; }
-        public string Модель { get; set; }
-        public string Инвентарный_номер { get; set; }
+        public Nullable<int> CabinetID { get; set; }
+        public string PrinterFullName { get; set; }
+        public string InventoryNumber { get; set; }
     }
 }

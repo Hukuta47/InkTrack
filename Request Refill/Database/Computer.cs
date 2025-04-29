@@ -15,6 +15,8 @@ namespace Request_Refill.Database
     public partial class Computer
     {
         public int ComputerID { get; set; }
+        public string ComputerName { get; set; }
+        public string IPAddress { get; set; }
     
         public virtual Device Device { get; set; }
     }
