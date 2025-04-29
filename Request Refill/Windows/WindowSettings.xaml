@@ -11,8 +11,7 @@
 		WindowStyle="None" 
 		Background="{x:Null}" 
 		SizeToContent="WidthAndHeight" Title="Настройки"
-		
-	xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+		>
 	<Window.Resources>
 		<Style x:Key="FocusVisual">
 			<Setter Property="Control.Template">
