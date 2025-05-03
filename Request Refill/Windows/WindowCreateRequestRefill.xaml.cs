@@ -15,14 +15,18 @@ namespace Request_Refill.Windows
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void CreatePrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            if (new AddPrintout().ShowDialog() == true)
-            {
+            AddPrintout DialogAddPrintout = new AddPrintout();
 
+            if (DialogAddPrintout.ShowDialog() == true)
+            {
+                DialogAddPrintout.printoutData.Number = listOfPrintedDocuments.Count + 1;
+                listOfPrintedDocuments.Add(DialogAddPrintout.printoutData);
+                DataGridListOfPrintedDocument.Items.Refresh();
             }
         }
     }

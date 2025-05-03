@@ -17,6 +17,7 @@ namespace Request_Refill.Windows.Dialog
 {
     public partial class AddPrintout : Window
     {
+        public PrintoutData printoutData;
         public AddPrintout()
         {
             InitializeComponent();
@@ -29,24 +30,13 @@ namespace Request_Refill.Windows.Dialog
         }
         private void AddPrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            PrintoutData printoutData = new PrintoutData()
+            printoutData = new PrintoutData()
             {
                 NameDocument = Textbox_NameDocument.Text,
                 CountPages = int.Parse(Textbox_CountPages.Text),
-                date = DateTime.Parse(DatePicker_date.Text),
+                Date = DateTime.Parse(DatePicker_date.Text),
             };
-
-
-            StringBuilder createtStr = new StringBuilder();
-            createtStr.AppendLine();
-
-            createtStr.AppendLine($"Имя документа: {printoutData.NameDocument}");
-            createtStr.AppendLine($"Дата: {printoutData.CountPages}");
-            createtStr.AppendLine($"Количесвто страниц: {printoutData.date}");
-
-
-
-            MessageBox.Show(createtStr.ToString());
+            DialogResult = true;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

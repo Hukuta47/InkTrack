@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Request_Refill.Classes
 {
@@ -8,7 +6,7 @@ namespace Request_Refill.Classes
     {
         public int Number { get; set; }
         public string NameDocument { get; set; }
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
         public int CountPages { get; set; }
     }
 

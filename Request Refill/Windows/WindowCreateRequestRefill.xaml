@@ -202,7 +202,7 @@
 					<DataGridTextColumn Header="Дата" 
                         Binding="{Binding Date, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"/>
 					<DataGridTextColumn Header="Страниц" 
-                        Binding="{Binding NumberOfPages, UpdateSourceTrigger=PropertyChanged}"/>
+                        Binding="{Binding CountPages, UpdateSourceTrigger=PropertyChanged}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 
