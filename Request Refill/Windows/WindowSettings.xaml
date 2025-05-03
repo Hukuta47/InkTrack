@@ -199,7 +199,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="Кабинет" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="CabinetName" SelectionChanged="ComboboxCabinetSelect_SelectionChanged"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxCabinetSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="CabinetName" SelectedValuePath="CabinetID"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="1">
 					<Grid.ColumnDefinitions>
@@ -207,7 +207,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="От кого по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox  Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="FIO"/>
+					<ComboBox  Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="FIO" SelectedValuePath="EmployeeID"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="2">
 					<Grid.ColumnDefinitions>
@@ -215,7 +215,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0" Text="Принтер по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
-					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxPrinterDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="PrinterInfo"/>
+					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxPrinterDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="PrinterInfo" SelectedValuePath="PrinterID"/>
 				</Grid>
 			</Grid>
 			

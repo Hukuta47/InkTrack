@@ -22,17 +22,21 @@ namespace Request_Refill.Windows
             if (App.programData != null)
             {
                 ComboboxCabinetSelect.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
-                ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(App.programData.idSelectedCabinet);
-                ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(App.programData.idSelectedCabinet);
+                ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(App.programData.SelectedCabinetID);
+                ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(App.programData.SelectedCabinetID);
 
-                ComboboxCabinetSelect.SelectedIndex = App.programData.idSelectedCabinet;
-                ComboboxFromWhoDefaultSelect.SelectedIndex = App.programData.idFromWhoDefaultSelect;
-                ComboboxPrinterDefaultSelect.SelectedIndex = App.programData.idPrinterDefaultSelect;
+                ComboboxCabinetSelect.SelectedValue = App.programData.SelectedCabinetID;
+                ComboboxFromWhoDefaultSelect.SelectedValue = App.programData.SelectedEmployeeID;
+                ComboboxPrinterDefaultSelect.SelectedValue = App.programData.SelectedPrinterID;
             }
             else
             {
                 ComboboxCabinetSelect.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
             }
+
+
+
+            ComboboxCabinetSelect.SelectionChanged += ComboboxCabinetSelect_SelectionChanged;
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
@@ -41,7 +45,7 @@ namespace Request_Refill.Windows
 
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int SelectedCabinetID = ((GetCabinetsWithPrinters_Result)ComboboxCabinetSelect.SelectedValue).CabinetID;
+            int SelectedCabinetID = ((GetCabinetsWithPrinters_Result)ComboboxCabinetSelect.SelectedItem).CabinetID;
             CountEmployees = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID).Count();
             CountPrinters = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID).Count();
 
@@ -56,11 +60,12 @@ namespace Request_Refill.Windows
 
         private void SaveSettings_Click(object sender, RoutedEventArgs e)
         {
+
             App.programData = new ProgramData()
             {
-                idSelectedCabinet = ComboboxCabinetSelect.SelectedIndex,
-                idFromWhoDefaultSelect = ComboboxFromWhoDefaultSelect.SelectedIndex,
-                idPrinterDefaultSelect = ComboboxPrinterDefaultSelect.SelectedIndex,
+                SelectedCabinetID = (ComboboxCabinetSelect.SelectedItem as GetCabinetsWithPrinters_Result).CabinetID,
+                SelectedEmployeeID = (ComboboxFromWhoDefaultSelect.SelectedItem as GetEmployeesInCabinet_Result).EmployeeID,
+                SelectedPrinterID = (ComboboxPrinterDefaultSelect.SelectedItem as GetPrintersInCabinet_Result).PrinterID,
                 CountEmployeesInCabinet = CountEmployees,
                 CountPrintersInCabinet = CountPrinters
             };

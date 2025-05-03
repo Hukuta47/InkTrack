@@ -1,11 +1,13 @@
-﻿namespace Request_Refill.Classes
+﻿using Request_Refill.Database;
+
+namespace Request_Refill.Classes
 {
     public class ProgramData
     {
-        public int idSelectedCabinet { get; set; } = -1;
-        public int idFromWhoDefaultSelect { get; set; } = -1;
-        public int idPrinterDefaultSelect { get; set; } = -1;
-        public int CountPrintersInCabinet { get; set; } = -1;
-        public int CountEmployeesInCabinet { get; set; } = -1;
+        public int SelectedCabinetID { get; set; } = 0;
+        public int SelectedEmployeeID { get; set; } = 0;
+        public int SelectedPrinterID { get; set; } = 0;
+        public int CountPrintersInCabinet { get; set; } = 0;
+        public int CountEmployeesInCabinet { get; set; } = 0;
     }
 }

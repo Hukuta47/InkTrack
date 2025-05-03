@@ -10,7 +10,7 @@ namespace Request_Refill.Windows.Dialog
         public PrintoutData printoutData;
 
         DateTime MaxDateSelect = DateTime.Now.Date;
-        DateTime? MinDateSelect = App.dBEntities.Printer.First(p => p.PrinterID == App.programData.idPrinterDefaultSelect).CartridgeReplacementDate;
+        DateTime? MinDateSelect = App.dBEntities.Printer.First(p => p.PrinterID == App.programData.SelectedPrinterID).CartridgeReplacementDate;
 
 
         public AddPrintout(bool EnabledSomePrinters)
@@ -28,13 +28,13 @@ namespace Request_Refill.Windows.Dialog
 
             if (DateTime.TryParse(DatePicker_date.Text, out DateTime DateSelected))
             {
-                if (DateSelected < MaxDateSelect)
+                if (DateSelected > MaxDateSelect)
                 {
-                    MessageBox.Show("Любим в будущее лазить?");
+                    
                 }
-                else if (MinDateSelect < DateSelected)
+                else if (MinDateSelect > DateSelected)
                 {
-                    //
+                    
                 }
             }
             else
@@ -45,7 +45,7 @@ namespace Request_Refill.Windows.Dialog
 
 
 
-                printoutData = new PrintoutData()
+            printoutData = new PrintoutData()
                 {
                     NameDocument = Textbox_NameDocument.Text,
                     CountPages = int.Parse(Textbox_CountPages.Text),
