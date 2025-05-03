@@ -13,6 +13,7 @@ namespace Request_Refill.Windows.Dialog
 
         DateTime MaxDateSelect = DateTime.Now.Date;
         DateTime? MinDateSelect = App.dBEntities.Printer.First(p => p.PrinterID == App.programData.SelectedPrinterID).CartridgeReplacementDate;
+        bool isChange;
 
 
         public AddPrintout()
@@ -23,21 +24,45 @@ namespace Request_Refill.Windows.Dialog
         public AddPrintout(PrintoutData printoutData)
         {
             InitializeComponent();
+            this.printoutData = printoutData;
+            isChange = true;
+
             Button_AddPrintoutData.Content = "Сохранить";
+            Textbox_NameDocument.Text = printoutData.NameDocument;
+            Textbox_CountPages.Text = printoutData.CountPages.ToString();
+            DatePicker_date.SelectedDate = printoutData.Date;
         }
         private void AddPrintoutData_Click(object sender, RoutedEventArgs e)
         {
-
-            if (ValidateInput())
+            switch (isChange)
             {
-                printoutData = new PrintoutData()
-                {
-                    NameDocument = Textbox_NameDocument.Text,
-                    CountPages = int.Parse(Textbox_CountPages.Text),
-                    Date = DateTime.Parse(DatePicker_date.Text),
-                };
-                DialogResult = true;
+                case true:
+                    if (ValidateInput())
+                    {
+                        printoutData.NameDocument = Textbox_NameDocument.Text;
+                        printoutData.CountPages = int.Parse(Textbox_CountPages.Text);
+                        printoutData.Date = DateTime.Parse(DatePicker_date.Text);
+
+                        DialogResult = true;
+                    }
+                    break;
+
+                case false:
+
+                    if (ValidateInput())
+                    {
+                        printoutData = new PrintoutData()
+                        {
+                            NameDocument = Textbox_NameDocument.Text,
+                            CountPages = int.Parse(Textbox_CountPages.Text),
+                            Date = DateTime.Parse(DatePicker_date.Text),
+                        };
+                        DialogResult = true;
+                    }
+
+                    break;
             }
+            
 
         }
 

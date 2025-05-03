@@ -66,8 +66,6 @@ namespace Request_Refill.Windows
                 SelectedCabinetID = (ComboboxCabinetSelect.SelectedItem as GetCabinetsWithPrinters_Result).CabinetID,
                 SelectedEmployeeID = (ComboboxFromWhoDefaultSelect.SelectedItem as GetEmployeesInCabinet_Result).EmployeeID,
                 SelectedPrinterID = (ComboboxPrinterDefaultSelect.SelectedItem as GetPrintersInCabinet_Result).PrinterID,
-                CountEmployeesInCabinet = CountEmployees,
-                CountPrintersInCabinet = CountPrinters
             };
 
             string JsonData = JsonConvert.SerializeObject(App.programData, Formatting.Indented);

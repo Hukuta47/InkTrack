@@ -192,7 +192,8 @@
 					  CanUserReorderColumns="False"
 					  CanUserResizeColumns="False"
 					  CanUserSortColumns="False"
-					  CanUserResizeRows="False">
+					  CanUserResizeRows="False"
+					  SelectionMode="Single">
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="#" Binding="{Binding Number}" />
 					<DataGridTextColumn Header="Название" Binding="{Binding NameDocument}"/>
@@ -219,8 +220,8 @@
 					<Button Style="{DynamicResource ButtonSaveStyle}" Content="Подтвердить" Width="133" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
 					<Button Style="{DynamicResource ButtonCancelStyle}" Content="Отмена" Width="133" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" FontFamily="{StaticResource Tex Gyre}" FontSize="16" Click="ClickCloseWindow"/>
 					<Button Content="Добавить запись" Grid.Column="8" Width="133" Height="39" Click="CreatePrintoutData_Click"/>
-					<Button Content="Иконка" Grid.Column="6" Width="133" Height="39"/>
-					<Button Content="Иконка" Grid.Column="4" Width="133" Height="39"/>
+					<Button Content="Изменить" Grid.Column="6" Width="133" Height="39" Click="ChangePrintoutData_Click"/>
+					<Button Content="Удалить" Grid.Column="4" Width="133" Height="39" Click="DeletePrintoutData_Click"/>
 				</Grid>
 			</Border>
 		</Grid>

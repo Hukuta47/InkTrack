@@ -7,7 +7,5 @@ namespace Request_Refill.Classes
         public int SelectedCabinetID { get; set; } = 0;
         public int SelectedEmployeeID { get; set; } = 0;
         public int SelectedPrinterID { get; set; } = 0;
-        public int CountPrintersInCabinet { get; set; } = 0;
-        public int CountEmployeesInCabinet { get; set; } = 0;
     }
 }
