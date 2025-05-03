@@ -11,8 +11,7 @@
         <EntityTypeShape EntityType="LitDBModel.Device" Width="1.5" PointX="8" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LitDBModel.Employee" Width="1.5" PointX="11.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="LitDBModel.Printer" Width="1.5" PointX="5.875" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.vCabinetPrinters" Width="1.5" PointX="7.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="LitDBModel.vCartridgeReport" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LitDBModel.vCabinetPrinters" Width="1.5" PointX="5.875" PointY="5.875" IsExpanded="true" />
         <AssociationConnector Association="LitDBModel.FK__Cartridge__Statu__47DBAE45" ManuallyRouted="false" />
         <AssociationConnector Association="LitDBModel.FK_Printer_Cartridge" ManuallyRouted="false" ></AssociationConnector>
         <AssociationConnector Association="LitDBModel.FK__Printer__Printer__3C69FB99" ManuallyRouted="false" />

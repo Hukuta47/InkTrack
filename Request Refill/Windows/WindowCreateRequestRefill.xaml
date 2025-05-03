@@ -189,20 +189,16 @@
 				</Grid>
 			</Border>
 
-			<DataGrid Grid.Row="1" Margin="10" Name="DataGridListOfPrintedDocument" AutoGenerateColumns="False" CanUserAddRows="True">
+			<DataGrid Grid.Row="1" Margin="10" Name="DataGridListOfPrintedDocument" AutoGenerateColumns="False" IsReadOnly="True" 
+					  CanUserReorderColumns="False"
+					  CanUserResizeColumns="False"
+					  CanUserSortColumns="False"
+					  CanUserResizeRows="False">
 				<DataGrid.Columns>
-					<!-- Нумерация только для чтения -->
-					<DataGridTextColumn Header="#" 
-                        Binding="{Binding Number}" 
-                        IsReadOnly="True"/>
-
-					<!-- Остальные колонки — для редактирования -->
-					<DataGridTextColumn Header="Название" 
-                        Binding="{Binding NameDocument, UpdateSourceTrigger=PropertyChanged}"/>
-					<DataGridTextColumn Header="Дата" 
-                        Binding="{Binding Date, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"/>
-					<DataGridTextColumn Header="Страниц" 
-                        Binding="{Binding CountPages, UpdateSourceTrigger=PropertyChanged}"/>
+					<DataGridTextColumn Header="#" Binding="{Binding Number}" />
+					<DataGridTextColumn Header="Название" Binding="{Binding NameDocument}"/>
+					<DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yy}"/>
+					<DataGridTextColumn Header="Страниц" Binding="{Binding CountPages}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 

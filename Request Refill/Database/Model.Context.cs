@@ -34,7 +34,6 @@ namespace Request_Refill.Database
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
         public virtual DbSet<vCabinetPrinters> vCabinetPrinters { get; set; }
-        public virtual DbSet<vCartridgeReport> vCartridgeReport { get; set; }
     
         public virtual ObjectResult<GetCabinetsWithPrinters_Result> GetCabinetsWithPrinters()
         {

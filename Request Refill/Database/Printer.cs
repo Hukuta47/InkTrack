@@ -18,6 +18,7 @@ namespace Request_Refill.Database
         public int NumbersOfRepairs { get; set; }
         public Nullable<int> CartridgeID { get; set; }
         public Nullable<int> PrinterStatusID { get; set; }
+        public Nullable<System.DateTime> CartridgeReplacementDate { get; set; }
     
         public virtual Cartridge Cartridge { get; set; }
         public virtual Device Device { get; set; }

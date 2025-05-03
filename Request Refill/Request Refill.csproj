@@ -159,9 +159,6 @@
     <Compile Include="Database\vCabinetPrinters.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\vCartridgeReport.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Dialog\AddPrintout.xaml.cs">
       <DependentUpon>AddPrintout.xaml</DependentUpon>
     </Compile>

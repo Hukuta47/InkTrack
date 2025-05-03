@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище LitDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище LitDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cabinet">
           <Key>
             <PropertyRef Name="CabinetID" />
@@ -77,6 +77,7 @@
           <Property Name="NumbersOfRepairs" Type="int" Nullable="false" />
           <Property Name="CartridgeID" Type="int" />
           <Property Name="PrinterStatusID" Type="int" />
+          <Property Name="CartridgeReplacementDate" Type="date" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "LitDB.dbo.vCabinetPrinters" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -94,28 +95,7 @@
           <Property Name="PrinterModel" Type="nvarchar" MaxLength="50" />
           <Property Name="PrinterInventoryNumber" Type="nchar" MaxLength="10" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "LitDB.dbo.vCartridgeReport" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
-        <EntityType Name="vCartridgeReport">
-          <Key>
-            <PropertyRef Name="CartridgeID" />
-            <PropertyRef Name="Номер картриджа" />
-            <PropertyRef Name="Тип картриджа" />
-            <PropertyRef Name="Установлен в" />
-          </Key>
-          <Property Name="CartridgeID" Type="int" Nullable="false" />
-          <Property Name="Номер картриджа" Type="nchar" MaxLength="4" Nullable="false" />
-          <Property Name="Модель картриджа" Type="nvarchar" MaxLength="50" />
-          <Property Name="Производитель" Type="nvarchar" MaxLength="50" />
-          <Property Name="Тип картриджа" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Статус" Type="nvarchar" MaxLength="20" />
-          <Property Name="Установлен в" Type="nvarchar" MaxLength="71" Nullable="false" />
-          <Property Name="Емкость" Type="int" />
-          <Property Name="Количество заправок" Type="int" />
-          <Property Name="Дата последней заправки" Type="date" />
-          <Property Name="Местоположение" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <Association Name="FK__Cabinet_D__Cabin__5DCAEF64">
+        <Association Name="FK__Cabinet_D__Cabin__5EBF139D">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
           <ReferentialConstraint>
@@ -139,7 +119,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cabinet_E__Cabin__5FB337D6">
+        <Association Name="FK__Cabinet_E__Cabin__60A75C0F">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,22 +205,7 @@
     [vCabinetPrinters].[PrinterInventoryNumber] AS [PrinterInventoryNumber]
     FROM [dbo].[vCabinetPrinters] AS [vCabinetPrinters]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vCartridgeReport" EntityType="Self.vCartridgeReport" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vCartridgeReport].[CartridgeID] AS [CartridgeID], 
-    [vCartridgeReport].[Номер картриджа] AS [Номер картриджа], 
-    [vCartridgeReport].[Модель картриджа] AS [Модель картриджа], 
-    [vCartridgeReport].[Производитель] AS [Производитель], 
-    [vCartridgeReport].[Тип картриджа] AS [Тип картриджа], 
-    [vCartridgeReport].[Статус] AS [Статус], 
-    [vCartridgeReport].[Установлен в] AS [Установлен в], 
-    [vCartridgeReport].[Емкость] AS [Емкость], 
-    [vCartridgeReport].[Количество заправок] AS [Количество заправок], 
-    [vCartridgeReport].[Дата последней заправки] AS [Дата последней заправки], 
-    [vCartridgeReport].[Местоположение] AS [Местоположение]
-    FROM [dbo].[vCartridgeReport] AS [vCartridgeReport]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__Cabinet_D__Cabin__5DCAEF64" Association="Self.FK__Cabinet_D__Cabin__5DCAEF64">
+          <AssociationSet Name="FK__Cabinet_D__Cabin__5EBF139D" Association="Self.FK__Cabinet_D__Cabin__5EBF139D">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
           </AssociationSet>
@@ -248,7 +213,7 @@
             <End Role="Device" EntitySet="Device" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cabinet_E__Cabin__5FB337D6" Association="Self.FK__Cabinet_E__Cabin__5FB337D6">
+          <AssociationSet Name="FK__Cabinet_E__Cabin__60A75C0F" Association="Self.FK__Cabinet_E__Cabin__60A75C0F">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
           </AssociationSet>
@@ -269,8 +234,7 @@
             <End Role="Printer" EntitySet="Printer" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LitDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -340,6 +304,7 @@
           <Property Name="PrinterStatusID" Type="Int32" />
           <NavigationProperty Name="Cartridge" Relationship="Self.FK_Printer_Cartridge" FromRole="Printer" ToRole="Cartridge" />
           <NavigationProperty Name="Device" Relationship="Self.FK__Printer__Printer__3C69FB99" FromRole="Printer" ToRole="Device" />
+          <Property Name="CartridgeReplacementDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="vCabinetPrinters">
           <Key>
@@ -354,25 +319,6 @@
           <Property Name="PrinterDeviceID" Type="Int32" Nullable="false" />
           <Property Name="PrinterModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PrinterInventoryNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vCartridgeReport">
-          <Key>
-            <PropertyRef Name="CartridgeID" />
-            <PropertyRef Name="Номер_картриджа" />
-            <PropertyRef Name="Тип_картриджа" />
-            <PropertyRef Name="Установлен_в" />
-          </Key>
-          <Property Name="CartridgeID" Type="Int32" Nullable="false" />
-          <Property Name="Номер_картриджа" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Модель_картриджа" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Производитель" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Тип_картриджа" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Статус" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Установлен_в" Type="String" MaxLength="71" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Емкость" Type="Int32" />
-          <Property Name="Количество_заправок" Type="Int32" />
-          <Property Name="Дата_последней_заправки" Type="DateTime" Precision="0" />
-          <Property Name="Местоположение" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__Cartridge__Statu__47DBAE45">
           <End Role="CartridgeStatus" Type="Self.CartridgeStatus" Multiplicity="1" />
@@ -426,7 +372,6 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="Printer" EntityType="Self.Printer" />
           <EntitySet Name="vCabinetPrinters" EntityType="Self.vCabinetPrinters" />
-          <EntitySet Name="vCartridgeReport" EntityType="Self.vCartridgeReport" />
           <AssociationSet Name="FK__Cartridge__Statu__47DBAE45" Association="Self.FK__Cartridge__Statu__47DBAE45">
             <End Role="CartridgeStatus" EntitySet="CartridgeStatus" />
             <End Role="Cartridge" EntitySet="Cartridge" />
@@ -449,10 +394,10 @@
           </AssociationSet>
           <FunctionImport Name="GetCabinetsWithPrinters" ReturnType="Collection(LitDBModel.GetCabinetsWithPrinters_Result)" />
           <FunctionImport Name="GetEmployeesInCabinet" ReturnType="Collection(LitDBModel.GetEmployeesInCabinet_Result)">
-            <Parameter Name="CabinetID" Mode="In" Type="Int32" />
+          <Parameter Name="CabinetID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPrintersInCabinet" ReturnType="Collection(LitDBModel.GetPrintersInCabinet_Result)">
-            <Parameter Name="CabinetID" Mode="In" Type="Int32" />
+          <Parameter Name="CabinetID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetCabinetsWithPrinters_Result">
@@ -529,6 +474,7 @@
           <EntitySetMapping Name="Printer">
             <EntityTypeMapping TypeName="LitDBModel.Printer">
               <MappingFragment StoreEntitySet="Printer">
+                <ScalarProperty Name="CartridgeReplacementDate" ColumnName="CartridgeReplacementDate" />
                 <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
                 <ScalarProperty Name="NumbersOfRepairs" ColumnName="NumbersOfRepairs" />
                 <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
@@ -545,23 +491,6 @@
                 <ScalarProperty Name="PrinterDeviceID" ColumnName="PrinterDeviceID" />
                 <ScalarProperty Name="PrinterModel" ColumnName="PrinterModel" />
                 <ScalarProperty Name="PrinterInventoryNumber" ColumnName="PrinterInventoryNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vCartridgeReport">
-            <EntityTypeMapping TypeName="LitDBModel.vCartridgeReport">
-              <MappingFragment StoreEntitySet="vCartridgeReport">
-                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
-                <ScalarProperty Name="Номер_картриджа" ColumnName="Номер картриджа" />
-                <ScalarProperty Name="Модель_картриджа" ColumnName="Модель картриджа" />
-                <ScalarProperty Name="Производитель" ColumnName="Производитель" />
-                <ScalarProperty Name="Тип_картриджа" ColumnName="Тип картриджа" />
-                <ScalarProperty Name="Статус" ColumnName="Статус" />
-                <ScalarProperty Name="Установлен_в" ColumnName="Установлен в" />
-                <ScalarProperty Name="Емкость" ColumnName="Емкость" />
-                <ScalarProperty Name="Количество_заправок" ColumnName="Количество заправок" />
-                <ScalarProperty Name="Дата_последней_заправки" ColumnName="Дата последней заправки" />
-                <ScalarProperty Name="Местоположение" ColumnName="Местоположение" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
