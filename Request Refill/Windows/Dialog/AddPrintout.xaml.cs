@@ -1,7 +1,9 @@
 ﻿using Request_Refill.Classes;
 using System;
 using System.Linq;
+using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace Request_Refill.Windows.Dialog
 {
@@ -13,12 +15,12 @@ namespace Request_Refill.Windows.Dialog
         DateTime? MinDateSelect = App.dBEntities.Printer.First(p => p.PrinterID == App.programData.SelectedPrinterID).CartridgeReplacementDate;
 
 
-        public AddPrintout(bool EnabledSomePrinters)
+        public AddPrintout()
         {
             InitializeComponent();
             Button_AddPrintoutData.Content = "Добавить";
         }
-        public AddPrintout(bool EnabledSomePrinters, PrintoutData printoutData)
+        public AddPrintout(PrintoutData printoutData)
         {
             InitializeComponent();
             Button_AddPrintoutData.Content = "Сохранить";
@@ -26,37 +28,70 @@ namespace Request_Refill.Windows.Dialog
         private void AddPrintoutData_Click(object sender, RoutedEventArgs e)
         {
 
-            if (DateTime.TryParse(DatePicker_date.Text, out DateTime DateSelected))
+            if (ValidateInput())
             {
-                if (DateSelected > MaxDateSelect)
-                {
-                    
-                }
-                else if (MinDateSelect > DateSelected)
-                {
-                    
-                }
-            }
-            else
-            {
-                //
-            }
-
-
-
-
-            printoutData = new PrintoutData()
+                printoutData = new PrintoutData()
                 {
                     NameDocument = Textbox_NameDocument.Text,
                     CountPages = int.Parse(Textbox_CountPages.Text),
                     Date = DateTime.Parse(DatePicker_date.Text),
                 };
-            DialogResult = true;
+                DialogResult = true;
+            }
+
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
+        public bool ValidateInput()
+        {
+            StringBuilder errors = new StringBuilder();
+
+            string name = Textbox_NameDocument.Text.Trim();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                errors.AppendLine("Название документа не может быть пустым");
+            }
+            else if (name.Length > 255)
+            {
+                errors.AppendLine("Название документа не может превышать 255 символов");
+            }
+
+            string countPages = Textbox_CountPages.Text.Trim();
+            if (string.IsNullOrWhiteSpace(countPages))
+            {
+                errors.AppendLine("Количество страниц не может быть пустым");
+            }
+            else if (!int.TryParse(countPages, out int pages) || pages < 1 || pages > 100)
+            {
+                errors.AppendLine("Количество страниц должно быть целым числом от 1 до 100");
+            }
+
+            if (!DatePicker_date.SelectedDate.HasValue)
+            {
+                errors.AppendLine("Дата должна быть указана");
+            }
+            else
+            {
+                DateTime selectedDate = DatePicker_date.SelectedDate.Value;
+
+                if (MinDateSelect > selectedDate || selectedDate > MaxDateSelect)
+                {
+                    errors.AppendLine($"Дата должна быть в диапазоне с {MinDateSelect.Value.ToShortDateString()} по {MaxDateSelect.ToShortDateString()}");
+                }
+            }
+
+            if (errors.Length > 0)
+            {
+                System.Windows.Forms.MessageBox.Show(errors.ToString(), "Ошибки ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

@@ -20,7 +20,7 @@ namespace Request_Refill.Windows
 
         private void CreatePrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            AddPrintout DialogAddPrintout = new AddPrintout(true);
+            AddPrintout DialogAddPrintout = new AddPrintout();
 
             if (DialogAddPrintout.ShowDialog() == true)
             {

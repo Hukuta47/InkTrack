@@ -206,7 +206,7 @@
 						<ColumnDefinition/>
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
-					<TextBlock Grid.Column="0" Text="От кого по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
+					<TextBlock Grid.Column="0" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"><Run Text="От кого "/><Run Language="ru-ru" Text="делать заявку"/></TextBlock>
 					<ComboBox  Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxFromWhoDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="FIO" SelectedValuePath="EmployeeID"/>
 				</Grid>
 				<Grid Margin="10" Grid.Row="2">
@@ -214,7 +214,7 @@
 						<ColumnDefinition/>
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
-					<TextBlock Grid.Column="0" Text="Принтер по умолчанию" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
+					<TextBlock Grid.Column="0" Text="Принтер" FontSize="16" FontFamily="{StaticResource Tex Gyre}" VerticalAlignment="Center"/>
 					<ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1" Width="200" Height="32" Name="ComboboxPrinterDefaultSelect" FontFamily="{StaticResource Tex Gyre}" FontSize="16" DisplayMemberPath="PrinterInfo" SelectedValuePath="PrinterID"/>
 				</Grid>
 			</Grid>
