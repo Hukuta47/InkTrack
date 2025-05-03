@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json;
 using System.IO;
-using System.Collections.Generic;
 
 namespace Request_Refill.Windows
 {
@@ -34,8 +33,6 @@ namespace Request_Refill.Windows
             {
                 ComboboxCabinetSelect.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
             }
-
-
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {

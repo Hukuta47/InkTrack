@@ -1,23 +1,13 @@
 ﻿using Request_Refill.Classes;
-using System;
+using Request_Refill.Windows.Dialog;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Request_Refill.Windows
 {
     public partial class WindowCreateRequestRefill : Window
     {
-        List<PrintedDocument> listOfPrintedDocuments = new List<PrintedDocument>();
+        List<PrintoutData> listOfPrintedDocuments = new List<PrintoutData>();
         public WindowCreateRequestRefill()
         {
             InitializeComponent();
@@ -28,5 +18,12 @@ namespace Request_Refill.Windows
             this.Close();
         }
 
+        private void CreatePrintoutData_Click(object sender, RoutedEventArgs e)
+        {
+            if (new AddPrintout().ShowDialog() == true)
+            {
+
+            }
+        }
     }
 }
