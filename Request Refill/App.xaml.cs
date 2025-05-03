@@ -8,6 +8,8 @@ using System.Windows.Resources;
 using System.Windows.Media.Imaging;
 using Request_Refill.Database;
 using Request_Refill.Classes;
+using System.Threading;
+using Newtonsoft.Json;
 
 namespace Request_Refill
 {
@@ -15,10 +17,35 @@ namespace Request_Refill
     {
         private NotifyIcon notifyIcon;
         static public LitDBEntities dBEntities = new LitDBEntities();
+        static string pathApplication;
+        static public ProgramData programData;
+
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            pathApplication = Path.Combine(pathToAppData, "Request Refill");
+            
+            if (Directory.Exists(pathApplication))
+            {
+                string ConfigFilePath = Path.Combine(pathApplication, "Config.json");
+                string JsonImportData = File.ReadAllText(ConfigFilePath);
+                programData = JsonConvert.DeserializeObject<ProgramData>(JsonImportData);
+            }
+            else
+            {
+                Directory.CreateDirectory(pathApplication);
+                string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
+                string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
+                File.WriteAllText(CreateConfigFilePath, JsonData);
+            }
+
+
+
+
 
 
             // Создаем иконку в трее
