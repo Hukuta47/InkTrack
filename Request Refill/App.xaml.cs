@@ -82,15 +82,8 @@ namespace Request_Refill
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon.Dispose(); // Очищаем ресурсы
-            ProgramData exampleProgramData = new ProgramData()
-            {
-                idSelectedCabinet = 0,
-                idFromWhoDefaultSelect = 0,
-                idPrinterDefaultSelect = 0,
-                CountEmployeesInCabinet = 0,
-                CountPrintersInCabinet = 0
-            };
-            if (programData.Equals(exampleProgramData))
+
+            if (programData == null)
             {
                 Directory.Delete(pathApplication, true);
             }
