@@ -229,7 +229,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 
-					<Button Style="{DynamicResource ButtonSaveStyle}" Content="Сохранить" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" FontFamily="{StaticResource Tex Gyre}" FontSize="16"/>
+					<Button Style="{DynamicResource ButtonSaveStyle}" Content="Сохранить" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" FontFamily="{StaticResource Tex Gyre}" FontSize="16" Click="SaveSettings_Click"/>
 					<Button Style="{DynamicResource ButtonCancelStyle}" Content="Отмена" Width="117" Height="39" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" FontFamily="{StaticResource Tex Gyre}" FontSize="16" Click="ClickCloseWindow"/>
 				</Grid>
 			</Border>

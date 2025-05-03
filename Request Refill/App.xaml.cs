@@ -8,7 +8,6 @@ using System.Windows.Resources;
 using System.Windows.Media.Imaging;
 using Request_Refill.Database;
 using Request_Refill.Classes;
-using System.Threading;
 using Newtonsoft.Json;
 
 namespace Request_Refill
@@ -17,7 +16,8 @@ namespace Request_Refill
     {
         private NotifyIcon notifyIcon;
         static public LitDBEntities dBEntities = new LitDBEntities();
-        static string pathApplication;
+        static public string pathApplication;
+        static public string pathJsonSettingsFile;
         static public ProgramData programData;
 
 
@@ -31,8 +31,8 @@ namespace Request_Refill
             
             if (Directory.Exists(pathApplication))
             {
-                string ConfigFilePath = Path.Combine(pathApplication, "Config.json");
-                string JsonImportData = File.ReadAllText(ConfigFilePath);
+                pathJsonSettingsFile = Path.Combine(pathApplication, "Config.json");
+                string JsonImportData = File.ReadAllText(pathJsonSettingsFile);
                 programData = JsonConvert.DeserializeObject<ProgramData>(JsonImportData);
             }
             else
@@ -40,11 +40,9 @@ namespace Request_Refill
                 Directory.CreateDirectory(pathApplication);
                 string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
                 string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
+                pathJsonSettingsFile = CreateConfigFilePath;
                 File.WriteAllText(CreateConfigFilePath, JsonData);
             }
-
-
-
 
 
 
@@ -84,6 +82,18 @@ namespace Request_Refill
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon.Dispose(); // Очищаем ресурсы
+            ProgramData exampleProgramData = new ProgramData()
+            {
+                idSelectedCabinet = 0,
+                idFromWhoDefaultSelect = 0,
+                idPrinterDefaultSelect = 0,
+                CountEmployeesInCabinet = 0,
+                CountPrintersInCabinet = 0
+            };
+            if (programData.Equals(exampleProgramData))
+            {
+                Directory.Delete(pathApplication, true);
+            }
             base.OnExit(e);
         }
 
