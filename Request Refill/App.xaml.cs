@@ -60,24 +60,13 @@ namespace Request_Refill
                 
             notifyIcon.Visible = true;
 
-            // Создаем контекстное меню
-            ContextMenuStrip contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Создание заявки на заправку", SelectImage("16/File B.png"), CreateRequestFill_Click);
-            contextMenu.Items.Add("Настройки", SelectImage("16/Settings B.png"), Settings_Click);
-            contextMenu.Items.Add("Закрыть", SelectImage("16/Shutdown B.png"), Close_Click);
-
-            // Привязываем меню к иконке
-            notifyIcon.ContextMenuStrip = contextMenu;
         }
 
 
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            notifyIcon.ContextMenuStrip.Show(Cursor.Position);
+            new WindowTraySelectFuntion().ShowDialog();
         }
-        private void CreateRequestFill_Click(object sender, EventArgs e) => new WindowCreateRequestRefill().ShowDialog();
-        private void Settings_Click(object sender, EventArgs e) => new WindowSettings().ShowDialog();
-        private void Close_Click(object sender, EventArgs e) => Shutdown();
 
         protected override void OnExit(ExitEventArgs e)
         {
@@ -94,7 +83,7 @@ namespace Request_Refill
         Icon SelectIcon(string FileName)
         {
             Uri iconUri = new Uri($"pack://application:,,,/Resources/{FileName}", UriKind.Absolute);
-            StreamResourceInfo sri = System.Windows.Application.GetResourceStream(iconUri);
+            StreamResourceInfo sri = GetResourceStream(iconUri);
 
             return new Icon(sri.Stream);
         }

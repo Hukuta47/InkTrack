@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Request_Refill.Windows.Dialog
 {
-    public partial class AddPrintout : Window
+    public partial class DataWindowPrintout : Window
     {
         public PrintoutData printoutData;
 
@@ -16,12 +16,12 @@ namespace Request_Refill.Windows.Dialog
         bool isChange;
 
 
-        public AddPrintout()
+        public DataWindowPrintout()
         {
             InitializeComponent();
             Button_AddPrintoutData.Content = "Добавить";
         }
-        public AddPrintout(PrintoutData printoutData)
+        public DataWindowPrintout(PrintoutData printoutData)
         {
             InitializeComponent();
             this.printoutData = printoutData;

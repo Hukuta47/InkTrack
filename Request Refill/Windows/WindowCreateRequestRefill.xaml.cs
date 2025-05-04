@@ -34,7 +34,7 @@ namespace Request_Refill.Windows
         private void CreatePrintoutData_Click(object sender, RoutedEventArgs e)
         {
 
-            AddPrintout DialogAddPrintout = new AddPrintout();
+            DataWindowPrintout DialogAddPrintout = new DataWindowPrintout();
 
             if (DialogAddPrintout.ShowDialog() == true)
             {
@@ -57,7 +57,7 @@ namespace Request_Refill.Windows
 
         private void ChangePrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            AddPrintout DialogAddPrintout = new AddPrintout(DataGridListOfPrintedDocument.SelectedItem as PrintoutData);
+            DataWindowPrintout DialogAddPrintout = new DataWindowPrintout(DataGridListOfPrintedDocument.SelectedItem as PrintoutData);
 
             if (DialogAddPrintout.ShowDialog() == true)
             {
