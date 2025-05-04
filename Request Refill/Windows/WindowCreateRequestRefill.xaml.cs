@@ -4,11 +4,8 @@ using System;
 using System.Collections.Generic;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Drawing.Printing;
-
 using System.IO;
 using System.Windows;
-using System.Xml.Linq;
 using System.Linq;
 
 namespace Request_Refill.Windows
@@ -16,6 +13,7 @@ namespace Request_Refill.Windows
     public partial class WindowCreateRequestRefill : Window
     {
         List<PrintoutData> listOfPrintedDocuments = new List<PrintoutData>();
+        int SumPagesPrintouts;
         public WindowCreateRequestRefill()
         {
             InitializeComponent();
@@ -76,6 +74,7 @@ namespace Request_Refill.Windows
         private void SaveRequestRefill_Click(object sender, RoutedEventArgs e)
         {
             GenerateTimesheet(listOfPrintedDocuments);
+
         }
 
         public static void GenerateTimesheet(List<PrintoutData> listOfPrintedDocuments)
@@ -161,6 +160,11 @@ namespace Request_Refill.Windows
             document.Add(footer);
 
             document.Close();
+        }
+
+        private void DataGridListOfPrintedDocument_InitializingNewItem(object sender, System.Windows.Controls.InitializingNewItemEventArgs e)
+        {
+            MessageBox.Show("s");
         }
     }
 }
