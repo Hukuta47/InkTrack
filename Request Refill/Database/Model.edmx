@@ -34,7 +34,6 @@
             <PropertyRef Name="CartridgeID" />
           </Key>
           <Property Name="CartridgeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PrinterID" Type="int" />
           <Property Name="CartridgeModelID" Type="int" Nullable="false" />
           <Property Name="CartridgeNumber" Type="nchar" MaxLength="4" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
@@ -95,7 +94,7 @@
           <Property Name="PrinterModel" Type="nvarchar" MaxLength="50" />
           <Property Name="PrinterInventoryNumber" Type="nchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK__Cabinet_D__Cabin__5EBF139D">
+        <Association Name="FK__Cabinet_D__Cabin__70DDC3D8">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
           <ReferentialConstraint>
@@ -119,7 +118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cabinet_E__Cabin__60A75C0F">
+        <Association Name="FK__Cabinet_E__Cabin__72C60C4A">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,7 +204,7 @@
     [vCabinetPrinters].[PrinterInventoryNumber] AS [PrinterInventoryNumber]
     FROM [dbo].[vCabinetPrinters] AS [vCabinetPrinters]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Cabinet_D__Cabin__5EBF139D" Association="Self.FK__Cabinet_D__Cabin__5EBF139D">
+          <AssociationSet Name="FK__Cabinet_D__Cabin__70DDC3D8" Association="Self.FK__Cabinet_D__Cabin__70DDC3D8">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
           </AssociationSet>
@@ -213,7 +212,7 @@
             <End Role="Device" EntitySet="Device" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cabinet_E__Cabin__60A75C0F" Association="Self.FK__Cabinet_E__Cabin__60A75C0F">
+          <AssociationSet Name="FK__Cabinet_E__Cabin__72C60C4A" Association="Self.FK__Cabinet_E__Cabin__72C60C4A">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
           </AssociationSet>
@@ -253,7 +252,6 @@
             <PropertyRef Name="CartridgeID" />
           </Key>
           <Property Name="CartridgeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PrinterID" Type="Int32" />
           <Property Name="CartridgeModelID" Type="Int32" Nullable="false" />
           <Property Name="CartridgeNumber" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="StatusID" Type="Int32" Nullable="false" />
@@ -431,7 +429,6 @@
             <EntityTypeMapping TypeName="LitDBModel.Cartridge">
               <MappingFragment StoreEntitySet="Cartridge">
                 <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
-                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
                 <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
                 <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />

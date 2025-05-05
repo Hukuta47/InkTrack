@@ -21,7 +21,6 @@ namespace Request_Refill.Database
         }
     
         public int CartridgeID { get; set; }
-        public Nullable<int> PrinterID { get; set; }
         public int CartridgeModelID { get; set; }
         public string CartridgeNumber { get; set; }
         public int StatusID { get; set; }

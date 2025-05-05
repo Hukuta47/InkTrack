@@ -7,6 +7,7 @@ using iTextSharp.text.pdf;
 using System.IO;
 using System.Windows;
 using System.Linq;
+using Request_Refill.Database;
 
 namespace Request_Refill.Windows
 {
@@ -19,8 +20,9 @@ namespace Request_Refill.Windows
             InitializeComponent();
             DataGridListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
 
+
             Random rnd = new Random();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 5; i++)
             {
                 listOfPrintedDocuments.Add(new PrintoutData
                 {
@@ -30,6 +32,13 @@ namespace Request_Refill.Windows
                     CountPages = rnd.Next(1, 21)     // Случайное число от 1 до 20
                 });
             }
+
+            SumPagesPrintouts = 0;
+            foreach (PrintoutData printoutData in listOfPrintedDocuments)
+            {
+                SumPagesPrintouts += printoutData.CountPages;
+            }
+            Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
         }
         private void ClickCloseWindow(object sender, RoutedEventArgs e)
         {
@@ -47,6 +56,13 @@ namespace Request_Refill.Windows
                 listOfPrintedDocuments.Add(DialogAddPrintout.printoutData);
                 DataGridListOfPrintedDocument.Items.Refresh();
             }
+
+            SumPagesPrintouts = 0;
+            foreach (PrintoutData printoutData in listOfPrintedDocuments)
+            {
+                SumPagesPrintouts += printoutData.CountPages;
+            }
+            Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
         }
 
         private void DeletePrintoutData_Click(object sender, RoutedEventArgs e)
@@ -58,6 +74,14 @@ namespace Request_Refill.Windows
                 listOfPrintedDocuments[i - 1].Number = i;
             }
             DataGridListOfPrintedDocument.Items.Refresh();
+
+
+            SumPagesPrintouts = 0;
+            foreach (PrintoutData printoutData in listOfPrintedDocuments)
+            {
+                SumPagesPrintouts += printoutData.CountPages;
+            }
+            Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
         }
 
         private void ChangePrintoutData_Click(object sender, RoutedEventArgs e)
@@ -69,14 +93,22 @@ namespace Request_Refill.Windows
                 listOfPrintedDocuments[DataGridListOfPrintedDocument.SelectedIndex] = DialogAddPrintout.printoutData;
                 DataGridListOfPrintedDocument.Items.Refresh();
             }
+
+            SumPagesPrintouts = 0;
+            foreach (PrintoutData printoutData in listOfPrintedDocuments)
+            {
+                SumPagesPrintouts += printoutData.CountPages;
+            }
+            Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
         }
 
         private void SaveRequestRefill_Click(object sender, RoutedEventArgs e)
         {
             GenerateTimesheet(listOfPrintedDocuments);
-
+            Cartridge cartridge = App.dBEntities.Printer.First(printer => printer.PrinterID == App.programData.SelectedPrinterID).Cartridge;
+            cartridge.Capacity = SumPagesPrintouts;
+            App.dBEntities.SaveChanges();
         }
-
         public static void GenerateTimesheet(List<PrintoutData> listOfPrintedDocuments)
         {
             // Create document with A4 size and margins (approximately 2-3cm)
@@ -160,11 +192,6 @@ namespace Request_Refill.Windows
             document.Add(footer);
 
             document.Close();
-        }
-
-        private void DataGridListOfPrintedDocument_InitializingNewItem(object sender, System.Windows.Controls.InitializingNewItemEventArgs e)
-        {
-            MessageBox.Show("s");
         }
     }
 }
