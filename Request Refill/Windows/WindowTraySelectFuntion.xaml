@@ -24,7 +24,7 @@
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 
-			<Button Content="Замена картриджа" Width="119" Height="132" Grid.Column="0" Grid.RowSpan="2" Margin="8,8,4,8"/>
+			<Button Content="Замена картриджа" Width="119" Height="132" Grid.Column="0" Grid.RowSpan="2" Margin="8,8,4,8" Click="OpenReplaceCartridge"/>
 			<Button Content="Создание заявки" Width="119" Height="132" Grid.Column="1" Grid.RowSpan="2" Margin="4,8,4,8" Click="OpenCreateRequestRefill_Click"/>
 			<Button Content="Настр" Width="62" Height="62" Grid.Column="2" Grid.Row="0" Margin="4,8,8,4" Click="OpenSettings_Click"/>
 			<Button Content="Выкл" Width="62" Height="62" Grid.Column="3" Grid.Row="1" Margin="4,4,8,8" Click="Shutdown_Click"/>

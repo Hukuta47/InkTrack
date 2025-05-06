@@ -126,6 +126,12 @@
     <Compile Include="Database\Cartridge.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\CartridgeModel.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\CartridgeReplacement_Log.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\CartridgeStatus.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -135,13 +141,22 @@
     <Compile Include="Database\Employee.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\EmployeeLIT.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\GetCabinetsWithPrinters_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\GetCompatibleCartridgesForPrinter_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\GetEmployeesInCabinet_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\GetPrintersInCabinet_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\InstallCartridgeToPrinter_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Model.Context.cs">
@@ -162,6 +177,9 @@
     <Compile Include="Database\Printer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\ReasonForReplacement.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\vCabinetPrinters.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -170,6 +188,9 @@
     </Compile>
     <Compile Include="Windows\WindowCreateRequestRefill.xaml.cs">
       <DependentUpon>WindowCreateRequestRefill.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WindowReplaceCartridge.xaml.cs">
+      <DependentUpon>WindowReplaceCartridge.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WindowSettings.xaml.cs">
       <DependentUpon>WindowSettings.xaml</DependentUpon>
@@ -225,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WindowCreateRequestRefill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WindowReplaceCartridge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,21 +12,11 @@ namespace Request_Refill.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class EmployeeLIT
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
-        {
-            this.Cabinet = new HashSet<Cabinet>();
-            this.EmployeeLIT = new HashSet<EmployeeLIT>();
-        }
-    
         public int EmployeeID { get; set; }
-        public string FIO { get; set; }
+        public int EmployeePositionID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cabinet> Cabinet { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeLIT> EmployeeLIT { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

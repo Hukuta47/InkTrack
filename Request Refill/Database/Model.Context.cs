@@ -34,6 +34,10 @@ namespace Request_Refill.Database
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
         public virtual DbSet<vCabinetPrinters> vCabinetPrinters { get; set; }
+        public virtual DbSet<CartridgeReplacement_Log> CartridgeReplacement_Log { get; set; }
+        public virtual DbSet<EmployeeLIT> EmployeeLIT { get; set; }
+        public virtual DbSet<ReasonForReplacement> ReasonForReplacement { get; set; }
+        public virtual DbSet<CartridgeModel> CartridgeModel { get; set; }
     
         public virtual ObjectResult<GetCabinetsWithPrinters_Result> GetCabinetsWithPrinters()
         {
@@ -56,6 +60,32 @@ namespace Request_Refill.Database
                 new ObjectParameter("CabinetID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPrintersInCabinet_Result>("GetPrintersInCabinet", cabinetIDParameter);
+        }
+    
+        public virtual ObjectResult<GetCompatibleCartridgesForPrinter_Result> GetCompatibleCartridgesForPrinter(Nullable<int> printerID)
+        {
+            var printerIDParameter = printerID.HasValue ?
+                new ObjectParameter("PrinterID", printerID) :
+                new ObjectParameter("PrinterID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompatibleCartridgesForPrinter_Result>("GetCompatibleCartridgesForPrinter", printerIDParameter);
+        }
+    
+        public virtual ObjectResult<InstallCartridgeToPrinter_Result> InstallCartridgeToPrinter(Nullable<int> newCartridgeID, Nullable<int> reasonID, Nullable<int> employeeLITID)
+        {
+            var newCartridgeIDParameter = newCartridgeID.HasValue ?
+                new ObjectParameter("NewCartridgeID", newCartridgeID) :
+                new ObjectParameter("NewCartridgeID", typeof(int));
+    
+            var reasonIDParameter = reasonID.HasValue ?
+                new ObjectParameter("ReasonID", reasonID) :
+                new ObjectParameter("ReasonID", typeof(int));
+    
+            var employeeLITIDParameter = employeeLITID.HasValue ?
+                new ObjectParameter("EmployeeLITID", employeeLITID) :
+                new ObjectParameter("EmployeeLITID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InstallCartridgeToPrinter_Result>("InstallCartridgeToPrinter", newCartridgeIDParameter, reasonIDParameter, employeeLITIDParameter);
         }
     }
 }

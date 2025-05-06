@@ -18,6 +18,8 @@ namespace Request_Refill.Database
         public Cartridge()
         {
             this.Printer = new HashSet<Printer>();
+            this.CartridgeReplacement_Log = new HashSet<CartridgeReplacement_Log>();
+            this.CartridgeReplacement_Log1 = new HashSet<CartridgeReplacement_Log>();
         }
     
         public int CartridgeID { get; set; }
@@ -32,5 +34,10 @@ namespace Request_Refill.Database
         public virtual CartridgeStatus CartridgeStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Printer> Printer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartridgeReplacement_Log> CartridgeReplacement_Log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartridgeReplacement_Log> CartridgeReplacement_Log1 { get; set; }
+        public virtual CartridgeModel CartridgeModel { get; set; }
     }
 }

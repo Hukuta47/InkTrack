@@ -51,5 +51,7 @@ namespace Request_Refill.Windows
         }
         private void OpenSettings_Click(object sender, RoutedEventArgs e) => new WindowSettings().ShowDialog();
         private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new WindowCreateRequestRefill().ShowDialog();
+
+        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new WindowReplaceCartridge().ShowDialog();
     }
 }
