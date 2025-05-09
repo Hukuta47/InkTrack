@@ -20,6 +20,7 @@ namespace Request_Refill.Database
         public int PrinterID { get; set; }
         public int EmployeeLitID { get; set; }
         public int ReasonID { get; set; }
+        public string Description { get; set; }
     
         public virtual Cartridge Cartridge { get; set; }
         public virtual Cartridge Cartridge1 { get; set; }

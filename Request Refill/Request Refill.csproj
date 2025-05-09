@@ -186,11 +186,11 @@
     <Compile Include="Windows\Dialog\AddPrintout.xaml.cs">
       <DependentUpon>AddPrintout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ReplaceCartridge.xaml.cs">
+      <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WindowCreateRequestRefill.xaml.cs">
       <DependentUpon>WindowCreateRequestRefill.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\WindowReplaceCartridge.xaml.cs">
-      <DependentUpon>WindowReplaceCartridge.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WindowSettings.xaml.cs">
       <DependentUpon>WindowSettings.xaml</DependentUpon>
@@ -217,10 +217,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Fonts\TeXGyreAdventor-Bold.ttf" />
-    <Resource Include="Fonts\TeXGyreAdventor-BoldItalic.ttf" />
-    <Resource Include="Fonts\TeXGyreAdventor-Italic.ttf" />
-    <Resource Include="Fonts\TeXGyreAdventor-Regular.ttf" />
     <EntityDeploy Include="Database\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -228,6 +224,7 @@
     <None Include="Database\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </None>
+    <Resource Include="Fonts\Proletarsk.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -245,11 +242,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\WindowCreateRequestRefill.xaml">
+    <Page Include="Windows\ReplaceCartridge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\WindowReplaceCartridge.xaml">
+    <Page Include="Windows\WindowCreateRequestRefill.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -311,6 +308,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\24\Help circle.png" />
+    <Resource Include="Resources\24\X.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\40\" />

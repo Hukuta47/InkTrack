@@ -68,6 +68,7 @@
           <Property Name="PrinterID" Type="int" Nullable="false" />
           <Property Name="EmployeeLitID" Type="int" Nullable="false" />
           <Property Name="ReasonID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CartridgeStatus">
           <Key>
@@ -136,7 +137,7 @@
           <Property Name="PrinterModel" Type="nvarchar" MaxLength="50" />
           <Property Name="PrinterInventoryNumber" Type="nchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK__Cabinet_D__Cabin__70DDC3D8">
+        <Association Name="FK__Cabinet_D__Cabin__6383C8BA">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
           <ReferentialConstraint>
@@ -160,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cabinet_E__Cabin__72C60C4A">
+        <Association Name="FK__Cabinet_E__Cabin__656C112C">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -355,7 +356,7 @@
     [vCabinetPrinters].[PrinterInventoryNumber] AS [PrinterInventoryNumber]
     FROM [dbo].[vCabinetPrinters] AS [vCabinetPrinters]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Cabinet_D__Cabin__70DDC3D8" Association="Self.FK__Cabinet_D__Cabin__70DDC3D8">
+          <AssociationSet Name="FK__Cabinet_D__Cabin__6383C8BA" Association="Self.FK__Cabinet_D__Cabin__6383C8BA">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
           </AssociationSet>
@@ -363,7 +364,7 @@
             <End Role="Device" EntitySet="Device" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cabinet_E__Cabin__72C60C4A" Association="Self.FK__Cabinet_E__Cabin__72C60C4A">
+          <AssociationSet Name="FK__Cabinet_E__Cabin__656C112C" Association="Self.FK__Cabinet_E__Cabin__656C112C">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
           </AssociationSet>
@@ -653,6 +654,7 @@
           <NavigationProperty Name="Cartridge1" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Cartridge1" FromRole="CartridgeReplacement_Log" ToRole="Cartridge" />
           <NavigationProperty Name="Printer" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Printer" FromRole="CartridgeReplacement_Log" ToRole="Printer" />
           <NavigationProperty Name="ReasonForReplacement" Relationship="LitDBModel.FK_CartridgeReplacement_Log_ReasonForReplacement" FromRole="CartridgeReplacement_Log" ToRole="ReasonForReplacement" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmployeeLIT">
           <Key>
@@ -898,6 +900,7 @@
           <EntitySetMapping Name="CartridgeReplacement_Log">
             <EntityTypeMapping TypeName="LitDBModel.CartridgeReplacement_Log">
               <MappingFragment StoreEntitySet="CartridgeReplacement_Log">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
                 <ScalarProperty Name="EmployeeLitID" ColumnName="EmployeeLitID" />
                 <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
