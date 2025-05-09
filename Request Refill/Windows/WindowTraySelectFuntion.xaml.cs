@@ -49,7 +49,7 @@ namespace Request_Refill.Windows
         {
             Application.Current.Shutdown();
         }
-        private void OpenSettings_Click(object sender, RoutedEventArgs e) => new WindowSettings().ShowDialog();
+        private void OpenSettings_Click(object sender, RoutedEventArgs e) => new Settings().ShowDialog();
         private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new WindowCreateRequestRefill().ShowDialog();
 
         private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().ShowDialog();

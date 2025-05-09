@@ -189,6 +189,9 @@
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WindowCreateRequestRefill.xaml.cs">
       <DependentUpon>WindowCreateRequestRefill.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ReplaceCartridge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

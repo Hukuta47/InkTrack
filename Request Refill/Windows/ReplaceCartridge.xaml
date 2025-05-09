@@ -4,7 +4,7 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Request_Refill.Windows.ReplaceCartridge"
-        Title="123123"
+        Title="Замена картриджа"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
@@ -46,7 +46,7 @@
 					<ColumnDefinition Width="auto"/>
 					<ColumnDefinition/>
 					<ColumnDefinition Width="auto"/>
-					<ColumnDefinition Width="10"/>
+					<ColumnDefinition Width="8"/>
 					<ColumnDefinition Width="auto"/>
 				</Grid.ColumnDefinitions>
 
