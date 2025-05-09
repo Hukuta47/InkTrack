@@ -26,7 +26,6 @@ namespace Request_Refill.Windows
             Combobox_CartridgeNumber.ItemsSource = App.dBEntities.GetCompatibleCartridgesForPrinter(SelectedPrinter);
             Combobox_WhoReplaced.ItemsSource = App.dBEntities.EmployeeLIT.ToList();
         }
-
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed) DragMove();

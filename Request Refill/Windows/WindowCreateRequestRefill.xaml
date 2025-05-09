@@ -10,9 +10,8 @@
 		WindowStartupLocation="CenterScreen" 
 		WindowStyle="None" 
 		Background="{x:Null}" 
-		SizeToContent="WidthAndHeight" Title="Настройки"
-		
-	xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+		SizeToContent="WidthAndHeight" Title="Настройки">
+
 	<Window.Resources>
 		<FontFamily x:Key="Proletarsk">
 			pack://application:,,,/Fonts/Proletarsk.ttf#Proletarsk

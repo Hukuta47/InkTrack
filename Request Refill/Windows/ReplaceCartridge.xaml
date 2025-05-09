@@ -90,11 +90,11 @@
 				</Grid.RowDefinitions>
 
 				<TextBlock Grid.Row="0" Text="Причина замены" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<ListBox Grid.Row="2" Name="Listbox_CauseReplaceCartridge" BorderBrush="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
+				<ListBox Grid.Row="2" Name="Listbox_CauseReplaceCartridge" BorderBrush="#FF3B62ED" DisplayMemberPath="Name" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
 				<TextBlock Grid.Row="4" Text="Картридж на замену" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<ComboBox Grid.Row="6" Name="Combobox_CartridgeNumber" BorderBrush="#FF3B62ED"  FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48"/>
+				<ComboBox Grid.Row="6" Name="Combobox_CartridgeNumber" BorderBrush="#FF3B62ED" DisplayMemberPath="CartridgeNumber" FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48"/>
 				<TextBlock Grid.Row="8" Text="Кто заменил" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<ComboBox Grid.Row="10" Name="Combobox_WhoReplaced" BorderBrush="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48"/>
+				<ComboBox Grid.Row="10" Name="Combobox_WhoReplaced" BorderBrush="#FF3B62ED" DisplayMemberPath="Employee.FIO" FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48"/>
 				<TextBlock Grid.Row="12" Text="Комментарий" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
 				<TextBox Grid.Row="14" Name="Textbox_Description" BorderBrush="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
 
