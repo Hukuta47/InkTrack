@@ -1,0 +1,75 @@
+﻿<Window x:Class="Request_Refill.Windows.Dialog.PrintoutInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Request_Refill.Windows.Dialog"
+        mc:Ignorable="d"
+        Title="PrintoutInfo"
+		WindowStyle="None"
+		AllowsTransparency="True"
+		Background="Transparent"
+		WindowStartupLocation="CenterScreen" 
+		SizeToContent="WidthAndHeight"
+		ResizeMode="NoResize">
+	<Window.Resources>
+		<FontFamily x:Key="Proletarsk">
+			pack://application:,,,/Fonts/Proletarsk.ttf#Proletarsk
+		</FontFamily>
+	</Window.Resources>
+
+	<Border Background="White" CornerRadius="20" Width="438" Height="444" Margin="20,20,20,30">
+		<Border.Effect>
+			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
+		</Border.Effect>
+
+
+
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition Height="76"/>
+			</Grid.RowDefinitions>
+
+			<StackPanel Grid.Row="0" Margin="32">
+
+				<StackPanel>
+					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Название документа"/>
+					<Rectangle Height="8"/>
+					<TextBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Textbox_NameDocument" BorderBrush="#FF3B62ED"/>
+				</StackPanel>
+				
+				<Rectangle Height="16"/>
+				
+				<StackPanel>
+					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Количество страниц" />
+					<Rectangle Height="8"/>
+					<TextBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Textbox_CountPages" BorderBrush="#FF3B62ED"/>
+				</StackPanel>
+
+				<Rectangle Height="16"/>
+				
+				<StackPanel>
+					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Дата печати"/>
+					<Rectangle Height="8"/>
+					<DatePicker FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="DatePicker_date" BorderBrush="#FF3B62ED"/>
+				</StackPanel>
+
+			</StackPanel>
+
+			<Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="8"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+				<Button Grid.Column="0" Content="*text*" FontFamily="{StaticResource Proletarsk}" Background="#FF3BED62" Width="207" Height="60" FontSize="24" Click="Accept_Click" Name="Button_Accept"/>
+				<Button Grid.Column="2" Content="Отмена" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="207" Height="60" FontSize="24" Click="Cancel_Click" Foreground="white"/>
+
+			</Grid>
+
+		</Grid>
+
+	</Border>
+</Window>

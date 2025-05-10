@@ -11,12 +11,7 @@ using Request_Refill.Database;
 using System.Windows.Input;
 
 namespace Request_Refill.Windows
-{
-    /// <summary>
-    /// Логика взаимодействия для CreateRequestRefill.xaml
-    /// </summary>
-    
-
+{ 
     public partial class CreateRequestRefill : Window
     {
         List<PrintoutData> listOfPrintedDocuments = new List<PrintoutData>();
@@ -56,7 +51,7 @@ namespace Request_Refill.Windows
         private void CreatePrintoutData_Click(object sender, RoutedEventArgs e)
         {
 
-            DataWindowPrintout DialogAddPrintout = new DataWindowPrintout();
+            PrintoutInfo DialogAddPrintout = new PrintoutInfo();
 
             if (DialogAddPrintout.ShowDialog() == true)
             {
@@ -94,7 +89,7 @@ namespace Request_Refill.Windows
 
         private void ChangePrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            DataWindowPrintout DialogAddPrintout = new DataWindowPrintout(DataGridListOfPrintedDocument.SelectedItem as PrintoutData);
+            PrintoutInfo DialogAddPrintout = new PrintoutInfo(DataGridListOfPrintedDocument.SelectedItem as PrintoutData);
 
             if (DialogAddPrintout.ShowDialog() == true)
             {

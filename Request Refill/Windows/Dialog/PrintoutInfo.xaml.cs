@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Request_Refill.Windows.Dialog
 {
-    public partial class DataWindowPrintout : Window
+    public partial class PrintoutInfo : Window
     {
         public PrintoutData printoutData;
 
@@ -15,24 +15,24 @@ namespace Request_Refill.Windows.Dialog
         DateTime? MinDateSelect = App.dBEntities.Printer.First(p => p.PrinterID == App.programData.SelectedPrinterID).CartridgeReplacementDate;
         bool isChange;
 
-
-        public DataWindowPrintout()
+        public PrintoutInfo()
         {
-            InitializeComponent();
-            Button_AddPrintoutData.Content = "Добавить";
+            InitializeComponent();  
+            Button_Accept.Content = "Добавить";
         }
-        public DataWindowPrintout(PrintoutData printoutData)
+        public PrintoutInfo(PrintoutData printoutData)
         {
             InitializeComponent();
             this.printoutData = printoutData;
             isChange = true;
 
-            Button_AddPrintoutData.Content = "Сохранить";
+            Button_Accept.Content = "Сохранить";
             Textbox_NameDocument.Text = printoutData.NameDocument;
             Textbox_CountPages.Text = printoutData.CountPages.ToString();
             DatePicker_date.SelectedDate = printoutData.Date;
         }
-        private void AddPrintoutData_Click(object sender, RoutedEventArgs e)
+
+        private void Accept_Click(object sender, RoutedEventArgs e)
         {
             switch (isChange)
             {
@@ -62,10 +62,7 @@ namespace Request_Refill.Windows.Dialog
 
                     break;
             }
-            
-
         }
-
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -117,6 +114,5 @@ namespace Request_Refill.Windows.Dialog
 
             return true;
         }
-
     }
 }

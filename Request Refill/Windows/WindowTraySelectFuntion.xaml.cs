@@ -7,14 +7,9 @@ namespace Request_Refill.Windows
 {
     public partial class WindowTraySelectFuntion : Window
     {
-        private static WindowTraySelectFuntion _currentInstance;
         public WindowTraySelectFuntion()
         {
-            
-
             InitializeComponent();
-
-
 
             this.SourceInitialized += (s, e) =>
             {
@@ -24,16 +19,21 @@ namespace Request_Refill.Windows
             };
 
         }
-
-
-        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) => Close();
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
+            Deactivated -= Window_Deactivated;
             Application.Current.Shutdown();
         }
-        private void OpenSettings_Click(object sender, RoutedEventArgs e) => new Settings().ShowDialog();
-        private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new CreateRequestRefill().ShowDialog();
+        private void OpenSettings_Click(object sender, RoutedEventArgs e) => new Settings().Show();
+        private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new CreateRequestRefill().Show();
 
-        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().ShowDialog();
+        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().Show();
+
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            
+            Close();
+        }
     }
 }

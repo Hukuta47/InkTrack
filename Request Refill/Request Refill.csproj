@@ -186,20 +186,14 @@
     <Compile Include="Windows\CreateRequestRefill.xaml.cs">
       <DependentUpon>CreateRequestRefill.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Dialog\AddPrintout.xaml.cs">
-      <DependentUpon>AddPrintout.xaml</DependentUpon>
+    <Compile Include="Windows\Dialog\PrintoutInfo.xaml.cs">
+      <DependentUpon>PrintoutInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\WindowCreateRequestRefill.xaml.cs">
-      <DependentUpon>WindowCreateRequestRefill.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\WindowSettings.xaml.cs">
-      <DependentUpon>WindowSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WindowTraySelectFuntion.xaml.cs">
       <DependentUpon>WindowTraySelectFuntion.xaml</DependentUpon>
@@ -248,7 +242,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Dialog\AddPrintout.xaml">
+    <Page Include="Windows\Dialog\PrintoutInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -257,14 +251,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\WindowCreateRequestRefill.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\WindowSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
