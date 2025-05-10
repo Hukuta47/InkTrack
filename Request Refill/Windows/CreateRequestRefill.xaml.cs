@@ -9,6 +9,9 @@ using System.Windows;
 using System.Linq;
 using Request_Refill.Database;
 using System.Windows.Input;
+using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text;
 
 namespace Request_Refill.Windows
 { 
@@ -24,7 +27,7 @@ namespace Request_Refill.Windows
 
 
             Random rnd = new Random();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 20; i++)
             {
                 listOfPrintedDocuments.Add(new PrintoutData
                 {
@@ -41,6 +44,10 @@ namespace Request_Refill.Windows
                 SumPagesPrintouts += printoutData.CountPages;
             }
             Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
+        }
+        public CreateRequestRefill(List<PrintoutData> listOfPrintedDocumentsLoad)
+        {
+
         }
         private void CloseWindow_Click(object sender, RoutedEventArgs e) => Close();
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
@@ -144,8 +151,25 @@ namespace Request_Refill.Windows
         public static void GenerateTimesheet(List<PrintoutData> listOfPrintedDocuments)
         {
             // Create document with A4 size and margins (approximately 2-3cm)
-            Document document = new Document(PageSize.A4, 56, 56, 36, 36);
-            PdfWriter.GetInstance(document, new FileStream("timesheet.pdf", FileMode.Create));
+            Document document = new Document(PageSize.A4);
+
+            string pathToDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string pathToCreateFolder = Path.Combine(pathToDesktop, $"Заявка на заправку картриджа от {DateTime.Now.ToShortDateString()}");
+            Directory.CreateDirectory(pathToCreateFolder);
+            string pathToSavePdf = Path.Combine(pathToCreateFolder, $"Заявка на заправку картриджа.pdf");
+
+
+            string pathToSaveRr = Path.Combine(pathToCreateFolder, $"Заявка на заправку картриджа.rr");
+            string JsonData = JsonConvert.SerializeObject(listOfPrintedDocuments, Formatting.Indented);
+            string binaryData = BitConverter.ToString(Encoding.UTF8.GetBytes(JsonData));
+            File.WriteAllText(pathToSaveRr, binaryData);
+
+
+
+
+
+
+            PdfWriter.GetInstance(document, new FileStream(pathToSavePdf, FileMode.Create));
             document.Open();
 
             // Define font with Cyrillic support

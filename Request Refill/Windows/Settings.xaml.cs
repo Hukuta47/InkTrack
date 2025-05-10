@@ -1,20 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Request_Refill.Classes;
 using Request_Refill.Database;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Request_Refill.Windows
 {
@@ -77,13 +68,11 @@ namespace Request_Refill.Windows
         {
             App.programData = new ProgramData()
             {
-                SelectedCabinetID = (ComboboxCabinetSelect.SelectedItem as GetCabinetsWithPrinters_Result).CabinetID,
-                SelectedEmployeeID = (ComboboxFromWhoDefaultSelect.SelectedItem as GetEmployeesInCabinet_Result).EmployeeID,
-                SelectedPrinterID = (ComboboxPrinterDefaultSelect.SelectedItem as GetPrintersInCabinet_Result).PrinterID,
+                SelectedCabinetID = (int)ComboboxCabinetSelect.SelectedValue,
+                SelectedEmployeeID = (int)ComboboxFromWhoDefaultSelect.SelectedValue,
+                SelectedPrinterID = (int)ComboboxPrinterDefaultSelect.SelectedValue,
             };
-
             string JsonData = JsonConvert.SerializeObject(App.programData, Formatting.Indented);
-
             File.WriteAllText(App.pathJsonSettingsFile, JsonData);
         }
     }
