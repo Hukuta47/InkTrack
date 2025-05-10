@@ -63,7 +63,7 @@
 				</Grid.RowDefinitions>
 
 
-				<DataGrid Grid.Row="0" FontFamily="{StaticResource Proletarsk}" FontSize="16" Name="DataGridListOfPrintedDocument" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Center" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" SelectionMode="Extended">
+				<DataGrid Grid.Row="0" FontFamily="{StaticResource Proletarsk}" FontSize="16" Name="DataGrid_ListOfPrintedDocument" SelectionChanged="DataGridListOfPrintedDocument_SelectionChanged" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Center" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" SelectionMode="Extended">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="№" Binding="{Binding Number}" Width="33" />
 						<DataGridTextColumn Header="Название" Binding="{Binding NameDocument}" Width="511"/>
@@ -91,9 +91,10 @@
 
 				<Button Content="Сохранить" FontFamily="{StaticResource Proletarsk}" Background="#FF3BED62" Width="207" Height="60" FontSize="24" Click="SaveRequestRefill_Click"/>
 				<Rectangle Width="8"/>
-				<Button Content="Удалить" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="172" Height="60" FontSize="24" Click="DeletePrintoutData_Click" Foreground="white"/>
-				<Rectangle Width="8"/>
-				<Button Content="Изменить" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="187" Height="60" FontSize="24" Click="ChangePrintoutData_Click" Foreground="white"/>
+				<StackPanel Width="367" Orientation="Horizontal" FlowDirection="RightToLeft">
+					<Button Content="Изменить" Visibility="Visible" Name="Button_Change" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="187" Height="60" FontSize="24" Click="ChangePrintoutData_Click" Foreground="white" Margin="0,0,8,0"/>
+					<Button Content="Удалить" Visibility="Visible" Name="Button_Delete" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="172" Height="60" FontSize="24" Click="DeletePrintoutData_Click" Foreground="white" />
+				</StackPanel>
 				<Rectangle Width="8"/>
 				<Button Content="Добавить запись" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="287" Height="60" FontSize="24" Click="CreatePrintoutData_Click" Foreground="white"/>
 

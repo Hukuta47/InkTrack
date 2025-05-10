@@ -20,7 +20,7 @@ namespace Request_Refill.Windows
         {
             InitializeComponent();
 
-            DataGridListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
+            DataGrid_ListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
 
 
             Random rnd = new Random();
@@ -57,7 +57,7 @@ namespace Request_Refill.Windows
             {
                 DialogAddPrintout.printoutData.Number = listOfPrintedDocuments.Count + 1;
                 listOfPrintedDocuments.Add(DialogAddPrintout.printoutData);
-                DataGridListOfPrintedDocument.Items.Refresh();
+                DataGrid_ListOfPrintedDocument.Items.Refresh();
             }
 
             SumPagesPrintouts = 0;
@@ -70,13 +70,23 @@ namespace Request_Refill.Windows
 
         private void DeletePrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            listOfPrintedDocuments.Remove(DataGridListOfPrintedDocument.SelectedItem as PrintoutData);
+            if (DataGrid_ListOfPrintedDocument.SelectedItems.Count == 1)
+            {
+                listOfPrintedDocuments.Remove(DataGrid_ListOfPrintedDocument.SelectedItem as PrintoutData);
+            }
+            else
+            {
+                foreach (PrintoutData data in DataGrid_ListOfPrintedDocument.SelectedItems)
+                {
+                    listOfPrintedDocuments.Remove(data);
+                }
+            }
 
             for (int i = 1; i < listOfPrintedDocuments.Count + 1; i++)
             {
                 listOfPrintedDocuments[i - 1].Number = i;
             }
-            DataGridListOfPrintedDocument.Items.Refresh();
+            DataGrid_ListOfPrintedDocument.Items.Refresh();
 
 
             SumPagesPrintouts = 0;
@@ -89,12 +99,12 @@ namespace Request_Refill.Windows
 
         private void ChangePrintoutData_Click(object sender, RoutedEventArgs e)
         {
-            PrintoutInfo DialogAddPrintout = new PrintoutInfo(DataGridListOfPrintedDocument.SelectedItem as PrintoutData);
+            PrintoutInfo DialogAddPrintout = new PrintoutInfo(DataGrid_ListOfPrintedDocument.SelectedItem as PrintoutData);
 
             if (DialogAddPrintout.ShowDialog() == true)
             {
-                listOfPrintedDocuments[DataGridListOfPrintedDocument.SelectedIndex] = DialogAddPrintout.printoutData;
-                DataGridListOfPrintedDocument.Items.Refresh();
+                listOfPrintedDocuments[DataGrid_ListOfPrintedDocument.SelectedIndex] = DialogAddPrintout.printoutData;
+                DataGrid_ListOfPrintedDocument.Items.Refresh();
             }
 
             SumPagesPrintouts = 0;
@@ -111,6 +121,25 @@ namespace Request_Refill.Windows
             Cartridge cartridge = App.dBEntities.Printer.First(printer => printer.PrinterID == App.programData.SelectedPrinterID).Cartridge;
             cartridge.Capacity = SumPagesPrintouts;
             App.dBEntities.SaveChanges();
+        }
+
+        private void DataGridListOfPrintedDocument_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (DataGrid_ListOfPrintedDocument.SelectedItems.Count == 1)
+            {
+                Button_Change.Visibility = Visibility.Visible;
+                Button_Delete.Visibility = Visibility.Visible;
+            }
+            else if (DataGrid_ListOfPrintedDocument.SelectedItems.Count > 1)
+            {
+                Button_Change.Visibility = Visibility.Collapsed;
+                Button_Delete.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Button_Change.Visibility = Visibility.Collapsed;
+                Button_Delete.Visibility = Visibility.Collapsed;
+            }
         }
         public static void GenerateTimesheet(List<PrintoutData> listOfPrintedDocuments)
         {
