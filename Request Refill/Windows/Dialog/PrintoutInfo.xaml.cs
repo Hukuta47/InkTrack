@@ -1,4 +1,5 @@
-﻿using Request_Refill.Classes;
+﻿using Newtonsoft.Json;
+using Request_Refill.Classes;
 using System;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Request_Refill.Windows.Dialog
         {
             InitializeComponent();  
             Button_Accept.Content = "Добавить";
+
         }
         public PrintoutInfo(PrintoutData printoutData)
         {

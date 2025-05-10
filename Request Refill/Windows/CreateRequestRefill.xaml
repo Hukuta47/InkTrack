@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Request_Refill.Windows"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:Request_Refill.Windows" 
+		xmlns:system="clr-namespace:System;assembly=mscorlib" 
+		xmlns:conv="clr-namespace:Request_Refill.Classes"
+		mc:Ignorable="d"
         Title="Создание заявки на заправку"
 		WindowStyle="None"
 		AllowsTransparency="True"
@@ -89,11 +91,24 @@
 			<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="8">
 
 
-				<Button Content="Сохранить" FontFamily="{StaticResource Proletarsk}" Background="#FF3BED62" Width="207" Height="60" FontSize="24" Click="SaveRequestRefill_Click"/>
+				<Button Content="Сохранить" Name="Button_Accept" FontFamily="{StaticResource Proletarsk}" Background="#FF3BED62" Width="207" Height="60" FontSize="24" Click="SaveRequestRefill_Click">
+					<Button.Style>
+						<Style TargetType="Button">
+							<!-- по умолчанию кнопка неактивна -->
+							<Setter Property="IsEnabled" Value="True"/>
+							<Style.Triggers>
+								<!-- когда в DataGrid есть хоть один элемент — включаем кнопку -->
+								<DataTrigger Binding="{Binding ElementName=DataGrid_ListOfPrintedDocument, Path=HasItems}" Value="True">
+									<Setter Property="IsEnabled" Value="True"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+				</Button>				
 				<Rectangle Width="8"/>
 				<StackPanel Width="367" Orientation="Horizontal" FlowDirection="RightToLeft">
-					<Button Content="Изменить" Visibility="Visible" Name="Button_Change" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="187" Height="60" FontSize="24" Click="ChangePrintoutData_Click" Foreground="white" Margin="0,0,8,0"/>
-					<Button Content="Удалить" Visibility="Visible" Name="Button_Delete" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="172" Height="60" FontSize="24" Click="DeletePrintoutData_Click" Foreground="white" />
+					<Button Content="Изменить" Visibility="Collapsed" Name="Button_Change" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="187" Height="60" FontSize="24" Click="ChangePrintoutData_Click" Foreground="white" Margin="0,0,8,0"/>
+					<Button Content="Удалить" Visibility="Collapsed" Name="Button_Delete" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="172" Height="60" FontSize="24" Click="DeletePrintoutData_Click" Foreground="white" />
 				</StackPanel>
 				<Rectangle Width="8"/>
 				<Button Content="Добавить запись" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="287" Height="60" FontSize="24" Click="CreatePrintoutData_Click" Foreground="white"/>

@@ -23,41 +23,79 @@ namespace Request_Refill
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            pathApplication = Path.Combine(pathToAppData, "Request Refill");
-            
-            if (Directory.Exists(pathApplication))
+            if (e.Args.Length > 0)
             {
-                pathJsonSettingsFile = Path.Combine(pathApplication, "Config.json");
-                string JsonImportData = File.ReadAllText(pathJsonSettingsFile);
-                programData = JsonConvert.DeserializeObject<ProgramData>(JsonImportData);
+                ShutdownMode = ShutdownMode.OnLastWindowClose;
+                string filePath = e.Args[0];
+
+                if (File.Exists(filePath) && Path.GetExtension(filePath).Equals(".rr", StringComparison.OrdinalIgnoreCase))
+                {
+                    string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    pathApplication = Path.Combine(pathToAppData, "Request Refill");
+
+                    if (Directory.Exists(pathApplication))
+                    {
+                        pathJsonSettingsFile = Path.Combine(pathApplication, "Config.json");
+                        string JsonImportData = File.ReadAllText(pathJsonSettingsFile);
+                        programData = JsonConvert.DeserializeObject<ProgramData>(JsonImportData);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(pathApplication);
+                        string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
+                        string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
+                        pathJsonSettingsFile = CreateConfigFilePath;
+                        File.WriteAllText(CreateConfigFilePath, JsonData);
+                    }
+                    new CreateRequestRefill(filePath).Show();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show(
+                        "Неподдерживаемый формат файла.\n" +
+                        "Поддерживается только .rr файлы.",
+                        "Ошибка",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                    Shutdown();
+                }
             }
             else
             {
-                Directory.CreateDirectory(pathApplication);
-                string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
-                string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
-                pathJsonSettingsFile = CreateConfigFilePath;
-                File.WriteAllText(CreateConfigFilePath, JsonData);
-            }
+                ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                pathApplication = Path.Combine(pathToAppData, "Request Refill");
 
+                if (Directory.Exists(pathApplication))
+                {
+                    pathJsonSettingsFile = Path.Combine(pathApplication, "Config.json");
+                    string JsonImportData = File.ReadAllText(pathJsonSettingsFile);
+                    programData = JsonConvert.DeserializeObject<ProgramData>(JsonImportData);
+                }
+                else
+                {
+                    Directory.CreateDirectory(pathApplication);
+                    string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
+                    string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
+                    pathJsonSettingsFile = CreateConfigFilePath;
+                    File.WriteAllText(CreateConfigFilePath, JsonData);
+                }
+                // Создаем иконку в трее
+                notifyIcon = new NotifyIcon();
+                notifyIcon.MouseClick += NotifyIcon_MouseClick;
+                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                {
+                    notifyIcon.Icon = SelectIcon("16/IconB.ico");
+                }
+                else
+                {
+                    notifyIcon.Icon = SelectIcon("16/IconW.ico");
+                }
 
-
-            // Создаем иконку в трее
-            notifyIcon = new NotifyIcon();
-            notifyIcon.MouseClick += NotifyIcon_MouseClick;
-            if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-            {
-                notifyIcon.Icon = SelectIcon("16/IconB.ico");
+                notifyIcon.Visible = true;
             }
-            else
-            {
-                notifyIcon.Icon = SelectIcon("16/IconW.ico");
-            }
-                
-            notifyIcon.Visible = true;
 
         }
 
@@ -66,9 +104,9 @@ namespace Request_Refill
 
         protected override void OnExit(ExitEventArgs e)
         {
-            notifyIcon.Dispose(); // Очищаем ресурсы
+            if (notifyIcon != null) notifyIcon.Dispose();
 
-            if (programData == null)
+            if (programData == null && pathApplication != null)
             {
                 Directory.Delete(pathApplication, true);
             }

@@ -10,7 +10,6 @@ using System.Linq;
 using Request_Refill.Database;
 using System.Windows.Input;
 using Newtonsoft.Json;
-using static System.Net.Mime.MediaTypeNames;
 using System.Text;
 
 namespace Request_Refill.Windows
@@ -22,7 +21,7 @@ namespace Request_Refill.Windows
         public CreateRequestRefill()
         {
             InitializeComponent();
-
+            
             DataGrid_ListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
 
 
@@ -44,9 +43,35 @@ namespace Request_Refill.Windows
                 SumPagesPrintouts += printoutData.CountPages;
             }
             Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
+
+
+            if (listOfPrintedDocuments.Count > 0)
+            {
+                Button_Accept.IsEnabled = true;
+            }
+            else
+            {
+                Button_Accept.IsEnabled = false;
+            }
         }
-        public CreateRequestRefill(List<PrintoutData> listOfPrintedDocumentsLoad)
+        public CreateRequestRefill(string pathFile)
         {
+            string readData = File.ReadAllText(pathFile);
+            
+            byte[] bytes = readData.Split('-').Select(h => Convert.ToByte(h, 16)).ToArray();
+
+            string decodedJson = Encoding.UTF8.GetString(bytes);
+
+            InitializeComponent();
+            listOfPrintedDocuments = JsonConvert.DeserializeObject<List<PrintoutData>>(decodedJson);
+            DataGrid_ListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
+
+            SumPagesPrintouts = 0;
+            foreach (PrintoutData printoutData in listOfPrintedDocuments)
+            {
+                SumPagesPrintouts += printoutData.CountPages;
+            }
+            Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
 
         }
         private void CloseWindow_Click(object sender, RoutedEventArgs e) => Close();
@@ -73,6 +98,8 @@ namespace Request_Refill.Windows
                 SumPagesPrintouts += printoutData.CountPages;
             }
             Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
+
+            Button_Accept.IsEnabled = true;
         }
 
         private void DeletePrintoutData_Click(object sender, RoutedEventArgs e)
@@ -102,6 +129,15 @@ namespace Request_Refill.Windows
                 SumPagesPrintouts += printoutData.CountPages;
             }
             Textblock_SumPagesPrintouts.Text = SumPagesPrintouts.ToString();
+
+            if (listOfPrintedDocuments.Count > 0)
+            {
+                Button_Accept.IsEnabled = true;
+            }
+            else
+            {
+                Button_Accept.IsEnabled = false;
+            }
         }
 
         private void ChangePrintoutData_Click(object sender, RoutedEventArgs e)
@@ -152,6 +188,7 @@ namespace Request_Refill.Windows
         {
             // Create document with A4 size and margins (approximately 2-3cm)
             Document document = new Document(PageSize.A4);
+
 
             string pathToDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string pathToCreateFolder = Path.Combine(pathToDesktop, $"Заявка на заправку картриджа от {DateTime.Now.ToShortDateString()}");
