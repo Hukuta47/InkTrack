@@ -5,9 +5,6 @@ using System.Windows;
 
 namespace Request_Refill.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowTraySelectFuntion.xaml
-    /// </summary>
     public partial class WindowTraySelectFuntion : Window
     {
         private static WindowTraySelectFuntion _currentInstance;
@@ -25,22 +22,7 @@ namespace Request_Refill.Windows
                 this.Left = workingArea.Right - this.Width + 8;
                 this.Top = workingArea.Bottom - this.Height + 18;
             };
-            this.Closing += (s, e) => _currentInstance = null;
 
-        }
-        public new bool? ShowDialog()
-        {
-            if (_currentInstance != null)
-            {
-                if (_currentInstance.WindowState == WindowState.Minimized)
-                    _currentInstance.WindowState = WindowState.Normal;
-
-                _currentInstance.Activate();
-                return false;
-            }
-
-            _currentInstance = this;
-            return base.ShowDialog();
         }
 
 
@@ -50,7 +32,7 @@ namespace Request_Refill.Windows
             Application.Current.Shutdown();
         }
         private void OpenSettings_Click(object sender, RoutedEventArgs e) => new Settings().ShowDialog();
-        private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new WindowCreateRequestRefill().ShowDialog();
+        private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new CreateRequestRefill().ShowDialog();
 
         private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().ShowDialog();
     }

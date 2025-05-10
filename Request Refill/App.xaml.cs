@@ -65,7 +65,7 @@ namespace Request_Refill
 
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            new WindowTraySelectFuntion().ShowDialog();
+            new WindowTraySelectFuntion().Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -86,7 +86,7 @@
 				</Grid.ColumnDefinitions>
 
 				<Button Grid.Column="0" Content="Сохранить" FontFamily="{StaticResource Proletarsk}" Background="#FF3BED62" Width="207" Height="60" FontSize="24" Click="Save_Click"/>
-				<Button Grid.Column="2" Content="Отмена" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="207" Height="60" FontSize="24" Click="Cancel_Click"/>
+				<Button Grid.Column="2" Content="Отмена" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="207" Height="60" FontSize="24" Click="Cancel_Click" Foreground="white"/>
 
 			</Grid>
 
