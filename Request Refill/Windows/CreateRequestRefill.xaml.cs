@@ -11,6 +11,7 @@ using Request_Refill.Database;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using System.Text;
+using System.Diagnostics;
 
 namespace Request_Refill.Windows
 { 
@@ -160,7 +161,7 @@ namespace Request_Refill.Windows
 
         private void SaveRequestRefill_Click(object sender, RoutedEventArgs e)
         {
-            GenerateTimesheet(listOfPrintedDocuments);
+            GenerateFiles(listOfPrintedDocuments);
             Cartridge cartridge = App.dBEntities.Printer.First(printer => printer.PrinterID == App.programData.SelectedPrinterID).Cartridge;
             cartridge.Capacity = SumPagesPrintouts;
             App.dBEntities.SaveChanges();
@@ -184,7 +185,7 @@ namespace Request_Refill.Windows
                 Button_Delete.Visibility = Visibility.Collapsed;
             }
         }
-        public static void GenerateTimesheet(List<PrintoutData> listOfPrintedDocuments)
+        public static void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
         {
             // Create document with A4 size and margins (approximately 2-3cm)
             Document document = new Document(PageSize.A4);
@@ -221,7 +222,7 @@ namespace Request_Refill.Windows
             Paragraph header = new Paragraph();
             header.Alignment = Element.ALIGN_LEFT;
             header.SpacingAfter = 10f;
-            header.IndentationLeft = 300;
+            header.IndentationLeft = 325;
             Phrase headerPhrase = new Phrase($"Директору ГАПОУ\n«Забайкальский горный колледж имени И.М. Агошкова»\nН.В. Зыкову\nот {App.dBEntities.Employee.First(employee => employee.EmployeeID == App.programData.SelectedEmployeeID).FIO}", regularFont);
             headerPhrase.Leading = 1; // Высота строки = размер шрифта (12)
             header.Add(headerPhrase);
@@ -232,8 +233,16 @@ namespace Request_Refill.Windows
             title.SpacingAfter = 10f;
             document.Add(title);
 
+
+
+            int CartridgeIDInstalled = App.dBEntities.Printer.First(printer => printer.PrinterID == App.programData.SelectedPrinterID).Cartridge.CartridgeID;
+            string NumberCartridge = App.dBEntities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;
+            string PrinterName = App.dBEntities.GetPrintersInCabinet(App.programData.SelectedCabinetID).First(printer => printer.PrinterID == App.programData.SelectedPrinterID).PrinterInfo;
+            string CabinetName = App.dBEntities.vCabinetPrinters.First(cabinet => cabinet.CabinetID == App.programData.SelectedCabinetID).CabinetName;
+
+
             Paragraph request = new Paragraph(
-                "Прошу произвести заправку картриджа №0054 для принтера HP LaserJet PRO M132nw в кабинете 204",
+                $"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}",
                 regularFont
             );
             request.Alignment = Element.ALIGN_CENTER;
@@ -243,7 +252,7 @@ namespace Request_Refill.Windows
             // Table Section
             PdfPTable table = new PdfPTable(4);
             table.WidthPercentage = 100;
-            table.SetWidths(new float[] { 10, 50, 20, 20 }); // Proportional column widths
+            table.SetWidths(new float[] { 4, 50, 10, 20 }); // Proportional column widths
 
             // Header Row
             string[] headers = { "№", "Наименование документов", "Дата", "Количество страниц" };
@@ -265,26 +274,29 @@ namespace Request_Refill.Windows
 
             // Total Row
             int totalPages = listOfPrintedDocuments.Sum(x => x.CountPages);
-            PdfPCell totalLabel = new PdfPCell(new Phrase("Итого:", boldFont));
+            PdfPCell totalLabel = new PdfPCell(new Phrase("Итого:", regularFont));
             totalLabel.Colspan = 3;
-            totalLabel.HorizontalAlignment = Element.ALIGN_RIGHT;
-            totalLabel.BackgroundColor = BaseColor.LIGHT_GRAY;
+            totalLabel.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(totalLabel);
 
-            PdfPCell totalValue = new PdfPCell(new Phrase(totalPages.ToString(), boldFont));
+            PdfPCell totalValue = new PdfPCell(new Phrase(totalPages.ToString(), regularFont));
             totalValue.HorizontalAlignment = Element.ALIGN_CENTER;
-            totalValue.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(totalValue);
 
             document.Add(table);
 
             // Footer Section
-            Paragraph footer = new Paragraph("<30> Апрель 2025г.\n\nподпись", regularFont);
-            footer.Alignment = Element.ALIGN_LEFT;
+
+            Paragraph footer = new Paragraph($"{DateTime.Now.ToLongDateString()}\n________________\nподпись", regularFont);
+            footer.IndentationLeft = 400;
+            footer.Alignment = Element.ALIGN_CENTER;
             footer.SpacingBefore = 20f;
             document.Add(footer);
 
+
             document.Close();
+
+            Process.Start(new ProcessStartInfo(pathToSavePdf) { UseShellExecute = true });
         }
     }
 }
