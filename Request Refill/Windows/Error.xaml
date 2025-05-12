@@ -1,0 +1,21 @@
+﻿<Window x:Class="Request_Refill.Windows.Error"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Request_Refill.Windows"
+        mc:Ignorable="d"
+        Title="Ошибка" Height="300" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+	<Grid Margin="10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Text="Произошла ошибка:" FontWeight="Bold"/>
+		<TextBox Grid.Row="1" Margin="0 5" Text="{Binding ErrorMessage}" 
+                 IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
+		<Button Grid.Row="2" Content="Закрыть" Width="100" HorizontalAlignment="Right" Click="CloseButton_Click"/>
+	</Grid>
+</Window>
