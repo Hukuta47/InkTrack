@@ -184,6 +184,15 @@
     <Compile Include="Database\vCabinetPrinters.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SetupWizardSettings_Page1.xaml.cs">
+      <DependentUpon>SetupWizardSettings_Page1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SetupWizardSettings_Page2.xaml.cs">
+      <DependentUpon>SetupWizardSettings_Page2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SetupWizardSettings_Page3.xaml.cs">
+      <DependentUpon>SetupWizardSettings_Page3.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreateRequestRefill.xaml.cs">
       <DependentUpon>CreateRequestRefill.xaml</DependentUpon>
     </Compile>
@@ -192,6 +201,9 @@
     </Compile>
     <Compile Include="Windows\Error.xaml.cs">
       <DependentUpon>Error.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SetupWizardSettings.xaml.cs">
+      <DependentUpon>SetupWizardSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
@@ -243,6 +255,18 @@
     <Resource Include="Resources\32\X.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Pages\SetupWizardSettings_Page1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SetupWizardSettings_Page2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SetupWizardSettings_Page3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CreateRequestRefill.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -252,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Error.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SetupWizardSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
