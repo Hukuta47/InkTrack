@@ -238,7 +238,7 @@ namespace Request_Refill.Windows
             int CartridgeIDInstalled = App.dBEntities.Printer.First(printer => printer.PrinterID == App.programData.SelectedPrinterID).Cartridge.CartridgeID;
             string NumberCartridge = App.dBEntities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;
             string PrinterName = App.dBEntities.GetPrintersInCabinet(App.programData.SelectedCabinetID).First(printer => printer.PrinterID == App.programData.SelectedPrinterID).PrinterInfo;
-            string CabinetName = App.dBEntities.vCabinetPrinters.First(cabinet => cabinet.CabinetID == App.programData.SelectedCabinetID).CabinetName;
+            string CabinetName = App.dBEntities.Cabinet.First(cabinet => cabinet.CabinetID == App.programData.SelectedCabinetID).CabinetName;
 
 
             Paragraph request = new Paragraph(

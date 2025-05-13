@@ -57,6 +57,8 @@ namespace Request_Refill
                     }
                     else
                     {
+                        new SetupWizardSettings().Show();
+
                         Directory.CreateDirectory(pathApplication);
                         string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
                         string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
@@ -119,7 +121,7 @@ namespace Request_Refill
 
         protected override void OnExit(ExitEventArgs e)
         {
-            if (notifyIcon != null) notifyIcon.Dispose();
+            notifyIcon?.Dispose();
 
             if (programData == null && pathApplication != null)
             {

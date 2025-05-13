@@ -13,14 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Request_Refill.Pages
+namespace Request_Refill.SetupWizardSettingsPages
 {
-    /// <summary>
-    /// Логика взаимодействия для FirstSetupSettings_Page1.xaml
-    /// </summary>
-    public partial class SetupWizardSettings_Page1 : Page
+    public partial class SetupWizardSettings_Page3 : Page
     {
-        public SetupWizardSettings_Page1()
+        public SetupWizardSettings_Page3()
         {
             InitializeComponent();
         }

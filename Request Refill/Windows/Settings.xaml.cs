@@ -47,11 +47,11 @@ namespace Request_Refill.Windows
 
             ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID);
             ComboboxFromWhoDefaultSelect.SelectedIndex = 0;
-            ComboboxFromWhoDefaultSelect.IsEnabled = CountEmployees == 1 ? false : true;
+            ComboboxFromWhoDefaultSelect.IsEnabled = CountEmployees != 1;
 
             ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID);
             ComboboxPrinterDefaultSelect.SelectedIndex = 0;
-            ComboboxPrinterDefaultSelect.IsEnabled = CountPrinters == 1 ? false : true;
+            ComboboxPrinterDefaultSelect.IsEnabled = CountPrinters != 1;
         }
 
 

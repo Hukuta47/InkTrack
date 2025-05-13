@@ -123,20 +123,6 @@
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "LitDB.dbo.vCabinetPrinters" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
-        <EntityType Name="vCabinetPrinters">
-          <Key>
-            <PropertyRef Name="CabinetID" />
-            <PropertyRef Name="CabinetName" />
-            <PropertyRef Name="BuildingName" />
-            <PropertyRef Name="PrinterDeviceID" />
-          </Key>
-          <Property Name="CabinetID" Type="int" Nullable="false" />
-          <Property Name="CabinetName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="BuildingName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PrinterDeviceID" Type="int" Nullable="false" />
-          <Property Name="PrinterModel" Type="nvarchar" MaxLength="50" />
-          <Property Name="PrinterInventoryNumber" Type="nchar" MaxLength="10" />
-        </EntityType>
         <Association Name="FK__Cabinet_D__Cabin__6383C8BA">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
@@ -346,16 +332,6 @@
           <EntitySet Name="EmployeeLIT" EntityType="Self.EmployeeLIT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Printer" EntityType="Self.Printer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReasonForReplacement" EntityType="Self.ReasonForReplacement" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="vCabinetPrinters" EntityType="Self.vCabinetPrinters" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vCabinetPrinters].[CabinetID] AS [CabinetID], 
-    [vCabinetPrinters].[CabinetName] AS [CabinetName], 
-    [vCabinetPrinters].[BuildingName] AS [BuildingName], 
-    [vCabinetPrinters].[PrinterDeviceID] AS [PrinterDeviceID], 
-    [vCabinetPrinters].[PrinterModel] AS [PrinterModel], 
-    [vCabinetPrinters].[PrinterInventoryNumber] AS [PrinterInventoryNumber]
-    FROM [dbo].[vCabinetPrinters] AS [vCabinetPrinters]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__Cabinet_D__Cabin__6383C8BA" Association="Self.FK__Cabinet_D__Cabin__6383C8BA">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
@@ -494,20 +470,6 @@
           <NavigationProperty Name="CartridgeReplacement_Log" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Printer" FromRole="Printer" ToRole="CartridgeReplacement_Log" />
           <NavigationProperty Name="CartridgeModel" Relationship="LitDBModel.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
         </EntityType>
-        <EntityType Name="vCabinetPrinters">
-          <Key>
-            <PropertyRef Name="CabinetID" />
-            <PropertyRef Name="CabinetName" />
-            <PropertyRef Name="BuildingName" />
-            <PropertyRef Name="PrinterDeviceID" />
-          </Key>
-          <Property Name="CabinetID" Type="Int32" Nullable="false" />
-          <Property Name="CabinetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BuildingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PrinterDeviceID" Type="Int32" Nullable="false" />
-          <Property Name="PrinterModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PrinterInventoryNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
         <Association Name="FK__Cartridge__Statu__47DBAE45">
           <End Role="CartridgeStatus" Type="Self.CartridgeStatus" Multiplicity="1" />
           <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
@@ -559,7 +521,6 @@
           <EntitySet Name="Device" EntityType="Self.Device" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="Printer" EntityType="Self.Printer" />
-          <EntitySet Name="vCabinetPrinters" EntityType="Self.vCabinetPrinters" />
           <AssociationSet Name="FK__Cartridge__Statu__47DBAE45" Association="Self.FK__Cartridge__Statu__47DBAE45">
             <End Role="CartridgeStatus" EntitySet="CartridgeStatus" />
             <End Role="Cartridge" EntitySet="Cartridge" />
@@ -842,18 +803,6 @@
                 <ScalarProperty Name="NumbersOfRepairs" ColumnName="NumbersOfRepairs" />
                 <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
                 <ScalarProperty Name="PrinterStatusID" ColumnName="PrinterStatusID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vCabinetPrinters">
-            <EntityTypeMapping TypeName="LitDBModel.vCabinetPrinters">
-              <MappingFragment StoreEntitySet="vCabinetPrinters">
-                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
-                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="PrinterDeviceID" ColumnName="PrinterDeviceID" />
-                <ScalarProperty Name="PrinterModel" ColumnName="PrinterModel" />
-                <ScalarProperty Name="PrinterInventoryNumber" ColumnName="PrinterInventoryNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

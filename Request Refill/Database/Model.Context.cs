@@ -33,7 +33,6 @@ namespace Request_Refill.Database
         public virtual DbSet<Device> Device { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
-        public virtual DbSet<vCabinetPrinters> vCabinetPrinters { get; set; }
         public virtual DbSet<CartridgeReplacement_Log> CartridgeReplacement_Log { get; set; }
         public virtual DbSet<EmployeeLIT> EmployeeLIT { get; set; }
         public virtual DbSet<ReasonForReplacement> ReasonForReplacement { get; set; }

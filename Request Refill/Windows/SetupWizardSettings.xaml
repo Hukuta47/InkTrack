@@ -39,14 +39,14 @@
 
 
 				<Rectangle Grid.ColumnSpan="2" Fill="Transparent" Panel.ZIndex="1" Name="PanelDrag" MouseDown="PanelDrag_MouseDown"/>
-				<TextBlock Text="Мастер настройки Request Refill" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,0,16,0" FontFamily="{StaticResource Proletarsk}"/>
+				<TextBlock Text="{Binding ElementName=Frame_SetupWizardSettings, Path=Content.Title}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,0,16,0" FontFamily="{StaticResource Proletarsk}"/>
 				<Button Grid.Column="4" Margin="0,8,8,8" Width="40" Height="40" Background="#FFED3B62" Click="CloseWindow_Click">
 					<Button.Content>
 						<Image Source="/Resources/24/x.png" Width="24" />
 					</Button.Content>
 				</Button>
 			</Grid>
-			<Frame Name="Frame_SetupWizardSettings" Grid.Row="1"/>
+			<Frame Name="Frame_SetupWizardSettings" Grid.Row="1" NavigationUIVisibility="Hidden"/>
 		</Grid>
 
 	</Border>
