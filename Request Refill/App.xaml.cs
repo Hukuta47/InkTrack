@@ -44,27 +44,12 @@ namespace Request_Refill
                 ShutdownMode = ShutdownMode.OnLastWindowClose;
                 string filePath = e.Args[0];
 
+                string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                pathApplication = Path.Combine(pathToAppData, "Request Refill");
+
+
                 if (File.Exists(filePath) && Path.GetExtension(filePath).Equals(".rr", StringComparison.OrdinalIgnoreCase))
                 {
-                    string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    pathApplication = Path.Combine(pathToAppData, "Request Refill");
-
-                    if (Directory.Exists(pathApplication))
-                    {
-                        pathJsonSettingsFile = Path.Combine(pathApplication, "Config.json");
-                        string JsonImportData = File.ReadAllText(pathJsonSettingsFile);
-                        programData = JsonConvert.DeserializeObject<ProgramData>(JsonImportData);
-                    }
-                    else
-                    {
-                        new SetupWizardSettings().Show();
-
-                        Directory.CreateDirectory(pathApplication);
-                        string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
-                        string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
-                        pathJsonSettingsFile = CreateConfigFilePath;
-                        File.WriteAllText(CreateConfigFilePath, JsonData);
-                    }
                     new CreateRequestRefill(filePath).Show();
                 }
                 else
@@ -93,11 +78,15 @@ namespace Request_Refill
                 }
                 else
                 {
-                    Directory.CreateDirectory(pathApplication);
-                    string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
-                    string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
-                    pathJsonSettingsFile = CreateConfigFilePath;
-                    File.WriteAllText(CreateConfigFilePath, JsonData);
+                    if (new SetupWizardSettings().ShowDialog() == true)
+                    {
+                        Directory.CreateDirectory(pathApplication);
+                        string JsonData = JsonConvert.SerializeObject(new ProgramData(), Formatting.Indented);
+                        string CreateConfigFilePath = Path.Combine(pathApplication, "Config.json");
+                        pathJsonSettingsFile = CreateConfigFilePath;
+                        File.WriteAllText(CreateConfigFilePath, JsonData);
+                    }
+                    
                 }
                 // Создаем иконку в трее
                 notifyIcon = new NotifyIcon();
@@ -122,11 +111,6 @@ namespace Request_Refill
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon?.Dispose();
-
-            if (programData == null && pathApplication != null)
-            {
-                Directory.Delete(pathApplication, true);
-            }
             base.OnExit(e);
         }
 
