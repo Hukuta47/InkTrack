@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="ApplicationSiteView.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ApplicationSiteView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Grid>
+		<WebView Name="Webview_Main" Source="https://bbb.zabgc.ru/hg.htm" NavigationStarting="WebView_NavigationStarting" NewWindowRequested="WebView_NewWindowRequested"/>
+	</Grid>
+</Page>
