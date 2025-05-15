@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace Request_Refill.SetupWizardSettingsPages
 {
@@ -18,7 +14,7 @@ namespace Request_Refill.SetupWizardSettingsPages
             new SetupWizardSettings_Page2(),
             new SetupWizardSettings_Page3()
         };
-        public NavigationClass(Frame frame)
+        public NavigationClass(Frame frame, Window window)
         {
             _frame = frame;
             _frame.Navigate(list[numPage]);

@@ -39,11 +39,13 @@ namespace Request_Refill.SetupWizardSettingsPages
 
             if (CountEmployees == 1 && CountPrinters == 1)
             {
-
+                VaribleButton.Style = (Style)FindResource("AcceptButton");
+                VaribleButton.Content = "Завершить";
             }
             else
             {
-
+                VaribleButton.Style = (Style)FindResource(typeof(Button));
+                VaribleButton.Content = "Дальше";
             }
         }
     }

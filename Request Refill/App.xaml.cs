@@ -44,10 +44,6 @@ namespace Request_Refill
                 ShutdownMode = ShutdownMode.OnLastWindowClose;
                 string filePath = e.Args[0];
 
-                string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                pathApplication = Path.Combine(pathToAppData, "Request Refill");
-
-
                 if (File.Exists(filePath) && Path.GetExtension(filePath).Equals(".rr", StringComparison.OrdinalIgnoreCase))
                 {
                     new CreateRequestRefill(filePath).Show();
@@ -67,8 +63,7 @@ namespace Request_Refill
             else
             {
                 ShutdownMode = ShutdownMode.OnExplicitShutdown;
-                string pathToAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                pathApplication = Path.Combine(pathToAppData, "Request Refill");
+
 
                 if (Directory.Exists(pathApplication))
                 {

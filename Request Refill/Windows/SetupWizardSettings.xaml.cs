@@ -21,7 +21,7 @@ namespace Request_Refill.Windows
         public SetupWizardSettings()
         {
             InitializeComponent();
-            navigationClass = new NavigationClass(Frame_SetupWizardSettings);
+            navigationClass = new NavigationClass(Frame_SetupWizardSettings, this);
         }
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
         {

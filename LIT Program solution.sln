@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Request Refill", "Request Refill\Request Refill.csproj", "{8E12C380-F11E-4BDD-839A-0B1372591405}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InkTrack Report", "InkTrack Report\InkTrack Report.csproj", "{B443831A-54C5-4BF3-971A-CA1959D77DF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{8E12C380-F11E-4BDD-839A-0B1372591405}.Release|ARM64.Build.0 = Release|Any CPU
 		{8E12C380-F11E-4BDD-839A-0B1372591405}.Release|x64.ActiveCfg = Release|Any CPU
 		{8E12C380-F11E-4BDD-839A-0B1372591405}.Release|x64.Build.0 = Release|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Debug|x64.Build.0 = Debug|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Release|ARM64.Build.0 = Release|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Release|x64.ActiveCfg = Release|Any CPU
+		{B443831A-54C5-4BF3-971A-CA1959D77DF7}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
