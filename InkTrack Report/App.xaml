@@ -51,6 +51,14 @@
 			<Setter Property="Background" Value="#ffffff"/>
 		</Style>
 
+		<Style TargetType="PasswordBox">
+			<Setter Property="Height" Value="48"/>
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
+			<Setter Property="Foreground" Value="#000000"/>
+			<Setter Property="BorderBrush" Value="#3b62ed"/>
+			<Setter Property="Background" Value="#ffffff"/>
+		</Style>
 
 	</Application.Resources>
 </Application>

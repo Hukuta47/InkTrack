@@ -10,15 +10,14 @@ namespace InkTrack_Report.Windows.Dialog
         public AdminAuthDialog()
         {
             InitializeComponent();
-            UsernameTextBox.Focus();
+            Textbox_Login.Focus();
 
         }
-        private void OkButton_Click(object sender, RoutedEventArgs e)
+        private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = IsUserAdministrator(UsernameTextBox.Text, PasswordBox.Password);
+            DialogResult = IsUserAdministrator(Textbox_Login.Text, Passwordbox_Password.Password);
             Close();
         }
-
         public bool IsUserAdministrator(string username, string password)
         {
             try
@@ -56,7 +55,7 @@ namespace InkTrack_Report.Windows.Dialog
             }
             return false;
         }
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
