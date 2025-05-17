@@ -1,14 +1,15 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Forms;
+﻿using InkTrack_Report.Classes;
+using InkTrack_Report.Database;
+using InkTrack_Report.Windows;
+using System;
 using System.Drawing;
 using System.IO;
-using InkTrack_Report.Windows;
-using System.Windows.Resources;
-using InkTrack_Report.Database;
-using InkTrack_Report.Classes;
-using System.Windows.Threading;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Resources;
+using System.Windows.Threading;
 
 namespace InkTrack_Report
 {
@@ -22,17 +23,6 @@ namespace InkTrack_Report
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Обработка исключений в UI-потоке WPF
-            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
-
-            // Обработка исключений в других потоках
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
-            // Обработка исключений в задачах async/await
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
-
-
 
             base.OnStartup(e);
 
@@ -100,7 +90,7 @@ namespace InkTrack_Report
 
         }
 
-
+        
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion().Show();
 
         protected override void OnExit(ExitEventArgs e)
@@ -118,43 +108,5 @@ namespace InkTrack_Report
             return new Icon(sri.Stream);
         }
 
-        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            // Предотвращаем аварийное завершение
-            e.Handled = true;
-
-            ShowError(e.Exception, "Произошла непредвиденная ошибка в UI-потоке");
-
-            // При желании можно завершить приложение:
-            // Environment.Exit(1);
-        }
-
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            // Здесь нет возможности предотвратить завершение
-            var ex = e.ExceptionObject as Exception;
-            ShowError(ex, "Произошла ошибка вне UI-потока");
-        }
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
-        {
-            // Предотвращаем «подавление» приложения .NET
-            e.SetObserved();
-
-            ShowError(e.Exception, "Произошла ошибка в задаче");
-        }
-        private void ShowError(Exception ex, string title)
-        {
-            // Простейший вариант: стандартное окно
-            System.Windows.MessageBox.Show(
-                ex?.ToString() ?? "Неизвестная ошибка",
-                title,
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-
-            // Или открыть своё WPF-окно:
-            // var win = new ErrorWindow();
-            // win.Owner = Current?.MainWindow;
-            // win.ShowDialog();
-        }
     }
 }

@@ -14,6 +14,10 @@ namespace InkTrack_Report.Windows
             Combobox_SelectEmployee.ItemsSource = App.dBEntities.GetEmployeesInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
             Combobox_SelectPrinter.ItemsSource = App.dBEntities.GetPrintersInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
 
+            Combobox_SelectEmployee.SelectedIndex = 0; 
+            Combobox_SelectPrinter.SelectedIndex = 0; 
+
+
         }
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
         {

@@ -72,17 +72,17 @@
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="16"/>
 					<RowDefinition />
-					
+
 					<RowDefinition Height="16"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="16"/>
 					<RowDefinition Height="48"/>
-					
+
 					<RowDefinition Height="16"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="16"/>
 					<RowDefinition Height="48"/>
-					
+
 					<RowDefinition Height="16"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="16"/>
@@ -96,7 +96,7 @@
 				<TextBlock Grid.Row="8" Text="Кто заменил" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
 				<ComboBox Grid.Row="10" Name="Combobox_WhoReplaced" BorderBrush="#FF3B62ED" DisplayMemberPath="Employee.FIO" FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48"/>
 				<TextBlock Grid.Row="12" Text="Комментарий" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<TextBox Grid.Row="14" Name="Textbox_Description" BorderBrush="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
+				<TextBox Grid.Row="14" Height="auto" Name="Textbox_Description" BorderBrush="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
 
 			</Grid>
 

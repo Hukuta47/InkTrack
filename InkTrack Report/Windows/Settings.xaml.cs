@@ -23,8 +23,8 @@ namespace InkTrack_Report.Windows
             InitializeComponent();
 
             ComboboxCabinetSelect.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
-            ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(SelectedEmployeeID);
-            ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(SelectedPrinterID);
+            ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID).ToList();
+            ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID).ToList();
 
 
             ComboboxCabinetSelect.SelectedValue = SelectedCabinetID;
