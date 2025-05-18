@@ -2,7 +2,10 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
+using ZABGC_Media_Generator.Properties;
 
 namespace ZABGC_Media_Generator
 {
@@ -32,9 +35,41 @@ namespace ZABGC_Media_Generator
                 var rect = new SKRect(210, 10, 1910, 870);
                 var rect1 = new SKRect(210, 880, 1910, 1070);
 
-
                 canvas.DrawRoundRect(rect, 32, 32, paint);
                 canvas.DrawRoundRect(rect1, 32, 32, paint);
+
+                var winFormsBitmap = Properties.Resources.Professinalitet_logo;
+
+                using (var stream = new MemoryStream())
+                {
+                    winFormsBitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                    stream.Position = 0;
+                    using (var skiaBitmap = SKBitmap.Decode(stream))
+                    {
+                        // Теперь можно использовать skiaBitmap на canvas
+                        canvas.DrawBitmap(skiaBitmap, 210, 880); // Примерные координаты
+                    }
+                }
+
+                var fontStream = new MemoryStream(Properties.Resources.DelaGothicOne_Regular); // "Arial" — имя файла в Resources
+                var typeface = new SKFont(SKTypeface.FromStream(fontStream));
+                typeface.Size = 48;
+                var textPaint = new SKPaint
+                {
+                    Color = SKColors.Black,
+                    IsAntialias = true
+                };
+
+                // Создание текстового блока
+                var text = "Пример текста через SKTexaskdjhalkdjakljdhakldhlkajdhsjlakdjksadhkjldljkhdkjlshakljdhalkhlkjhdkljahdtBlob";
+                var textBlob = SKTextBlob.Create(text, typeface);
+
+                // Рисование на canvas
+                canvas.DrawText(textBlob, 50, 100, textPaint);
+
+
+
+
 
                 // 2. Экспортируем в PNG (во временный файл)
                 using (var image = surface.Snapshot())
@@ -56,5 +91,7 @@ namespace ZABGC_Media_Generator
                 }
             }
         }
+
+        // Метод для создания текста с переносами
     }
 }
