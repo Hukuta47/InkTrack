@@ -89,8 +89,6 @@ namespace InkTrack_Report
             }
 
         }
-
-        
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion().Show();
 
         protected override void OnExit(ExitEventArgs e)
