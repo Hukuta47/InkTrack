@@ -1,0 +1,1593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище LitDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bulding">
+          <Key>
+            <PropertyRef Name="BuldingID" />
+          </Key>
+          <Property Name="BuldingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cabinet">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuldingID" Type="int" Nullable="false" />
+          <Property Name="CabinetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cabinet_Device">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cabinet_Employee">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cartridge">
+          <Key>
+            <PropertyRef Name="CartridgeID" />
+          </Key>
+          <Property Name="CartridgeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CartridgeModelID" Type="int" Nullable="false" />
+          <Property Name="CartridgeNumber" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="CartridgeTypeID" Type="int" Nullable="false" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="NumberOfRefills" Type="int" />
+          <Property Name="LastDateOfRefill" Type="date" />
+        </EntityType>
+        <EntityType Name="CartridgeCompatibility">
+          <Key>
+            <PropertyRef Name="CartridgeModelID" />
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="CartridgeModelID" Type="int" Nullable="false" />
+          <Property Name="PrinterID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartridgeModel">
+          <Key>
+            <PropertyRef Name="CartridgeModelID" />
+          </Key>
+          <Property Name="CartridgeModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CartridgeReplacement_Log">
+          <Key>
+            <PropertyRef Name="ReplacementID" />
+          </Key>
+          <Property Name="ReplacementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OldCartridgeID" Type="int" Nullable="false" />
+          <Property Name="NewCartridgeID" Type="int" Nullable="false" />
+          <Property Name="PrinterID" Type="int" Nullable="false" />
+          <Property Name="EmployeeLitID" Type="int" Nullable="false" />
+          <Property Name="ReasonID" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CartridgeStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="CartridgeType">
+          <Key>
+            <PropertyRef Name="CartridgeTypeID" />
+          </Key>
+          <Property Name="CartridgeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Computer">
+          <Key>
+            <PropertyRef Name="ComputerID" />
+          </Key>
+          <Property Name="ComputerID" Type="int" Nullable="false" />
+          <Property Name="ComputerName" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceTypeID" Type="int" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" />
+          <Property Name="Characteristics" Type="xml" />
+          <Property Name="InventoryNumber" Type="nchar" MaxLength="10" />
+          <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Device_LaptopIssuance">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+            <PropertyRef Name="LaptopIssuanceID" />
+          </Key>
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="LaptopIssuanceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeID" />
+          </Key>
+          <Property Name="DeviceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee_EmployeePosition">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="EmployeePositionID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="EmployeePositionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeLIT">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="EmployeePositionID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="EmployeePositionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeePosition">
+          <Key>
+            <PropertyRef Name="EmployeePositionID" />
+          </Key>
+          <Property Name="EmployeePositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="LaptopIssuance">
+          <Key>
+            <PropertyRef Name="IssuanceID" />
+          </Key>
+          <Property Name="IssuanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateIssuance" Type="date" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="ReturnDate" Type="date" />
+          <Property Name="StatusID" Type="nchar" MaxLength="10" />
+          <Property Name="EmployeeIDIssuedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Printer">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="int" Nullable="false" />
+          <Property Name="NumbersOfRepairs" Type="int" Nullable="false" />
+          <Property Name="CartridgeID" Type="int" />
+          <Property Name="PrinterStatusID" Type="int" />
+          <Property Name="CartridgeReplacementDate" Type="date" />
+        </EntityType>
+        <EntityType Name="PrinterStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReasonForReplacement">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "LitDB.dbo.CabinetDevicesEmployees" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="CabinetDevicesEmployees">
+          <Key>
+            <PropertyRef Name="CabinetName" />
+          </Key>
+          <Property Name="CabinetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DevicesInCabinet" Type="nvarchar" MaxLength="4000" />
+          <Property Name="EmployeesInCabinet" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <Association Name="FK__Cabinet__Bulding__619B8048">
+          <End Role="Bulding" Type="Self.Bulding" Multiplicity="1" />
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bulding">
+              <PropertyRef Name="BuldingID" />
+            </Principal>
+            <Dependent Role="Cabinet">
+              <PropertyRef Name="BuldingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_D__Cabin__628FA481">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
+          <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cabinet">
+              <PropertyRef Name="CabinetID" />
+            </Principal>
+            <Dependent Role="Cabinet_Device">
+              <PropertyRef Name="CabinetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_D__Devic__59063A47">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Cabinet_Device" Type="Self.Cabinet_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Cabinet_Device">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_E__Cabin__6477ECF3">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
+          <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cabinet">
+              <PropertyRef Name="CabinetID" />
+            </Principal>
+            <Dependent Role="Cabinet_Employee">
+              <PropertyRef Name="CabinetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cabinet_E__Emplo__5CD6CB2B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Cabinet_Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Cartr__46E78A0C">
+          <End Role="CartridgeModel" Type="Self.CartridgeModel" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeModel">
+              <PropertyRef Name="CartridgeModelID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Cartr__4AB81AF0">
+          <End Role="CartridgeModel" Type="Self.CartridgeModel" Multiplicity="1" />
+          <End Role="CartridgeCompatibility" Type="Self.CartridgeCompatibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeModel">
+              <PropertyRef Name="CartridgeModelID" />
+            </Principal>
+            <Dependent Role="CartridgeCompatibility">
+              <PropertyRef Name="CartridgeModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Print__619B8048">
+          <End Role="Printer" Type="Self.Printer" Multiplicity="1" />
+          <End Role="CartridgeCompatibility" Type="Self.CartridgeCompatibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Principal>
+            <Dependent Role="CartridgeCompatibility">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Statu__47DBAE45">
+          <End Role="CartridgeStatus" Type="Self.CartridgeStatus" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Device__DeviceTy__398D8EEE">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceTypeID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Printer__Printer__3C69FB99">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cartridge_CartridgeType">
+          <End Role="CartridgeType" Type="Self.CartridgeType" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeType">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_Cartridge">
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cartridge">
+              <PropertyRef Name="CartridgeID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="OldCartridgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_Cartridge1">
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cartridge">
+              <PropertyRef Name="CartridgeID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="NewCartridgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_Printer">
+          <End Role="Printer" Type="Self.Printer" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_ReasonForReplacement">
+          <End Role="ReasonForReplacement" Type="Self.ReasonForReplacement" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReasonForReplacement">
+              <PropertyRef Name="ReasonID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Computer_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Computer" Type="Self.Computer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Computer">
+              <PropertyRef Name="ComputerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_LaptopIssuance_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Device_LaptopIssuance" Type="Self.Device_LaptopIssuance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Device_LaptopIssuance">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_LaptopIssuance_LaptopIssuance">
+          <End Role="LaptopIssuance" Type="Self.LaptopIssuance" Multiplicity="1" />
+          <End Role="Device_LaptopIssuance" Type="Self.Device_LaptopIssuance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LaptopIssuance">
+              <PropertyRef Name="IssuanceID" />
+            </Principal>
+            <Dependent Role="Device_LaptopIssuance">
+              <PropertyRef Name="LaptopIssuanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeType_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee_EmployeePosition" Type="Self.Employee_EmployeePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee_EmployeePosition">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeType_EmployeeType">
+          <End Role="EmployeePosition" Type="Self.EmployeePosition" Multiplicity="1" />
+          <End Role="Employee_EmployeePosition" Type="Self.Employee_EmployeePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeePosition">
+              <PropertyRef Name="EmployeePositionID" />
+            </Principal>
+            <Dependent Role="Employee_EmployeePosition">
+              <PropertyRef Name="EmployeePositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeLIT_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeLIT" Type="Self.EmployeeLIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeLIT">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeLIT_EmployeePosition">
+          <End Role="EmployeePosition" Type="Self.EmployeePosition" Multiplicity="1" />
+          <End Role="EmployeeLIT" Type="Self.EmployeeLIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeePosition">
+              <PropertyRef Name="EmployeePositionID" />
+            </Principal>
+            <Dependent Role="EmployeeLIT">
+              <PropertyRef Name="EmployeePositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaptopIssuance_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="LaptopIssuance" Type="Self.LaptopIssuance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="LaptopIssuance">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Printer_Cartridge">
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="0..1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cartridge">
+              <PropertyRef Name="CartridgeID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="CartridgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Printer_PrinterStatus">
+          <End Role="PrinterStatus" Type="Self.PrinterStatus" Multiplicity="0..1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrinterStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="PrinterStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddCartridge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CartridgeModelID" Type="int" Mode="In" />
+          <Parameter Name="CartridgeNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="StatusID" Type="int" Mode="In" />
+          <Parameter Name="CartridgeTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetCabinetsWithPrinters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCompatibleCartridgesForPrinter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrinterID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetCompatibleCartridgesInStockForPrinter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrinterID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetEmployeesInCabinet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CabinetID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetPrintersInCabinet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CabinetID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InstallCartridgeToPrinter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NewCartridgeID" Type="int" Mode="In" />
+          <Parameter Name="ReasonID" Type="int" Mode="In" />
+          <Parameter Name="EmployeeLITID" Type="int" Mode="In" />
+          <Parameter Name="Comment" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище LitDBModelContainer">
+          <EntitySet Name="Bulding" EntityType="Self.Bulding" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet" EntityType="Self.Cabinet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet_Device" EntityType="Self.Cabinet_Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet_Employee" EntityType="Self.Cabinet_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cartridge" EntityType="Self.Cartridge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeCompatibility" EntityType="Self.CartridgeCompatibility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeModel" EntityType="Self.CartridgeModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeReplacement_Log" EntityType="Self.CartridgeReplacement_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeStatus" EntityType="Self.CartridgeStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartridgeType" EntityType="Self.CartridgeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Computer" EntityType="Self.Computer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device_LaptopIssuance" EntityType="Self.Device_LaptopIssuance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_EmployeePosition" EntityType="Self.Employee_EmployeePosition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeLIT" EntityType="Self.EmployeeLIT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeePosition" EntityType="Self.EmployeePosition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LaptopIssuance" EntityType="Self.LaptopIssuance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Printer" EntityType="Self.Printer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrinterStatus" EntityType="Self.PrinterStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReasonForReplacement" EntityType="Self.ReasonForReplacement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CabinetDevicesEmployees" EntityType="Self.CabinetDevicesEmployees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CabinetDevicesEmployees].[CabinetName] AS [CabinetName], 
+    [CabinetDevicesEmployees].[DevicesInCabinet] AS [DevicesInCabinet], 
+    [CabinetDevicesEmployees].[EmployeesInCabinet] AS [EmployeesInCabinet]
+    FROM [dbo].[CabinetDevicesEmployees] AS [CabinetDevicesEmployees]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Cabinet__Bulding__619B8048" Association="Self.FK__Cabinet__Bulding__619B8048">
+            <End Role="Bulding" EntitySet="Bulding" />
+            <End Role="Cabinet" EntitySet="Cabinet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_D__Cabin__628FA481" Association="Self.FK__Cabinet_D__Cabin__628FA481">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_D__Devic__59063A47" Association="Self.FK__Cabinet_D__Devic__59063A47">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Cabinet_Device" EntitySet="Cabinet_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_E__Cabin__6477ECF3" Association="Self.FK__Cabinet_E__Cabin__6477ECF3">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cabinet_E__Emplo__5CD6CB2B" Association="Self.FK__Cabinet_E__Emplo__5CD6CB2B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Cartr__46E78A0C" Association="Self.FK__Cartridge__Cartr__46E78A0C">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Cartr__4AB81AF0" Association="Self.FK__Cartridge__Cartr__4AB81AF0">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="CartridgeCompatibility" EntitySet="CartridgeCompatibility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Print__619B8048" Association="Self.FK__Cartridge__Print__619B8048">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="CartridgeCompatibility" EntitySet="CartridgeCompatibility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Statu__47DBAE45" Association="Self.FK__Cartridge__Statu__47DBAE45">
+            <End Role="CartridgeStatus" EntitySet="CartridgeStatus" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Device__DeviceTy__398D8EEE" Association="Self.FK__Device__DeviceTy__398D8EEE">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Printer__Printer__3C69FB99" Association="Self.FK__Printer__Printer__3C69FB99">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cartridge_CartridgeType" Association="Self.FK_Cartridge_CartridgeType">
+            <End Role="CartridgeType" EntitySet="CartridgeType" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Cartridge" Association="Self.FK_CartridgeReplacement_Log_Cartridge">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Cartridge1" Association="Self.FK_CartridgeReplacement_Log_Cartridge1">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Printer" Association="Self.FK_CartridgeReplacement_Log_Printer">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_ReasonForReplacement" Association="Self.FK_CartridgeReplacement_Log_ReasonForReplacement">
+            <End Role="ReasonForReplacement" EntitySet="ReasonForReplacement" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Computer_Device" Association="Self.FK_Computer_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Computer" EntitySet="Computer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_LaptopIssuance_Device" Association="Self.FK_Device_LaptopIssuance_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Device_LaptopIssuance" EntitySet="Device_LaptopIssuance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_LaptopIssuance_LaptopIssuance" Association="Self.FK_Device_LaptopIssuance_LaptopIssuance">
+            <End Role="LaptopIssuance" EntitySet="LaptopIssuance" />
+            <End Role="Device_LaptopIssuance" EntitySet="Device_LaptopIssuance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeType_Employee" Association="Self.FK_Employee_EmployeeType_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee_EmployeePosition" EntitySet="Employee_EmployeePosition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeType_EmployeeType" Association="Self.FK_Employee_EmployeeType_EmployeeType">
+            <End Role="EmployeePosition" EntitySet="EmployeePosition" />
+            <End Role="Employee_EmployeePosition" EntitySet="Employee_EmployeePosition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeLIT_Employee" Association="Self.FK_EmployeeLIT_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeLIT" EntitySet="EmployeeLIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeLIT_EmployeePosition" Association="Self.FK_EmployeeLIT_EmployeePosition">
+            <End Role="EmployeePosition" EntitySet="EmployeePosition" />
+            <End Role="EmployeeLIT" EntitySet="EmployeeLIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaptopIssuance_Employee" Association="Self.FK_LaptopIssuance_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="LaptopIssuance" EntitySet="LaptopIssuance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Printer_Cartridge" Association="Self.FK_Printer_Cartridge">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Printer_PrinterStatus" Association="Self.FK_Printer_PrinterStatus">
+            <End Role="PrinterStatus" EntitySet="PrinterStatus" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LitDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bulding">
+          <Key>
+            <PropertyRef Name="BuldingID" />
+          </Key>
+          <Property Name="BuldingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cabinet" Relationship="Self.FK__Cabinet__Bulding__619B8048" FromRole="Bulding" ToRole="Cabinet" />
+        </EntityType>
+        <EntityType Name="Cabinet">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+          </Key>
+          <Property Name="CabinetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuldingID" Type="Int32" Nullable="false" />
+          <Property Name="CabinetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Bulding" Relationship="Self.FK__Cabinet__Bulding__619B8048" FromRole="Cabinet" ToRole="Bulding" />
+          <NavigationProperty Name="Device" Relationship="Self.Cabinet_Device" FromRole="Cabinet" ToRole="Device" />
+          <NavigationProperty Name="Employee" Relationship="Self.Cabinet_Employee" FromRole="Cabinet" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Cartridge">
+          <Key>
+            <PropertyRef Name="CartridgeID" />
+          </Key>
+          <Property Name="CartridgeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartridgeModelID" Type="Int32" Nullable="false" />
+          <Property Name="CartridgeNumber" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="CartridgeTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="NumberOfRefills" Type="Int32" />
+          <Property Name="LastDateOfRefill" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CartridgeModel" Relationship="Self.FK__Cartridge__Cartr__46E78A0C" FromRole="Cartridge" ToRole="CartridgeModel" />
+          <NavigationProperty Name="CartridgeStatus" Relationship="Self.FK__Cartridge__Statu__47DBAE45" FromRole="Cartridge" ToRole="CartridgeStatus" />
+          <NavigationProperty Name="CartridgeType" Relationship="Self.FK_Cartridge_CartridgeType" FromRole="Cartridge" ToRole="CartridgeType" />
+          <NavigationProperty Name="CartridgeReplacement_Log" Relationship="Self.FK_CartridgeReplacement_Log_Cartridge" FromRole="Cartridge" ToRole="CartridgeReplacement_Log" />
+          <NavigationProperty Name="CartridgeReplacement_Log1" Relationship="Self.FK_CartridgeReplacement_Log_Cartridge1" FromRole="Cartridge" ToRole="CartridgeReplacement_Log" />
+          <NavigationProperty Name="Printer" Relationship="Self.FK_Printer_Cartridge" FromRole="Cartridge" ToRole="Printer" />
+        </EntityType>
+        <EntityType Name="CartridgeModel">
+          <Key>
+            <PropertyRef Name="CartridgeModelID" />
+          </Key>
+          <Property Name="CartridgeModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="Self.FK__Cartridge__Cartr__46E78A0C" FromRole="CartridgeModel" ToRole="Cartridge" />
+          <NavigationProperty Name="Printer" Relationship="Self.CartridgeCompatibility" FromRole="CartridgeModel" ToRole="Printer" />
+        </EntityType>
+        <EntityType Name="CartridgeReplacement_Log">
+          <Key>
+            <PropertyRef Name="ReplacementID" />
+          </Key>
+          <Property Name="ReplacementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OldCartridgeID" Type="Int32" Nullable="false" />
+          <Property Name="NewCartridgeID" Type="Int32" Nullable="false" />
+          <Property Name="PrinterID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeLitID" Type="Int32" Nullable="false" />
+          <Property Name="ReasonID" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="Self.FK_CartridgeReplacement_Log_Cartridge" FromRole="CartridgeReplacement_Log" ToRole="Cartridge" />
+          <NavigationProperty Name="Cartridge1" Relationship="Self.FK_CartridgeReplacement_Log_Cartridge1" FromRole="CartridgeReplacement_Log" ToRole="Cartridge" />
+          <NavigationProperty Name="Printer" Relationship="Self.FK_CartridgeReplacement_Log_Printer" FromRole="CartridgeReplacement_Log" ToRole="Printer" />
+          <NavigationProperty Name="ReasonForReplacement" Relationship="Self.FK_CartridgeReplacement_Log_ReasonForReplacement" FromRole="CartridgeReplacement_Log" ToRole="ReasonForReplacement" />
+        </EntityType>
+        <EntityType Name="CartridgeStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="Self.FK__Cartridge__Statu__47DBAE45" FromRole="CartridgeStatus" ToRole="Cartridge" />
+        </EntityType>
+        <EntityType Name="CartridgeType">
+          <Key>
+            <PropertyRef Name="CartridgeTypeID" />
+          </Key>
+          <Property Name="CartridgeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cartridge" Relationship="Self.FK_Cartridge_CartridgeType" FromRole="CartridgeType" ToRole="Cartridge" />
+        </EntityType>
+        <EntityType Name="Computer">
+          <Key>
+            <PropertyRef Name="ComputerID" />
+          </Key>
+          <Property Name="ComputerID" Type="Int32" Nullable="false" />
+          <Property Name="ComputerName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IPAddress" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_Computer_Device" FromRole="Computer" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Characteristics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InventoryNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Computer" Relationship="Self.FK_Computer_Device" FromRole="Device" ToRole="Computer" />
+          <NavigationProperty Name="DeviceType" Relationship="Self.FK__Device__DeviceTy__398D8EEE" FromRole="Device" ToRole="DeviceType" />
+          <NavigationProperty Name="Printer" Relationship="Self.FK__Printer__Printer__3C69FB99" FromRole="Device" ToRole="Printer" />
+          <NavigationProperty Name="Cabinet" Relationship="Self.Cabinet_Device" FromRole="Device" ToRole="Cabinet" />
+          <NavigationProperty Name="LaptopIssuance" Relationship="Self.Device_LaptopIssuance" FromRole="Device" ToRole="LaptopIssuance" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeID" />
+          </Key>
+          <Property Name="DeviceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="Self.FK__Device__DeviceTy__398D8EEE" FromRole="DeviceType" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LaptopIssuance" Relationship="Self.FK_LaptopIssuance_Employee" FromRole="Employee" ToRole="LaptopIssuance" />
+          <NavigationProperty Name="Cabinet" Relationship="Self.Cabinet_Employee" FromRole="Employee" ToRole="Cabinet" />
+          <NavigationProperty Name="EmployeePosition" Relationship="Self.Employee_EmployeePosition" FromRole="Employee" ToRole="EmployeePosition" />
+          <NavigationProperty Name="EmployeePosition1" Relationship="Self.EmployeeLIT" FromRole="Employee" ToRole="EmployeePosition" />
+        </EntityType>
+        <EntityType Name="EmployeePosition">
+          <Key>
+            <PropertyRef Name="EmployeePositionID" />
+          </Key>
+          <Property Name="EmployeePositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.Employee_EmployeePosition" FromRole="EmployeePosition" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="Self.EmployeeLIT" FromRole="EmployeePosition" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="LaptopIssuance">
+          <Key>
+            <PropertyRef Name="IssuanceID" />
+          </Key>
+          <Property Name="IssuanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateIssuance" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="ReturnDate" Type="DateTime" Precision="0" />
+          <Property Name="StatusID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EmployeeIDIssuedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_LaptopIssuance_Employee" FromRole="LaptopIssuance" ToRole="Employee" />
+          <NavigationProperty Name="Device" Relationship="Self.Device_LaptopIssuance" FromRole="LaptopIssuance" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Printer">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="Int32" Nullable="false" />
+          <Property Name="NumbersOfRepairs" Type="Int32" Nullable="false" />
+          <Property Name="CartridgeID" Type="Int32" />
+          <Property Name="PrinterStatusID" Type="Int32" />
+          <Property Name="CartridgeReplacementDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Cartridge" Relationship="Self.FK_Printer_Cartridge" FromRole="Printer" ToRole="Cartridge" />
+          <NavigationProperty Name="CartridgeReplacement_Log" Relationship="Self.FK_CartridgeReplacement_Log_Printer" FromRole="Printer" ToRole="CartridgeReplacement_Log" />
+          <NavigationProperty Name="Device" Relationship="Self.FK__Printer__Printer__3C69FB99" FromRole="Printer" ToRole="Device" />
+          <NavigationProperty Name="PrinterStatus" Relationship="Self.FK_Printer_PrinterStatus" FromRole="Printer" ToRole="PrinterStatus" />
+          <NavigationProperty Name="CartridgeModel" Relationship="Self.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
+        </EntityType>
+        <EntityType Name="PrinterStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Printer" Relationship="Self.FK_Printer_PrinterStatus" FromRole="PrinterStatus" ToRole="Printer" />
+        </EntityType>
+        <EntityType Name="ReasonForReplacement">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CartridgeReplacement_Log" Relationship="Self.FK_CartridgeReplacement_Log_ReasonForReplacement" FromRole="ReasonForReplacement" ToRole="CartridgeReplacement_Log" />
+        </EntityType>
+        <Association Name="FK__Cabinet__Bulding__619B8048">
+          <End Role="Bulding" Type="Self.Bulding" Multiplicity="1" />
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bulding">
+              <PropertyRef Name="BuldingID" />
+            </Principal>
+            <Dependent Role="Cabinet">
+              <PropertyRef Name="BuldingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Cartr__46E78A0C">
+          <End Role="CartridgeModel" Type="Self.CartridgeModel" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeModel">
+              <PropertyRef Name="CartridgeModelID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cartridge__Statu__47DBAE45">
+          <End Role="CartridgeStatus" Type="Self.CartridgeStatus" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cartridge_CartridgeType">
+          <End Role="CartridgeType" Type="Self.CartridgeType" Multiplicity="1" />
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartridgeType">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Principal>
+            <Dependent Role="Cartridge">
+              <PropertyRef Name="CartridgeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_Cartridge">
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cartridge">
+              <PropertyRef Name="CartridgeID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="OldCartridgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_Cartridge1">
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cartridge">
+              <PropertyRef Name="CartridgeID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="NewCartridgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Printer_Cartridge">
+          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="0..1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cartridge">
+              <PropertyRef Name="CartridgeID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="CartridgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_Printer">
+          <End Role="Printer" Type="Self.Printer" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartridgeReplacement_Log_ReasonForReplacement">
+          <End Role="ReasonForReplacement" Type="Self.ReasonForReplacement" Multiplicity="1" />
+          <End Role="CartridgeReplacement_Log" Type="Self.CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReasonForReplacement">
+              <PropertyRef Name="ReasonID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Computer_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Computer" Type="Self.Computer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Computer">
+              <PropertyRef Name="ComputerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Device__DeviceTy__398D8EEE">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceTypeID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Printer__Printer__3C69FB99">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="PrinterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaptopIssuance_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="LaptopIssuance" Type="Self.LaptopIssuance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="LaptopIssuance">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Printer_PrinterStatus">
+          <End Role="PrinterStatus" Type="Self.PrinterStatus" Multiplicity="0..1" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrinterStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Printer">
+              <PropertyRef Name="PrinterStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cabinet_Device">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="*" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+        </Association>
+        <Association Name="Cabinet_Employee">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+        </Association>
+        <Association Name="CartridgeCompatibility">
+          <End Role="CartridgeModel" Type="Self.CartridgeModel" Multiplicity="*" />
+          <End Role="Printer" Type="Self.Printer" Multiplicity="*" />
+        </Association>
+        <Association Name="Device_LaptopIssuance">
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <End Role="LaptopIssuance" Type="Self.LaptopIssuance" Multiplicity="*" />
+        </Association>
+        <Association Name="Employee_EmployeePosition">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="EmployeePosition" Type="Self.EmployeePosition" Multiplicity="*" />
+        </Association>
+        <Association Name="EmployeeLIT">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="EmployeePosition" Type="Self.EmployeePosition" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="LitDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bulding" EntityType="Self.Bulding" />
+          <EntitySet Name="Cabinet" EntityType="Self.Cabinet" />
+          <EntitySet Name="Cartridge" EntityType="Self.Cartridge" />
+          <EntitySet Name="CartridgeModel" EntityType="Self.CartridgeModel" />
+          <EntitySet Name="CartridgeReplacement_Log" EntityType="Self.CartridgeReplacement_Log" />
+          <EntitySet Name="CartridgeStatus" EntityType="Self.CartridgeStatus" />
+          <EntitySet Name="CartridgeType" EntityType="Self.CartridgeType" />
+          <EntitySet Name="Computer" EntityType="Self.Computer" />
+          <EntitySet Name="Device" EntityType="Self.Device" />
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeePosition" EntityType="Self.EmployeePosition" />
+          <EntitySet Name="LaptopIssuance" EntityType="Self.LaptopIssuance" />
+          <EntitySet Name="Printer" EntityType="Self.Printer" />
+          <EntitySet Name="PrinterStatus" EntityType="Self.PrinterStatus" />
+          <EntitySet Name="ReasonForReplacement" EntityType="Self.ReasonForReplacement" />
+          <AssociationSet Name="FK__Cabinet__Bulding__619B8048" Association="Self.FK__Cabinet__Bulding__619B8048">
+            <End Role="Bulding" EntitySet="Bulding" />
+            <End Role="Cabinet" EntitySet="Cabinet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Cartr__46E78A0C" Association="Self.FK__Cartridge__Cartr__46E78A0C">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cartridge__Statu__47DBAE45" Association="Self.FK__Cartridge__Statu__47DBAE45">
+            <End Role="CartridgeStatus" EntitySet="CartridgeStatus" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cartridge_CartridgeType" Association="Self.FK_Cartridge_CartridgeType">
+            <End Role="CartridgeType" EntitySet="CartridgeType" />
+            <End Role="Cartridge" EntitySet="Cartridge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Cartridge" Association="Self.FK_CartridgeReplacement_Log_Cartridge">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Cartridge1" Association="Self.FK_CartridgeReplacement_Log_Cartridge1">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Printer_Cartridge" Association="Self.FK_Printer_Cartridge">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Printer" Association="Self.FK_CartridgeReplacement_Log_Printer">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_ReasonForReplacement" Association="Self.FK_CartridgeReplacement_Log_ReasonForReplacement">
+            <End Role="ReasonForReplacement" EntitySet="ReasonForReplacement" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Computer_Device" Association="Self.FK_Computer_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Computer" EntitySet="Computer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Device__DeviceTy__398D8EEE" Association="Self.FK__Device__DeviceTy__398D8EEE">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Printer__Printer__3C69FB99" Association="Self.FK__Printer__Printer__3C69FB99">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaptopIssuance_Employee" Association="Self.FK_LaptopIssuance_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="LaptopIssuance" EntitySet="LaptopIssuance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Printer_PrinterStatus" Association="Self.FK_Printer_PrinterStatus">
+            <End Role="PrinterStatus" EntitySet="PrinterStatus" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="Cabinet_Device" Association="Self.Cabinet_Device">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="Cabinet_Employee" Association="Self.Cabinet_Employee">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="CartridgeCompatibility" Association="Self.CartridgeCompatibility">
+            <End Role="CartridgeModel" EntitySet="CartridgeModel" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="Device_LaptopIssuance" Association="Self.Device_LaptopIssuance">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="LaptopIssuance" EntitySet="LaptopIssuance" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_EmployeePosition" Association="Self.Employee_EmployeePosition">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeePosition" EntitySet="EmployeePosition" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeLIT" Association="Self.EmployeeLIT">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeePosition" EntitySet="EmployeePosition" />
+          </AssociationSet>
+          <FunctionImport Name="AddCartridge">
+            <Parameter Name="CartridgeModelID" Mode="In" Type="Int32" />
+            <Parameter Name="CartridgeNumber" Mode="In" Type="String" />
+            <Parameter Name="StatusID" Mode="In" Type="Int32" />
+            <Parameter Name="CartridgeTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCabinetsWithPrinters" ReturnType="Collection(LitDBModel.GetCabinetsWithPrinters_Result)" />
+          <FunctionImport Name="GetCompatibleCartridgesForPrinter" ReturnType="Collection(LitDBModel.GetCompatibleCartridgesForPrinter_Result)">
+          <Parameter Name="PrinterID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCompatibleCartridgesInStockForPrinter" ReturnType="Collection(LitDBModel.GetCompatibleCartridgesInStockForPrinter_Result)">
+          <Parameter Name="PrinterID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetEmployeesInCabinet" ReturnType="Collection(LitDBModel.GetEmployeesInCabinet_Result)">
+          <Parameter Name="CabinetID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPrintersInCabinet" ReturnType="Collection(LitDBModel.GetPrintersInCabinet_Result)">
+          <Parameter Name="CabinetID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InstallCartridgeToPrinter">
+            <Parameter Name="NewCartridgeID" Mode="In" Type="Int32" />
+            <Parameter Name="ReasonID" Mode="In" Type="Int32" />
+            <Parameter Name="EmployeeLITID" Mode="In" Type="Int32" />
+            <Parameter Name="Comment" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(LitDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(LitDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="CabinetDevicesEmployees" EntityType="LitDBModel.CabinetDevicesEmployees" />
+        </EntityContainer>
+        <ComplexType Name="GetCabinetsWithPrinters_Result">
+          <Property Type="Int32" Name="CabinetID" Nullable="false" />
+          <Property Type="String" Name="CabinetName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetCompatibleCartridgesForPrinter_Result">
+          <Property Type="Int32" Name="CartridgeID" Nullable="false" />
+          <Property Type="String" Name="CartridgeNumber" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="CartridgeModel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Manufacturer" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CartridgeType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="NowState" Nullable="true" MaxLength="51" />
+        </ComplexType>
+        <ComplexType Name="GetCompatibleCartridgesInStockForPrinter_Result">
+          <Property Type="Int32" Name="CartridgeID" Nullable="false" />
+          <Property Type="String" Name="CartridgeNumber" Nullable="false" MaxLength="4" />
+        </ComplexType>
+        <ComplexType Name="GetEmployeesInCabinet_Result">
+          <Property Type="Int32" Name="EmployeeID" Nullable="false" />
+          <Property Type="String" Name="FIO" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetPrintersInCabinet_Result">
+          <Property Type="Int32" Name="PrinterID" Nullable="false" />
+          <Property Type="String" Name="PrinterInfo" Nullable="false" MaxLength="101" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="CabinetDevicesEmployees">
+          <Key>
+            <PropertyRef Name="CabinetName" />
+          </Key>
+          <Property Name="CabinetName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DevicesInCabinet" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeesInCabinet" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище LitDBModelContainer" CdmEntityContainer="LitDBEntities">
+          <EntitySetMapping Name="Bulding">
+            <EntityTypeMapping TypeName="LitDBModel.Bulding">
+              <MappingFragment StoreEntitySet="Bulding">
+                <ScalarProperty Name="BuldingID" ColumnName="BuldingID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cabinet">
+            <EntityTypeMapping TypeName="LitDBModel.Cabinet">
+              <MappingFragment StoreEntitySet="Cabinet">
+                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+                <ScalarProperty Name="BuldingID" ColumnName="BuldingID" />
+                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cartridge">
+            <EntityTypeMapping TypeName="LitDBModel.Cartridge">
+              <MappingFragment StoreEntitySet="Cartridge">
+                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
+                <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
+                <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="CartridgeTypeID" ColumnName="CartridgeTypeID" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="NumberOfRefills" ColumnName="NumberOfRefills" />
+                <ScalarProperty Name="LastDateOfRefill" ColumnName="LastDateOfRefill" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeModel">
+            <EntityTypeMapping TypeName="LitDBModel.CartridgeModel">
+              <MappingFragment StoreEntitySet="CartridgeModel">
+                <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeReplacement_Log">
+            <EntityTypeMapping TypeName="LitDBModel.CartridgeReplacement_Log">
+              <MappingFragment StoreEntitySet="CartridgeReplacement_Log">
+                <ScalarProperty Name="ReplacementID" ColumnName="ReplacementID" />
+                <ScalarProperty Name="OldCartridgeID" ColumnName="OldCartridgeID" />
+                <ScalarProperty Name="NewCartridgeID" ColumnName="NewCartridgeID" />
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+                <ScalarProperty Name="EmployeeLitID" ColumnName="EmployeeLitID" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeStatus">
+            <EntityTypeMapping TypeName="LitDBModel.CartridgeStatus">
+              <MappingFragment StoreEntitySet="CartridgeStatus">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartridgeType">
+            <EntityTypeMapping TypeName="LitDBModel.CartridgeType">
+              <MappingFragment StoreEntitySet="CartridgeType">
+                <ScalarProperty Name="CartridgeTypeID" ColumnName="CartridgeTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Computer">
+            <EntityTypeMapping TypeName="LitDBModel.Computer">
+              <MappingFragment StoreEntitySet="Computer">
+                <ScalarProperty Name="ComputerID" ColumnName="ComputerID" />
+                <ScalarProperty Name="ComputerName" ColumnName="ComputerName" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Device">
+            <EntityTypeMapping TypeName="LitDBModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Characteristics" ColumnName="Characteristics" />
+                <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceType">
+            <EntityTypeMapping TypeName="LitDBModel.DeviceType">
+              <MappingFragment StoreEntitySet="DeviceType">
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="LitDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeePosition">
+            <EntityTypeMapping TypeName="LitDBModel.EmployeePosition">
+              <MappingFragment StoreEntitySet="EmployeePosition">
+                <ScalarProperty Name="EmployeePositionID" ColumnName="EmployeePositionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LaptopIssuance">
+            <EntityTypeMapping TypeName="LitDBModel.LaptopIssuance">
+              <MappingFragment StoreEntitySet="LaptopIssuance">
+                <ScalarProperty Name="IssuanceID" ColumnName="IssuanceID" />
+                <ScalarProperty Name="DateIssuance" ColumnName="DateIssuance" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="EmployeeIDIssuedBy" ColumnName="EmployeeIDIssuedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Printer">
+            <EntityTypeMapping TypeName="LitDBModel.Printer">
+              <MappingFragment StoreEntitySet="Printer">
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+                <ScalarProperty Name="NumbersOfRepairs" ColumnName="NumbersOfRepairs" />
+                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
+                <ScalarProperty Name="PrinterStatusID" ColumnName="PrinterStatusID" />
+                <ScalarProperty Name="CartridgeReplacementDate" ColumnName="CartridgeReplacementDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrinterStatus">
+            <EntityTypeMapping TypeName="LitDBModel.PrinterStatus">
+              <MappingFragment StoreEntitySet="PrinterStatus">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReasonForReplacement">
+            <EntityTypeMapping TypeName="LitDBModel.ReasonForReplacement">
+              <MappingFragment StoreEntitySet="ReasonForReplacement">
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Cabinet_Device" TypeName="LitDBModel.Cabinet_Device" StoreEntitySet="Cabinet_Device">
+            <EndProperty Name="Cabinet">
+              <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+            </EndProperty>
+            <EndProperty Name="Device">
+              <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Cabinet_Employee" TypeName="LitDBModel.Cabinet_Employee" StoreEntitySet="Cabinet_Employee">
+            <EndProperty Name="Cabinet">
+              <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="CartridgeCompatibility" TypeName="LitDBModel.CartridgeCompatibility" StoreEntitySet="CartridgeCompatibility">
+            <EndProperty Name="CartridgeModel">
+              <ScalarProperty Name="CartridgeModelID" ColumnName="CartridgeModelID" />
+            </EndProperty>
+            <EndProperty Name="Printer">
+              <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Device_LaptopIssuance" TypeName="LitDBModel.Device_LaptopIssuance" StoreEntitySet="Device_LaptopIssuance">
+            <EndProperty Name="Device">
+              <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+            </EndProperty>
+            <EndProperty Name="LaptopIssuance">
+              <ScalarProperty Name="IssuanceID" ColumnName="LaptopIssuanceID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Employee_EmployeePosition" TypeName="LitDBModel.Employee_EmployeePosition" StoreEntitySet="Employee_EmployeePosition">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+            </EndProperty>
+            <EndProperty Name="EmployeePosition">
+              <ScalarProperty Name="EmployeePositionID" ColumnName="EmployeePositionID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EmployeeLIT" TypeName="LitDBModel.EmployeeLIT" StoreEntitySet="EmployeeLIT">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+            </EndProperty>
+            <EndProperty Name="EmployeePosition">
+              <ScalarProperty Name="EmployeePositionID" ColumnName="EmployeePositionID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="AddCartridge" FunctionName="Хранилище LitDBModel.AddCartridge" />
+          <FunctionImportMapping FunctionImportName="GetCabinetsWithPrinters" FunctionName="Хранилище LitDBModel.GetCabinetsWithPrinters">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.GetCabinetsWithPrinters_Result">
+                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCompatibleCartridgesForPrinter" FunctionName="Хранилище LitDBModel.GetCompatibleCartridgesForPrinter">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.GetCompatibleCartridgesForPrinter_Result">
+                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
+                <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
+                <ScalarProperty Name="CartridgeModel" ColumnName="CartridgeModel" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="CartridgeType" ColumnName="CartridgeType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NowState" ColumnName="NowState" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCompatibleCartridgesInStockForPrinter" FunctionName="Хранилище LitDBModel.GetCompatibleCartridgesInStockForPrinter">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.GetCompatibleCartridgesInStockForPrinter_Result">
+                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
+                <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployeesInCabinet" FunctionName="Хранилище LitDBModel.GetEmployeesInCabinet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.GetEmployeesInCabinet_Result">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPrintersInCabinet" FunctionName="Хранилище LitDBModel.GetPrintersInCabinet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.GetPrintersInCabinet_Result">
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+                <ScalarProperty Name="PrinterInfo" ColumnName="PrinterInfo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InstallCartridgeToPrinter" FunctionName="Хранилище LitDBModel.InstallCartridgeToPrinter" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище LitDBModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище LitDBModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище LitDBModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище LitDBModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище LitDBModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LitDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище LitDBModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище LitDBModel.sp_upgraddiagrams" />
+          <EntitySetMapping Name="CabinetDevicesEmployees">
+            <EntityTypeMapping TypeName="LitDBModel.CabinetDevicesEmployees">
+              <MappingFragment StoreEntitySet="CabinetDevicesEmployees">
+                <ScalarProperty Name="EmployeesInCabinet" ColumnName="EmployeesInCabinet" />
+                <ScalarProperty Name="DevicesInCabinet" ColumnName="DevicesInCabinet" />
+                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
