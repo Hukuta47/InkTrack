@@ -31,8 +31,9 @@ namespace InkTrack_Report.Windows
             int NewCartridgeID = (Combobox_CartridgeNumber.SelectedItem as GetCompatibleCartridgesForPrinter_Result).CartridgeID;
             int ReasonID = (Listbox_CauseReplaceCartridge.SelectedItem as ReasonForReplacement).ReasonID;
             int EmployeeLITID = (Combobox_WhoReplaced.SelectedItem as EmployeeLIT).EmployeeID;
+            string Description = Textbox_Description.Text;
 
-            App.dBEntities.InstallCartridgeToPrinter(NewCartridgeID, ReasonID, EmployeeLITID);
+            App.dBEntities.InstallCartridgeToPrinter(NewCartridgeID, ReasonID, EmployeeLITID, Description);
         }
     }
 }

@@ -156,7 +156,6 @@ namespace InkTrack_Report.Windows
                 listOfPrintedDocuments[DataGrid_ListOfPrintedDocument.SelectedIndex] = DialogAddPrintout.printoutData;
                 DataGrid_ListOfPrintedDocument.Items.Refresh();
             }
-
             SumPagesPrintouts = 0;
             foreach (PrintoutData printoutData in listOfPrintedDocuments)
             {
@@ -168,7 +167,7 @@ namespace InkTrack_Report.Windows
         private void SaveRequestRefill_Click(object sender, RoutedEventArgs e)
         {
             GenerateFiles(listOfPrintedDocuments);
-            Cartridge cartridge = App.dBEntities.Printer.First(printer => printer.PrinterID == SelectedCabinetID).Cartridge;
+            Cartridge cartridge = App.dBEntities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
             cartridge.Capacity = SumPagesPrintouts;
             App.dBEntities.SaveChanges();
         }
