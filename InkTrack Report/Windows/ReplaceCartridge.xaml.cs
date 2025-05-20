@@ -7,8 +7,6 @@ namespace InkTrack_Report.Windows
 {
     public partial class ReplaceCartridge : Window
     {
-        int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
-        int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
 
         public ReplaceCartridge()
