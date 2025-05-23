@@ -31,18 +31,17 @@ namespace InkTrack_Report.Windows
             
             DataGrid_ListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
 
-
-            Random rnd = new Random();
-            for (int i = 0; i < 20; i++)
-            {
-                listOfPrintedDocuments.Add(new PrintoutData
-                {
-                    Number = i + 1,
-                    NameDocument = $"Report_{DateTime.Today:yyyyMMdd}_{i + 1}",
-                    Date = DateTime.Now.AddDays(-i), // Даты за последние 10 дней
-                    CountPages = rnd.Next(1, 21)     // Случайное число от 1 до 20
-                });
-            }
+            //Random rnd = new Random();
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    listOfPrintedDocuments.Add(new PrintoutData
+            //    {
+            //        Number = i + 1,
+            //        NameDocument = $"Report_{DateTime.Today:yyyyMMdd}_{i + 1}",
+            //        Date = DateTime.Now.AddDays(-i), // Даты за последние 10 дней
+            //        CountPages = rnd.Next(1, 21)     // Случайное число от 1 до 20
+            //    });
+            //}
 
             SumPagesPrintouts = 0;
             foreach (PrintoutData printoutData in listOfPrintedDocuments)
