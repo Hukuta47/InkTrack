@@ -1,6 +1,7 @@
 ﻿using InkTrack_Report.Classes;
 using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
+using InkTrack_Report.Windows.Dialog;
 using System;
 using System.Drawing;
 using System.IO;
@@ -83,13 +84,20 @@ namespace InkTrack_Report
                     {
                         notifyIcon.Icon = SelectIcon("16/IconW.ico");
                     }
-
                     notifyIcon.Visible = true;
                 }
             }
 
         }
-        void NotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion().Show();
+        void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:  new CreateRequestRefill().Show(); break;
+                case MouseButtons.Right: if (new AdminAuthDialog().ShowDialog() == true) new WindowTraySelectFuntion().Show(); break;
+            }
+            
+        }
 
         protected override void OnExit(ExitEventArgs e)
         {

@@ -27,14 +27,9 @@
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
 		<StackPanel Margin="8">
-
-			<Button Content="Создание заявки" Width="364" Height="60" Click="OpenCreateRequestRefill_Click" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
-			<Rectangle Height="10"/>
 			<Button Content="Замена картриджа" Width="364" Height="60" Click="OpenReplaceCartridge" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
 			<Rectangle Height="10"/>
 			<Button Content="Настройки" Width="364" Height="60" Click="OpenSettings_Click" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
-			<Rectangle Height="10"/>
-			<Button Content="О программе" Width="364" Height="60" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
 			<Rectangle Height="10"/>
 			<Button Content="Закрыть Request Refill" Width="364" Height="60" Click="Shutdown_Click" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
 

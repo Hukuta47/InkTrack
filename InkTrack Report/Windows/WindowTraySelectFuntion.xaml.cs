@@ -21,30 +21,11 @@ namespace InkTrack_Report.Windows
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
-
-            if (new AdminAuthDialog().ShowDialog() == true)
-            {
-                Deactivated -= Window_Deactivated;
-                Application.Current.Shutdown();
-            }
+            Deactivated -= Window_Deactivated;
+            Application.Current.Shutdown();
         }
-        private void OpenSettings_Click(object sender, RoutedEventArgs e)
-        {
-            if (new AdminAuthDialog().ShowDialog() == true)
-            {
-                new Settings().Show();
-            }
-        }
-        private void OpenCreateRequestRefill_Click(object sender, RoutedEventArgs e) => new CreateRequestRefill().Show();
-
-        private void OpenReplaceCartridge(object sender, RoutedEventArgs e)
-        {
-            if (new AdminAuthDialog().ShowDialog() == true)
-            {
-                new ReplaceCartridge().Show();
-            }
-        }
-
+        private void OpenSettings_Click(object sender, RoutedEventArgs e) => new Settings().Show();
+        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().Show();
         private void Window_Deactivated(object sender, EventArgs e)
         {
             Close();
