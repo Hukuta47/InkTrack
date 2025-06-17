@@ -23,14 +23,11 @@ namespace InkTrack_Report
         static public string pathApplication;
         static public string pathJsonSettingsFile;
 
-
         protected override void OnStartup(StartupEventArgs e)
         {
-
             base.OnStartup(e);
 
             entities.CartridgeStatus.ToList();
-
             if (e.Args.Length > 0)
             {
                 ShutdownMode = ShutdownMode.OnLastWindowClose;
@@ -60,7 +57,6 @@ namespace InkTrack_Report
                     "SELECT * FROM __InstanceCreationEvent " +
                     "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
                 );
-
                 if (InkTrack_Report.Properties.Settings.Default.isFirstStartup)
                 {
                     if (new SettingsSetupWizard().ShowDialog() == true)
@@ -98,6 +94,10 @@ namespace InkTrack_Report
                         notifyIcon.Icon = SelectIcon("16/IconW.ico");
                     }
                     notifyIcon.Visible = true;
+
+                    watcherPrinting = new ManagementEventWatcher(query);
+                    watcherPrinting.EventArrived += OnPrintJobCreated;
+                    watcherPrinting.Start();
                 }
             }
         }

@@ -15,6 +15,12 @@
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 			<Setter Property="Foreground" Value="#ffffff"/>
 			<Setter Property="Background" Value="#3b62ed"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Style.Resources>
+				<Style TargetType="Border">
+					<Setter Property="CornerRadius" Value="12"/>
+				</Style>
+			</Style.Resources>
 		</Style>
 
 		<Style TargetType="Button" x:Key="CancelButton">
@@ -23,6 +29,12 @@
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 			<Setter Property="Foreground" Value="#ffffff"/>
 			<Setter Property="Background" Value="#ed3b62"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Style.Resources>
+				<Style TargetType="Border">
+					<Setter Property="CornerRadius" Value="12"/>
+				</Style>
+			</Style.Resources>
 		</Style>
 
 		<Style TargetType="Button" x:Key="AcceptButton">
@@ -31,6 +43,12 @@
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 			<Setter Property="Foreground" Value="#000000"/>
 			<Setter Property="Background" Value="#3bed62"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Style.Resources>
+				<Style TargetType="Border">
+					<Setter Property="CornerRadius" Value="12"/>
+				</Style>
+			</Style.Resources>
 		</Style>
 
 		<Style TargetType="ComboBox">

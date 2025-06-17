@@ -144,7 +144,6 @@ namespace InkTrack_Report.Windows
                 Button_Accept.IsEnabled = false;
             }
         }
-
         private void ChangePrintoutData_Click(object sender, RoutedEventArgs e)
         {
             PrintoutInfo DialogAddPrintout = new PrintoutInfo(DataGrid_ListOfPrintedDocument.SelectedItem as PrintoutData);
@@ -169,7 +168,6 @@ namespace InkTrack_Report.Windows
             cartridge.Capacity = SumPagesPrintouts;
             App.entities.SaveChanges();
         }
-
         private void DataGridListOfPrintedDocument_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (DataGrid_ListOfPrintedDocument.SelectedItems.Count == 1)
