@@ -19,7 +19,7 @@ namespace InkTrack_Report.Windows.Dialog
         public PrintoutData printoutData;
 
         DateTime MaxDateSelect = DateTime.Now.Date;
-        DateTime? MinDateSelect = App.dBEntities.Printer.First(p => p.PrinterID == Properties.Settings.Default.SelectedPrinterID).CartridgeReplacementDate;
+        DateTime? MinDateSelect = App.entities.Printer.First(p => p.PrinterID == Properties.Settings.Default.SelectedPrinterID).CartridgeReplacementDate;
         bool isChange;
 
         public PrintoutInfo()

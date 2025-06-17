@@ -10,9 +10,9 @@ namespace InkTrack_Report.Windows
         {
             InitializeComponent();
 
-            Combobox_SelectCabinet.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
-            Combobox_SelectEmployee.ItemsSource = App.dBEntities.GetEmployeesInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
-            Combobox_SelectPrinter.ItemsSource = App.dBEntities.GetPrintersInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
+            Combobox_SelectCabinet.ItemsSource = App.entities.GetCabinetsWithPrinters().ToList();
+            Combobox_SelectEmployee.ItemsSource = App.entities.GetEmployeesInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
+            Combobox_SelectPrinter.ItemsSource = App.entities.GetPrintersInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
 
             Combobox_SelectEmployee.SelectedIndex = 0; 
             Combobox_SelectPrinter.SelectedIndex = 0; 
@@ -50,8 +50,8 @@ namespace InkTrack_Report.Windows
 
         private void Combobox_SelectCabinet_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            Combobox_SelectEmployee.ItemsSource = App.dBEntities.GetEmployeesInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
-            Combobox_SelectPrinter.ItemsSource = App.dBEntities.GetPrintersInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
+            Combobox_SelectEmployee.ItemsSource = App.entities.GetEmployeesInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
+            Combobox_SelectPrinter.ItemsSource = App.entities.GetPrintersInCabinet((int)Combobox_SelectCabinet.SelectedValue).ToList();
 
             Combobox_SelectEmployee.SelectedIndex = 0;
             Combobox_SelectPrinter.SelectedIndex = 0;

@@ -22,9 +22,9 @@ namespace InkTrack_Report.Windows
         {
             InitializeComponent();
 
-            ComboboxCabinetSelect.ItemsSource = App.dBEntities.GetCabinetsWithPrinters().ToList();
-            ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID).ToList();
-            ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID).ToList();
+            ComboboxCabinetSelect.ItemsSource = App.entities.GetCabinetsWithPrinters().ToList();
+            ComboboxFromWhoDefaultSelect.ItemsSource = App.entities.GetEmployeesInCabinet(SelectedCabinetID).ToList();
+            ComboboxPrinterDefaultSelect.ItemsSource = App.entities.GetPrintersInCabinet(SelectedCabinetID).ToList();
 
 
             ComboboxCabinetSelect.SelectedValue = SelectedCabinetID;
@@ -38,14 +38,14 @@ namespace InkTrack_Report.Windows
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int SelectedCabinetID = ((GetCabinetsWithPrinters_Result)ComboboxCabinetSelect.SelectedItem).CabinetID;
-            CountEmployees = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID).Count();
-            CountPrinters = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID).Count();
+            CountEmployees = App.entities.GetEmployeesInCabinet(SelectedCabinetID).Count();
+            CountPrinters = App.entities.GetPrintersInCabinet(SelectedCabinetID).Count();
 
-            ComboboxFromWhoDefaultSelect.ItemsSource = App.dBEntities.GetEmployeesInCabinet(SelectedCabinetID);
+            ComboboxFromWhoDefaultSelect.ItemsSource = App.entities.GetEmployeesInCabinet(SelectedCabinetID);
             ComboboxFromWhoDefaultSelect.SelectedIndex = 0;
             ComboboxFromWhoDefaultSelect.IsEnabled = CountEmployees != 1;
 
-            ComboboxPrinterDefaultSelect.ItemsSource = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID);
+            ComboboxPrinterDefaultSelect.ItemsSource = App.entities.GetPrintersInCabinet(SelectedCabinetID);
             ComboboxPrinterDefaultSelect.SelectedIndex = 0;
             ComboboxPrinterDefaultSelect.IsEnabled = CountPrinters != 1;
         }

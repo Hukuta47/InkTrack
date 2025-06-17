@@ -14,13 +14,12 @@ using System.Text;
 using System.Diagnostics;
 
 namespace InkTrack_Report.Windows
-{ 
+{
     public partial class CreateRequestRefill : Window
     {
         int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
         int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
-
 
 
         List<PrintoutData> listOfPrintedDocuments = new List<PrintoutData>();
@@ -29,7 +28,7 @@ namespace InkTrack_Report.Windows
         {
             InitializeComponent();
             
-            DataGrid_ListOfPrintedDocument.ItemsSource = listOfPrintedDocuments;
+            DataGrid_ListOfPrintedDocument.ItemsSource = App.printoutDatas;
 
             //Random rnd = new Random();
             //for (int i = 0; i < 20; i++)
@@ -166,9 +165,9 @@ namespace InkTrack_Report.Windows
         private void SaveRequestRefill_Click(object sender, RoutedEventArgs e)
         {
             GenerateFiles(listOfPrintedDocuments);
-            Cartridge cartridge = App.dBEntities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
+            Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
             cartridge.Capacity = SumPagesPrintouts;
-            App.dBEntities.SaveChanges();
+            App.entities.SaveChanges();
         }
 
         private void DataGridListOfPrintedDocument_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -227,7 +226,7 @@ namespace InkTrack_Report.Windows
             header.Alignment = Element.ALIGN_LEFT;
             header.SpacingAfter = 10f;
             header.IndentationLeft = 325;
-            Phrase headerPhrase = new Phrase($"Директору ГАПОУ\n«Забайкальский горный колледж имени И.М. Агошкова»\nН.В. Зыкову\nот {App.dBEntities.Employee.First(employee => employee.EmployeeID == SelectedEmployeeID).FIO}", regularFont);
+            Phrase headerPhrase = new Phrase($"Директору ГАПОУ\n«Забайкальский горный колледж имени И.М. Агошкова»\nН.В. Зыкову\nот {App.entities.Employee.First(employee => employee.EmployeeID == SelectedEmployeeID).FIO}", regularFont);
             headerPhrase.Leading = 1; // Высота строки = размер шрифта (12)
             header.Add(headerPhrase);
             document.Add(header);
@@ -239,10 +238,10 @@ namespace InkTrack_Report.Windows
 
 
 
-            int CartridgeIDInstalled = App.dBEntities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge.CartridgeID;
-            string NumberCartridge = App.dBEntities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;
-            string PrinterName = App.dBEntities.GetPrintersInCabinet(SelectedCabinetID).First(printer => printer.PrinterID == SelectedPrinterID).PrinterInfo;
-            string CabinetName = App.dBEntities.Cabinet.First(cabinet => cabinet.CabinetID == SelectedCabinetID).CabinetName;
+            int CartridgeIDInstalled = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge.CartridgeID;
+            string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;
+            string PrinterName = App.entities.GetPrintersInCabinet(SelectedCabinetID).First(printer => printer.PrinterID == SelectedPrinterID).PrinterInfo;
+            string CabinetName = App.entities.Cabinet.First(cabinet => cabinet.CabinetID == SelectedCabinetID).CabinetName;
 
 
             Paragraph request = new Paragraph(
