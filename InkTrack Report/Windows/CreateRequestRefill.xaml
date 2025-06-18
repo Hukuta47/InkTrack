@@ -91,19 +91,8 @@
 			<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="8">
 
 
-				<Button Content="Сохранить" Name="Button_Accept" FontFamily="{StaticResource Proletarsk}" Background="#FF3BED62" Width="207" Height="60" FontSize="24" Click="SaveRequestRefill_Click">
-					<Button.Style>
-						<Style TargetType="Button">
-							<!-- по умолчанию кнопка неактивна -->
-							<Setter Property="IsEnabled" Value="True"/>
-							<Style.Triggers>
-								<!-- когда в DataGrid есть хоть один элемент — включаем кнопку -->
-								<DataTrigger Binding="{Binding ElementName=DataGrid_ListOfPrintedDocument, Path=HasItems}" Value="True">
-									<Setter Property="IsEnabled" Value="True"/>
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</Button.Style>
+				<Button Content="Сохранить" Name="Button_Accept" Style="{StaticResource AcceptButton}" Width="207" Height="60" Click="SaveRequestRefill_Click">
+					
 				</Button>				
 				<Rectangle Width="8"/>
 				<StackPanel Width="367" Orientation="Horizontal" FlowDirection="RightToLeft">
