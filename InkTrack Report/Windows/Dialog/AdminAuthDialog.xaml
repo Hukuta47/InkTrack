@@ -12,11 +12,6 @@
 		WindowStartupLocation="CenterScreen" 
 		SizeToContent="WidthAndHeight"
 		ResizeMode="NoResize">
-	<Window.Resources>
-		<FontFamily x:Key="Proletarsk">
-			pack://application:,,,/Fonts/Proletarsk.ttf#Proletarsk
-		</FontFamily>
-	</Window.Resources>
 	<Border Background="White" CornerRadius="20" Width="484" Height="auto" Margin="20,20,20,30">
 		<Border.Effect>
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
@@ -33,13 +28,13 @@
 			<StackPanel Grid.Row="0" Margin="32">
 
 				<StackPanel>
-					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Логин"/>
+					<TextBlock Text="Логин"/>
 					<Rectangle Height="8"/>
 					<TextBox FontFamily="{StaticResource Proletarsk}" Name="Textbox_Login"/>
 				</StackPanel>
 				<Rectangle Height="16"/>
 				<StackPanel>
-					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Пароль" />
+					<TextBlock Text="Пароль" />
 					<Rectangle Height="8"/>
 					<PasswordBox FontFamily="{StaticResource Proletarsk}" Name="Passwordbox_Password"/>
 				</StackPanel>

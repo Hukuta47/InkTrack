@@ -41,7 +41,7 @@
 
 				<Rectangle Grid.ColumnSpan="2" Fill="Transparent" Panel.ZIndex="1" Name="PanelDrag" MouseDown="PanelDrag_MouseDown"/>
 				<TextBlock Text="Мастер настройки InkTrack Report" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,0,16,0" FontFamily="{StaticResource Proletarsk}"/>
-				<Button Grid.Column="4" Margin="0,8,8,8" Width="40" Height="40" Background="#FFED3B62" Click="CloseWindow_Click">
+				<Button Grid.Column="4" Margin="0,8,8,8" Width="40" Height="40" Padding="0" Style="{StaticResource CancelButton}" Click="CloseWindow_Click">
 					<Button.Content>
 						<Image Source="/Resources/24/x.png" Width="24" />
 					</Button.Content>

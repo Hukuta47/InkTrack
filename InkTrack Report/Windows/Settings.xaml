@@ -28,7 +28,7 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="56"/>
 				<RowDefinition/>
-				<RowDefinition Height="92"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 
 			<Grid Grid.Row="0">
@@ -43,12 +43,12 @@
 
 				<Rectangle Grid.ColumnSpan="2" Fill="Transparent" Panel.ZIndex="1" Name="PanelDrag" MouseDown="PanelDrag_MouseDown"/>
 				<TextBlock Text="Настройки" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,0,16,0" FontFamily="{StaticResource Proletarsk}"/>
-				<Button Grid.Column="2" Margin="8,8,0,8" Width="40" Height="40" Background="#FF3B62ED">
+				<Button Grid.Column="2" Margin="8,8,0,8" Width="40" Height="40" Padding="0">
 					<Button.Content>
-						<Image Source="/Resources/24/Help circle.png" Width="24" />
+						<Image Source="/Resources/24/Help circle.png" Width="24"/>
 					</Button.Content>
 				</Button>
-				<Button Grid.Column="4" Margin="0,8,8,8" Width="40" Height="40" Click="CloseWindow_Click" Style="{StaticResource CancelButton}">
+				<Button Grid.Column="4" Margin="0,8,8,8" Width="40" Height="40" Padding="0" Click="CloseWindow_Click" Style="{StaticResource CancelButton}">
 					<Button.Content>
 						<Image Source="/Resources/24/x.png" Width="24" />
 					</Button.Content>
@@ -84,7 +84,7 @@
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
 
-				<Button Grid.Column="0" Content="Сохранить" Width="207" Click="Save_Click" Style="{StaticResource AcceptButton}"/>
+				<Button Grid.Column="0" Content="Сохранить" Click="Save_Click" Style="{StaticResource AcceptButton}"/>
 				<Button Grid.Column="2" Content="Отмена" Width="207" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
 
 			</Grid>

@@ -92,9 +92,8 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
-			
-		</Style>
 
+		</Style>
 		<Style TargetType="Button" x:Key="CancelButton">
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="Padding" Value="32,18,32,18"/>
@@ -176,7 +175,6 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-
 		<Style TargetType="Button" x:Key="AcceptButton">
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="Padding" Value="32,18,32,18"/>
@@ -259,6 +257,11 @@
 			</Setter>
 		</Style>
 
+		<Style TargetType="TextBlock">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
+		</Style>
+		
 		<Style TargetType="ComboBox">
 			<Setter Property="Height" Value="48"/>
 			<Setter Property="FontSize" Value="24"/>

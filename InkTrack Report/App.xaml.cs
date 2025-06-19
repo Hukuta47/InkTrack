@@ -35,6 +35,7 @@ namespace InkTrack_Report
             if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
             {
                 string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                Directory.CreateDirectory(pathApplication);
                 File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
             }
 
@@ -68,8 +69,8 @@ namespace InkTrack_Report
             else
             {
                 string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
-                var jsonData = JsonConvert.DeserializeObject(FileData);
-                printoutDatas = jsonData as List<PrintoutData>;
+                List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
+                printoutDatas = jsonData;
 
 
                 notifyIcon = new NotifyIcon();

@@ -14,9 +14,9 @@ namespace InkTrack_Report.Windows.Dialog
         }
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(Username))
             {
-                MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Введите логин", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             DialogResult = ValidateCredentials(Username, Password);
