@@ -2,6 +2,7 @@
 using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,67 +21,30 @@ namespace InkTrack_Report
         ManagementEventWatcher watcherPrinting;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
-        static public string pathApplication;
-        static public string pathJsonSettingsFile;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             entities.CartridgeStatus.ToList();
-            if (e.Args.Length > 0)
-            {
-                ShutdownMode = ShutdownMode.OnLastWindowClose;
-                string filePath = e.Args[0];
 
-                if (File.Exists(filePath) && Path.GetExtension(filePath).Equals(".rr", StringComparison.OrdinalIgnoreCase))
-                {
-                    new CreateRequestRefill(filePath).Show();
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show(
-                        "Неподдерживаемый формат файла.\n" +
-                        "Поддерживается только .rr файлы.",
-                        "Ошибка",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                    Shutdown();
-                }
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            string pathApplication = "C:\\ProgramData\\InkTrackReport";
+
+            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
+            {
+                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
             }
-            else
+
+            var query = new WqlEventQuery(
+                "SELECT * FROM __InstanceCreationEvent " +
+                "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
+            );
+            if (InkTrack_Report.Properties.Settings.Default.isFirstStartup)
             {
-                ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-                var query = new WqlEventQuery(
-                    "SELECT * FROM __InstanceCreationEvent " +
-                    "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
-                );
-                if (InkTrack_Report.Properties.Settings.Default.isFirstStartup)
-                {
-                    if (new SettingsSetupWizard().ShowDialog() == true)
-                    {
-                        // Создаем иконку в трее
-                        notifyIcon = new NotifyIcon();
-                        notifyIcon.MouseClick += NotifyIcon_MouseClick;
-                        if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                        {
-                            notifyIcon.Icon = SelectIcon("16/IconB.ico");
-                        }
-                        else
-                        {
-                            notifyIcon.Icon = SelectIcon("16/IconW.ico");
-                        }
-
-                        notifyIcon.Visible = true;
-
-                        watcherPrinting = new ManagementEventWatcher(query);
-                        watcherPrinting.EventArrived += OnPrintJobCreated;
-                        watcherPrinting.Start();
-                    }
-                }
-                else
+                if (new SettingsSetupWizard().ShowDialog() == true)
                 {
                     // Создаем иконку в трее
                     notifyIcon = new NotifyIcon();
@@ -93,12 +57,36 @@ namespace InkTrack_Report
                     {
                         notifyIcon.Icon = SelectIcon("16/IconW.ico");
                     }
+
                     notifyIcon.Visible = true;
 
                     watcherPrinting = new ManagementEventWatcher(query);
                     watcherPrinting.EventArrived += OnPrintJobCreated;
                     watcherPrinting.Start();
                 }
+            }
+            else
+            {
+                string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
+                var jsonData = JsonConvert.DeserializeObject(FileData);
+                printoutDatas = jsonData as List<PrintoutData>;
+
+
+                notifyIcon = new NotifyIcon();
+                notifyIcon.MouseClick += NotifyIcon_MouseClick;
+                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                {
+                    notifyIcon.Icon = SelectIcon("16/IconB.ico");
+                }
+                else
+                {
+                    notifyIcon.Icon = SelectIcon("16/IconW.ico");
+                }
+                notifyIcon.Visible = true;
+
+                watcherPrinting = new ManagementEventWatcher(query);
+                watcherPrinting.EventArrived += OnPrintJobCreated;
+                watcherPrinting.Start();
             }
         }
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -134,14 +122,13 @@ namespace InkTrack_Report
                 CountPages = pages,
                 Date = dateTime
             };
-            // сохраняем в историю
             lock (printoutDatas)
             {
                 printoutDatas.Add(record);
             }
-
-            // выводим в консоль
-            Console.WriteLine("New print job detected: " + record);
+            string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+            string pathApplication = "C:\\ProgramData\\InkTrackReport";
+            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
         }
         Icon SelectIcon(string FileName)
         {

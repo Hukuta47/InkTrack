@@ -18,7 +18,6 @@ namespace InkTrack_Report.Windows
                 this.Left = workingArea.Right - this.Width + 8;
                 this.Top = workingArea.Bottom - this.Height + 18;
             };
-
             if (ServiceOn)
             {
                 Button_Service.Visibility = Visibility.Collapsed;
