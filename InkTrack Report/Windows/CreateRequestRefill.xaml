@@ -25,7 +25,6 @@
 		<Border.Effect>
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
-
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="56"/>
@@ -96,11 +95,11 @@
 				</Button>				
 				<Rectangle Width="8"/>
 				<StackPanel Width="367" Orientation="Horizontal" FlowDirection="RightToLeft">
-					<Button Content="Изменить" Visibility="Collapsed" Name="Button_Change" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="187" Height="60" FontSize="24" Click="ChangePrintoutData_Click" Foreground="white" Margin="0,0,8,0"/>
+					<Button Content="Изменить" Visibility="Collapsed" Name="Button_Change" Height="60" FontSize="24" Click="ChangePrintoutData_Click" Foreground="white" Margin="0,0,8,0"/>
 					<Button Content="Удалить" Visibility="Collapsed" Name="Button_Delete" FontFamily="{StaticResource Proletarsk}" Background="#FFED3B62" Width="172" Height="60" FontSize="24" Click="DeletePrintoutData_Click" Foreground="white" />
 				</StackPanel>
 				<Rectangle Width="8"/>
-				<Button Content="Добавить запись" FontFamily="{StaticResource Proletarsk}" Background="#3B62ED" Width="287" Height="60" FontSize="24" Click="CreatePrintoutData_Click" Foreground="white"/>
+				<Button Content="Добавить запись" FontSize="24" Click="CreatePrintoutData_Click" Foreground="white"/>
 
 			</StackPanel>
 

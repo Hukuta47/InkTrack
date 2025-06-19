@@ -8,7 +8,7 @@ namespace InkTrack_Report.Windows
 {
     public partial class WindowTraySelectFuntion : Window
     {
-        public WindowTraySelectFuntion()
+        public WindowTraySelectFuntion(bool ServiceOn)
         {
             InitializeComponent();
 
@@ -18,6 +18,12 @@ namespace InkTrack_Report.Windows
                 this.Left = workingArea.Right - this.Width + 8;
                 this.Top = workingArea.Bottom - this.Height + 18;
             };
+
+            if (ServiceOn)
+            {
+                Button_Service.Visibility = Visibility.Collapsed;
+                ServiceButtons.Visibility = Visibility.Visible;
+            }
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
@@ -29,6 +35,13 @@ namespace InkTrack_Report.Windows
         private void Window_Deactivated(object sender, EventArgs e)
         {
             Close();
+        }
+        private void OpenServiceButtons_Click(object sender, EventArgs e)
+        {
+            if (new AdminAuthDialog().ShowDialog() == true)
+            {
+                new WindowTraySelectFuntion(true).Show();
+            }
         }
     }
 }

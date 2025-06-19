@@ -8,48 +8,255 @@
 			pack://application:,,,/Fonts/Proletarsk.ttf#Proletarsk
 		</FontFamily>
 		<SolidColorBrush Color="#3B62ED" x:Key="DefaultColor"/>
-
+		<SolidColorBrush Color="#ed3b62" x:Key="CancelColor"/>
+		<SolidColorBrush Color="#3BED62" x:Key="AcceptColor"/>
 
 		<Style TargetType="Button">
-
-			
-
-			<Setter Property="Height" Value="60"/>
 			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Padding" Value="32,18,32,18"/>
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 			<Setter Property="Foreground" Value="#ffffff"/>
 			<Setter Property="Background" Value="{StaticResource DefaultColor}"/>
 			<Setter Property="BorderThickness" Value="0"/>
 
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border x:Name="border" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12">
+							<Border.Effect>
+								<DropShadowEffect x:Name="shadowEffect" BlurRadius="40" Opacity="0.35" ShadowDepth="20" Direction="-90" Color="#3B62ED"/>
+							</Border.Effect>
 
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup>
+									<VisualState Name="Normal">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+									<VisualState Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="BlurRadius" To="40" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="ShadowDepth" To="20" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+
+									<VisualState Name="Pressed">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="BlurRadius" To="20" Duration="0:0:0.1">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="ShadowDepth" To="10" Duration="0:0:0.1">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+
+									<VisualState Name="Disabled">
+										<Storyboard>
+											<ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" To="#1946BB" Duration="0:0:0.2"/>
+										</Storyboard>
+									</VisualState>
+
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			
 		</Style>
 
 		<Style TargetType="Button" x:Key="CancelButton">
-			<Setter Property="Height" Value="60"/>
 			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Padding" Value="32,18,32,18"/>
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 			<Setter Property="Foreground" Value="#ffffff"/>
-			<Setter Property="Background" Value="#ed3b62"/>
+			<Setter Property="Background" Value="{StaticResource CancelColor}"/>
 			<Setter Property="BorderThickness" Value="0"/>
-			<Style.Resources>
-				<Style TargetType="Border">
-					<Setter Property="CornerRadius" Value="12"/>
-				</Style>
-			</Style.Resources>
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border x:Name="border" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12">
+							<Border.Effect>
+								<DropShadowEffect x:Name="shadowEffect" BlurRadius="40" Opacity="0.35" ShadowDepth="20" Direction="-90" Color="#ed3b62"/>
+							</Border.Effect>
+
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup>
+									<VisualState Name="Normal">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+									<VisualState Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="BlurRadius" To="40" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="ShadowDepth" To="20" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+									<VisualState Name="Pressed">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="BlurRadius" To="20" Duration="0:0:0.1">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="ShadowDepth" To="10" Duration="0:0:0.1">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+
+									<VisualState Name="Disabled">
+										<Storyboard>
+											<ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" To="#1946BB" Duration="0:0:0.2"/>
+										</Storyboard>
+									</VisualState>
+
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 		</Style>
 
 		<Style TargetType="Button" x:Key="AcceptButton">
-			<Setter Property="Height" Value="60"/>
 			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Padding" Value="32,18,32,18"/>
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 			<Setter Property="Foreground" Value="#000000"/>
-			<Setter Property="Background" Value="#3bed62"/>
+			<Setter Property="Background" Value="{StaticResource AcceptColor}"/>
 			<Setter Property="BorderThickness" Value="0"/>
-			<Style.Resources>
-				<Style TargetType="Border">
-					<Setter Property="CornerRadius" Value="12"/>
-				</Style>
-			</Style.Resources>
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border x:Name="border" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12">
+							<Border.Effect>
+								<DropShadowEffect x:Name="shadowEffect" BlurRadius="40" Opacity="0.35" ShadowDepth="20" Direction="-90" Color="#3BED62"/>
+							</Border.Effect>
+
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup>
+									<VisualState Name="Normal">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+									<VisualState Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="BlurRadius" To="40" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="ShadowDepth" To="20" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+									<VisualState Name="Pressed">
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="Opacity" To="0.35" Duration="0:0:0.3">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="BlurRadius" To="20" Duration="0:0:0.1">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="shadowEffect" Storyboard.TargetProperty="ShadowDepth" To="10" Duration="0:0:0.1">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseOut"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</VisualState>
+
+									<VisualState Name="Disabled">
+										<Storyboard>
+											<ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" To="#1946BB" Duration="0:0:0.2"/>
+										</Storyboard>
+									</VisualState>
+
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 		</Style>
 
 		<Style TargetType="ComboBox">

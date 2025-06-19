@@ -22,16 +22,22 @@
 
 
 
-	<Border Background="White" CornerRadius="32" Margin="20,20,20,30" >
+	<Border Background="White" CornerRadius="20" Margin="20,20,20,30" Padding="8">
 		<Border.Effect>
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
-		<StackPanel Margin="8">
-			<Button Content="Замена картриджа" Width="364" Height="60" Click="OpenReplaceCartridge" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
+		<StackPanel ClipToBounds="True">
+			<Button Content="Генерация печатной формы заявки" Click="OpenReplaceCartridge"/>
 			<Rectangle Height="10"/>
-			<Button Content="Настройки" Width="364" Height="60" Click="OpenSettings_Click" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
-			<Rectangle Height="10"/>
-			<Button Content="Закрыть Request Refill" Width="364" Height="60" Click="Shutdown_Click" Background="#FF3B62ED" FontFamily="{StaticResource Proletarsk}" FontSize="24" Foreground="White"/>
+			<Button Content="Сервис" Click="OpenServiceButtons_Click" Name="Button_Service"/>
+			<StackPanel Name="ServiceButtons" Visibility="Collapsed">
+				<Button Content="Замена картриджа" Click="OpenReplaceCartridge">
+				</Button>
+				<Rectangle Height="10"/>
+				<Button Content="Настройки" Click="OpenSettings_Click"/>
+				<Rectangle Height="10"/>
+				<Button Content="Закрыть InkTracker Report" Click="Shutdown_Click"/>
+			</StackPanel>
 
 		</StackPanel>
     </Border>

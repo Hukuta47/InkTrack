@@ -103,11 +103,7 @@ namespace InkTrack_Report
         }
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            switch (e.Button)
-            {
-                case MouseButtons.Left:  new CreateRequestRefill().Show(); break;
-                case MouseButtons.Right: if (new AdminAuthDialog().ShowDialog() == true) new WindowTraySelectFuntion().Show(); break;
-            }
+            new WindowTraySelectFuntion(false).Show();
         }
         protected override void OnExit(ExitEventArgs e)
         {
