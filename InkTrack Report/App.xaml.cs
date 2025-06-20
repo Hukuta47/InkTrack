@@ -117,19 +117,22 @@ namespace InkTrack_Report
             {
                 Console.WriteLine($"Не удалось получить количество страниц: {ex.Message}");
             }
-            var record = new PrintoutData
+            if (pages != 0)
             {
-                NameDocument = document,
-                CountPages = pages,
-                Date = dateTime
-            };
-            lock (printoutDatas)
-            {
-                printoutDatas.Add(record);
+                var record = new PrintoutData
+                {
+                    NameDocument = document,
+                    CountPages = pages,
+                    Date = dateTime
+                };
+                lock (printoutDatas)
+                {
+                    printoutDatas.Add(record);
+                }
+                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                string pathApplication = "C:\\ProgramData\\InkTrackReport";
+                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
             }
-            string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-            string pathApplication = "C:\\ProgramData\\InkTrackReport";
-            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
         }
         Icon SelectIcon(string FileName)
         {

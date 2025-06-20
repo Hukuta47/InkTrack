@@ -12,11 +12,6 @@ namespace InkTrack_Report.Windows
         public ReplaceCartridge()
         {
             InitializeComponent();
-
-            int SelectedPrinter = SelectedPrinterID;
-            Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForReplacement.ToList();
-            Combobox_CartridgeNumber.ItemsSource = App.entities.GetCompatibleCartridgesForPrinter(SelectedPrinter);
-            Combobox_WhoReplaced.ItemsSource = App.entities.EmployeeLIT.ToList();
         }
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -28,12 +23,7 @@ namespace InkTrack_Report.Windows
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            int NewCartridgeID = (Combobox_CartridgeNumber.SelectedItem as GetCompatibleCartridgesForPrinter_Result).CartridgeID;
-            int ReasonID = (Listbox_CauseReplaceCartridge.SelectedItem as ReasonForReplacement).ReasonID;
-            int EmployeeLITID = (Combobox_WhoReplaced.SelectedItem as EmployeeLIT).EmployeeID;
-            string Description = Textbox_Description.Text;
 
-            App.entities.InstallCartridgeToPrinter(NewCartridgeID, ReasonID, EmployeeLITID, Description);
         }
     }
 }
