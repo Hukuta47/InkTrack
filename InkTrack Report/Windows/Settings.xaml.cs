@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json;
-using InkTrack_Report.Classes;
-using InkTrack_Report.Database;
+﻿using InkTrack_Report.Database;
 using System.Linq;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace InkTrack_Report.Windows
 {
@@ -15,17 +13,16 @@ namespace InkTrack_Report.Windows
         int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
 
-
         int CountEmployees;
         int CountPrinters;
+
+        List<Cabinet> cabinetsWithPrinters;
+        List<Employee> employeeInCabinet;
+        List<Printer> printersInCabinet;
         public Settings()
         {
             InitializeComponent();
-
-            ComboboxCabinetSelect.ItemsSource = App.entities.GetCabinetsWithPrinters().ToList();
-            ComboboxFromWhoDefaultSelect.ItemsSource = App.entities.GetEmployeesInCabinet(SelectedCabinetID).ToList();
-            ComboboxPrinterDefaultSelect.ItemsSource = App.entities.GetPrintersInCabinet(SelectedCabinetID).ToList();
-
+            UpdateData();
 
             ComboboxCabinetSelect.SelectedValue = SelectedCabinetID;
             ComboboxFromWhoDefaultSelect.SelectedValue = SelectedEmployeeID;
@@ -37,15 +34,17 @@ namespace InkTrack_Report.Windows
         }
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int SelectedCabinetID = ((GetCabinetsWithPrinters_Result)ComboboxCabinetSelect.SelectedItem).CabinetID;
-            CountEmployees = App.entities.GetEmployeesInCabinet(SelectedCabinetID).Count();
-            CountPrinters = App.entities.GetPrintersInCabinet(SelectedCabinetID).Count();
+            UpdateData();
 
-            ComboboxFromWhoDefaultSelect.ItemsSource = App.entities.GetEmployeesInCabinet(SelectedCabinetID);
+            int SelectedCabinetID = ((Cabinet)ComboboxCabinetSelect.SelectedItem).CabinetID;
+            CountEmployees = employeeInCabinet.Count();
+            CountPrinters = printersInCabinet.Count();
+
+            ComboboxFromWhoDefaultSelect.ItemsSource = employeeInCabinet;
             ComboboxFromWhoDefaultSelect.SelectedIndex = 0;
             ComboboxFromWhoDefaultSelect.IsEnabled = CountEmployees != 1;
 
-            ComboboxPrinterDefaultSelect.ItemsSource = App.entities.GetPrintersInCabinet(SelectedCabinetID);
+            ComboboxPrinterDefaultSelect.ItemsSource = printersInCabinet;
             ComboboxPrinterDefaultSelect.SelectedIndex = 0;
             ComboboxPrinterDefaultSelect.IsEnabled = CountPrinters != 1;
         }
@@ -65,6 +64,31 @@ namespace InkTrack_Report.Windows
             Properties.Settings.Default.SelectedPrinterID = (int)ComboboxPrinterDefaultSelect.SelectedValue;
 
             Properties.Settings.Default.Save();
+        }
+        void UpdateData()
+        {
+            List<Cabinet> CabinetHaveDevice = App.entities.Cabinet.Where(c => c.Device != null).ToList();
+            foreach (var cabinet in CabinetHaveDevice)
+            {
+                List<Device> PrintersList = cabinet.Device.Where(d => d.DeviceTypeID == 2).ToList();
+                if (PrintersList != null)
+                {
+                    cabinetsWithPrinters.Add(cabinet);
+                }
+            }
+
+            ComboboxCabinetSelect.ItemsSource = cabinetsWithPrinters;
+            foreach (var employee in (ComboboxCabinetSelect.SelectedItem as Cabinet).Employee)
+            {
+                employeeInCabinet.Add(employee);
+            }
+            foreach (var printer in (ComboboxCabinetSelect.SelectedItem as Cabinet).Device.Where(d => d.DeviceTypeID == 2))
+            {
+                printersInCabinet.Add(printer.Printer);
+            }
+
+            ComboboxFromWhoDefaultSelect.ItemsSource = employeeInCabinet;
+            ComboboxPrinterDefaultSelect.ItemsSource = printersInCabinet;
         }
     }
 }

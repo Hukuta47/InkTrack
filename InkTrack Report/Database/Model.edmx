@@ -721,51 +721,7 @@
             <End Role="CartridgeModel" EntitySet="CartridgeModel" />
             <End Role="Printer" EntitySet="Printer" />
           </AssociationSet>
-          <FunctionImport Name="GetCabinetsWithPrinters" ReturnType="Collection(LitDBModel.GetCabinetsWithPrinters_Result)" />
-          <FunctionImport Name="GetCompatibleCartridgesForPrinter" ReturnType="Collection(LitDBModel.GetCompatibleCartridgesForPrinter_Result)">
-            <Parameter Name="PrinterID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetCompatibleCartridgesInStockForPrinter" ReturnType="Collection(LitDBModel.GetCompatibleCartridgesInStockForPrinter_Result)">
-            <Parameter Name="PrinterID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetEmployeesInCabinet" ReturnType="Collection(LitDBModel.GetEmployeesInCabinet_Result)">
-            <Parameter Name="CabinetID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetPrintersInCabinet" ReturnType="Collection(LitDBModel.GetPrintersInCabinet_Result)">
-            <Parameter Name="CabinetID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="InstallCartridgeToPrinter">
-            <Parameter Name="NewCartridgeID" Mode="In" Type="Int32" />
-            <Parameter Name="ReasonID" Mode="In" Type="Int32" />
-            <Parameter Name="EmployeeLITID" Mode="In" Type="Int32" />
-            <Parameter Name="Comment" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="GetCabinetsWithPrinters_Result">
-          <Property Type="Int32" Name="CabinetID" Nullable="false" />
-          <Property Type="String" Name="CabinetName" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetCompatibleCartridgesForPrinter_Result">
-          <Property Type="Int32" Name="CartridgeID" Nullable="false" />
-          <Property Type="String" Name="CartridgeNumber" Nullable="false" MaxLength="4" />
-          <Property Type="String" Name="CartridgeModel" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Manufacturer" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CartridgeType" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Status" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="NowState" Nullable="true" MaxLength="51" />
-        </ComplexType>
-        <ComplexType Name="GetCompatibleCartridgesInStockForPrinter_Result">
-          <Property Type="Int32" Name="CartridgeID" Nullable="false" />
-          <Property Type="String" Name="CartridgeNumber" Nullable="false" MaxLength="4" />
-        </ComplexType>
-        <ComplexType Name="GetEmployeesInCabinet_Result">
-          <Property Type="Int32" Name="EmployeeID" Nullable="false" />
-          <Property Type="String" Name="FIO" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetPrintersInCabinet_Result">
-          <Property Type="Int32" Name="PrinterID" Nullable="false" />
-          <Property Type="String" Name="PrinterInfo" Nullable="false" MaxLength="101" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -906,52 +862,6 @@
               <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="GetCabinetsWithPrinters" FunctionName="Хранилище LitDBModel.GetCabinetsWithPrinters">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LitDBModel.GetCabinetsWithPrinters_Result">
-                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
-                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCompatibleCartridgesForPrinter" FunctionName="Хранилище LitDBModel.GetCompatibleCartridgesForPrinter">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LitDBModel.GetCompatibleCartridgesForPrinter_Result">
-                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
-                <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
-                <ScalarProperty Name="CartridgeModel" ColumnName="CartridgeModel" />
-                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
-                <ScalarProperty Name="CartridgeType" ColumnName="CartridgeType" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="NowState" ColumnName="NowState" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCompatibleCartridgesInStockForPrinter" FunctionName="Хранилище LitDBModel.GetCompatibleCartridgesInStockForPrinter">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LitDBModel.GetCompatibleCartridgesInStockForPrinter_Result">
-                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
-                <ScalarProperty Name="CartridgeNumber" ColumnName="CartridgeNumber" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetEmployeesInCabinet" FunctionName="Хранилище LitDBModel.GetEmployeesInCabinet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LitDBModel.GetEmployeesInCabinet_Result">
-                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-                <ScalarProperty Name="FIO" ColumnName="FIO" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetPrintersInCabinet" FunctionName="Хранилище LitDBModel.GetPrintersInCabinet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LitDBModel.GetPrintersInCabinet_Result">
-                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
-                <ScalarProperty Name="PrinterInfo" ColumnName="PrinterInfo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InstallCartridgeToPrinter" FunctionName="Хранилище LitDBModel.InstallCartridgeToPrinter" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
