@@ -60,7 +60,7 @@
 				<StackPanel Width="392">
 					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Кабинет"/>
 					<Rectangle Height="16"/>
-					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="ComboboxCabinetSelect" DisplayMemberPath="CabinetName" SelectedValuePath="CabinetID"/>
+					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Combobox_SelectCabinet" DisplayMemberPath="CabinetName" SelectedValuePath="CabinetID"/>
 				</StackPanel>
 				<Rectangle Height="32"/>
 				<StackPanel Width="392">

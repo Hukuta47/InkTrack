@@ -11,7 +11,8 @@ namespace InkTrack_Report.Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Printer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,7 +27,15 @@ namespace InkTrack_Report.Database
         public Nullable<int> CartridgeID { get; set; }
         public Nullable<int> PrinterStatusID { get; set; }
         public Nullable<System.DateTime> CartridgeReplacementDate { get; set; }
-    
+        public string PrinterName
+        {
+            get
+            {
+                Device device = App.entities.Device.First(d => d.DeviceID == PrinterID);
+                return $"{device.Manufacturer} {device.Model}";
+            }
+        }
+
         public virtual Cartridge Cartridge { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartridgeReplacement_Log> CartridgeReplacement_Log { get; set; }

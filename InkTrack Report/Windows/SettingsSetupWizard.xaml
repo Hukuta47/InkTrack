@@ -61,7 +61,7 @@
 				<StackPanel Margin="32,18,32,32">
 					<TextBlock Grid.Row="0" Text="Укажите принтер" FontSize="24" FontFamily="{StaticResource Proletarsk}"/>
 					<Rectangle Height="16"/>
-					<ComboBox  Grid.Row="1" Name="Combobox_SelectPrinter" SelectedValuePath="PrinterID" DisplayMemberPath="PrinterInfo" SelectedIndex="0"/>
+					<ComboBox  Grid.Row="1" Name="Combobox_SelectPrinter" SelectedValuePath="PrinterID" DisplayMemberPath="PrinterName" SelectedIndex="0"/>
 				</StackPanel>
 			</StackPanel>
 
