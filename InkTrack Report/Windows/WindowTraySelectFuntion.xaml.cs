@@ -16,8 +16,13 @@ using System.Windows;
 
 namespace InkTrack_Report.Windows
 {
+
     public partial class WindowTraySelectFuntion : Window
     {
+        List<Cabinet> cabinetsWithPrinters;
+        List<Employee> employeeInCabinet;
+        List<Printer> printersInCabinet;
+
         int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
         int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
@@ -113,7 +118,7 @@ namespace InkTrack_Report.Windows
 
             int CartridgeIDInstalled = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge.CartridgeID;
             string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;
-            string PrinterName = App.entities.GetPrintersInCabinet(SelectedCabinetID).First(printer => printer.PrinterID == SelectedPrinterID).PrinterInfo;
+            string PrinterName = GetDeviceName(SelectedPrinterID);
             string CabinetName = App.entities.Cabinet.First(cabinet => cabinet.CabinetID == SelectedCabinetID).CabinetName;
 
 
@@ -173,6 +178,12 @@ namespace InkTrack_Report.Windows
             document.Close();
 
             Process.Start(new ProcessStartInfo(pathToSavePdf) { UseShellExecute = true });
+        }
+        string GetDeviceName(int DeviceId)
+        {
+            Device device = App.entities.Device.FirstOrDefault(d => d.DeviceID == DeviceId);
+
+            return $"{device.Manufacturer} {device.Model}";
         }
     }
 }

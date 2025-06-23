@@ -1,6 +1,8 @@
 ﻿using InkTrack_Report.Database;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace InkTrack_Report.Windows
@@ -9,9 +11,12 @@ namespace InkTrack_Report.Windows
     {
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
 
+        List<Cartridge> ListCartritgesForReplace;
         public ReplaceCartridge()
         {
             InitializeComponent();
+
+            Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForReplacement.ToList();
         }
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
         {
