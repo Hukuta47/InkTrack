@@ -21,7 +21,6 @@ namespace InkTrack_Report.Database
             this.CartridgeReplacement_Log1 = new HashSet<CartridgeReplacement_Log>();
             this.Printer = new HashSet<Printer>();
         }
-    
         public int CartridgeID { get; set; }
         public int CartridgeModelID { get; set; }
         public string CartridgeNumber { get; set; }

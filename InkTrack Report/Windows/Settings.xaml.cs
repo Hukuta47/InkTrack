@@ -13,20 +13,29 @@ namespace InkTrack_Report.Windows
         int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
 
-        int CountEmployees;
-        int CountPrinters;
-
-        List<Cabinet> cabinetsWithPrinters = new List<Cabinet>();
-        List<Employee> employeeInCabinet = new List<Employee>();
-        List<Printer> printersInCabinet = new List<Printer>();
         public Settings()
+
         {
             InitializeComponent();
-            InitData();
-        }
-        private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
+            Combobox_SelectCabinet.ItemsSource = App.entities.Cabinet.Where(c => c.Device.Any(d => d.DeviceTypeID == 2)).ToList();
+            Combobox_SelectCabinet.SelectionChanged += ComboboxCabinetSelect_SelectionChanged;
+
+
+            Combobox_SelectCabinet.SelectedValue = SelectedCabinetID;
+            Combobox_SelectEmployee.SelectedValue = SelectedEmployeeID;
+            Combobox_SelectPrinter.SelectedValue = SelectedPrinterID;
+        }
+
+        private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Combobox_SelectEmployee.IsEnabled = (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee.Count > 1 ? true : false;
+            Combobox_SelectEmployee.ItemsSource = (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee;
+            Combobox_SelectPrinter.IsEnabled = (Combobox_SelectCabinet.SelectedItem as Cabinet).Device.Count > 1 ? true : false;
+            Combobox_SelectPrinter.ItemsSource = (Combobox_SelectCabinet.SelectedItem as Cabinet).Device.Where(d => d.DeviceTypeID == 2);
+
+            Combobox_SelectEmployee.SelectedIndex = 0;
+            Combobox_SelectPrinter.SelectedIndex = 0;
         }
 
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
@@ -36,28 +45,13 @@ namespace InkTrack_Report.Windows
         private void CloseWindow_Click() => Close();
         private void CloseWindow_Click(object sender, RoutedEventArgs e) => Close();
         private void Cancel_Click(object sender, RoutedEventArgs e) => CloseWindow_Click();
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.SelectedCabinetID = (int)Combobox_SelectCabinet.SelectedValue;
-            Properties.Settings.Default.SelectedEmployeeID = (int)ComboboxFromWhoDefaultSelect.SelectedValue;
-            Properties.Settings.Default.SelectedPrinterID = (int)ComboboxPrinterDefaultSelect.SelectedValue;
+            Properties.Settings.Default.SelectedEmployeeID = (int)Combobox_SelectEmployee.SelectedValue;
+            Properties.Settings.Default.SelectedPrinterID = (int)Combobox_SelectPrinter.SelectedValue;
 
             Properties.Settings.Default.Save();
-        }
-
-        void InitData()
-        {
-            UpdateData();
-            Combobox_SelectCabinet.ItemsSource = cabinetsWithPrinters;
-        }
-        void UpdateData()
-        {
-            List<Cabinet> CabinetHaveDevice = new List<Cabinet>();
-            foreach (var cabinet in App.entities.Cabinet.Where(c => c.Device.Contains<Device>(new Device().DeviceTypeID = 1)))
-            {
-                
-            }
         }
     }
 }

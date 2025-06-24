@@ -60,19 +60,19 @@
 				<StackPanel Width="392">
 					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Кабинет"/>
 					<Rectangle Height="16"/>
-					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Combobox_SelectCabinet" DisplayMemberPath="CabinetName" SelectedValuePath="CabinetID"/>
+					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Combobox_SelectCabinet" DisplayMemberPath="CabinetName" SelectedValuePath="CabinetID" SelectionChanged="ComboboxCabinetSelect_SelectionChanged"/>
 				</StackPanel>
 				<Rectangle Height="32"/>
 				<StackPanel Width="392">
 					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Сотрудник" />
 					<Rectangle Height="16"/>
-					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="ComboboxFromWhoDefaultSelect" DisplayMemberPath="FIO" SelectedValuePath="EmployeeID"/>
+					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Combobox_SelectEmployee" DisplayMemberPath="FIO" SelectedValuePath="EmployeeID"/>
 				</StackPanel>
 				<Rectangle Height="32"/>
 				<StackPanel Width="392">
 					<TextBlock FontSize="24" FontFamily="{StaticResource Proletarsk}" Text="Принтер"/>
 					<Rectangle Height="16"/>
-					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="ComboboxPrinterDefaultSelect" DisplayMemberPath="PrinterInfo" SelectedValuePath="PrinterID"/>
+					<ComboBox FontSize="24" FontFamily="{StaticResource Proletarsk}" Height="48" Name="Combobox_SelectPrinter" DisplayMemberPath="DeviceName" SelectedValuePath="DeviceID"/>
 				</StackPanel>
 
 			</StackPanel>

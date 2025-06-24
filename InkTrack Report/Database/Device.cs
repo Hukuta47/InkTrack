@@ -27,7 +27,14 @@ namespace InkTrack_Report.Database
         public string Characteristics { get; set; }
         public string InventoryNumber { get; set; }
         public string SerialNumber { get; set; }
-    
+        public string DeviceName
+        {
+            get
+            {
+                return $"{Manufacturer} {Model}";
+            }
+        }
+
         public virtual Printer Printer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cabinet> Cabinet { get; set; }

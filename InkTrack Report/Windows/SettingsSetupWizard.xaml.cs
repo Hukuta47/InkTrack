@@ -1,29 +1,29 @@
 ﻿using InkTrack_Report.Database;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace InkTrack_Report.Windows
 {
     public partial class SettingsSetupWizard : Window
     {
-        List<Cabinet> cabinetsWithPrinters;
-        List<Employee> employeeInCabinet;
-        List<Printer> printersInCabinet;
         public SettingsSetupWizard()
         {
             InitializeComponent();
-            UpdateData();
 
-            Combobox_SelectCabinet.ItemsSource = cabinetsWithPrinters;
-            Combobox_SelectEmployee.ItemsSource = employeeInCabinet;
-            Combobox_SelectPrinter.ItemsSource = printersInCabinet;
+            Combobox_SelectCabinet.ItemsSource = App.entities.Cabinet.Where(c => c.Device.Any(d => d.DeviceTypeID == 2)).ToList();
+            Combobox_SelectCabinet.SelectionChanged += ComboboxCabinetSelect_SelectionChanged;
+        }
+        private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Combobox_SelectEmployee.IsEnabled = (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee.Count > 1 ? true : false;
+            Combobox_SelectEmployee.ItemsSource = (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee;
+            Combobox_SelectPrinter.IsEnabled = (Combobox_SelectCabinet.SelectedItem as Cabinet).Device.Count > 1 ? true : false;
+            Combobox_SelectPrinter.ItemsSource = (Combobox_SelectCabinet.SelectedItem as Cabinet).Device.Where(d => d.DeviceTypeID == 2);
 
-            Combobox_SelectEmployee.SelectedIndex = 0; 
-            Combobox_SelectPrinter.SelectedIndex = 0; 
-
-
+            Combobox_SelectEmployee.SelectedIndex = 0;
+            Combobox_SelectPrinter.SelectedIndex = 0;
         }
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
         {
@@ -52,41 +52,6 @@ namespace InkTrack_Report.Windows
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed) DragMove();
-        }
-
-        private void Combobox_SelectCabinet_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            Combobox_SelectEmployee.ItemsSource = employeeInCabinet;
-            Combobox_SelectPrinter.ItemsSource = printersInCabinet;
-
-            Combobox_SelectEmployee.SelectedIndex = 0;
-            Combobox_SelectPrinter.SelectedIndex = 0;
-        }
-
-        void UpdateData()
-        {
-            List<Cabinet> CabinetHaveDevice = App.entities.Cabinet.Where(c => c.Device != null).ToList();
-            foreach (var cabinet in CabinetHaveDevice)
-            {
-                List<Device> PrintersList = cabinet.Device.Where(d => d.DeviceTypeID == 2).ToList();
-                if (PrintersList != null)
-                {
-                    cabinetsWithPrinters.Add(cabinet);
-                }
-            }
-
-            Combobox_SelectCabinet.ItemsSource = cabinetsWithPrinters;
-            foreach (var employee in (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee)
-            {
-                employeeInCabinet.Add(employee);
-            }
-            foreach (var printer in (Combobox_SelectCabinet.SelectedItem as Cabinet).Device.Where(d => d.DeviceTypeID == 2))
-            {
-                printersInCabinet.Add(printer.Printer);
-            }
-
-            Combobox_SelectEmployee.ItemsSource = employeeInCabinet;
-            Combobox_SelectPrinter.ItemsSource = printersInCabinet;
         }
     }
 }

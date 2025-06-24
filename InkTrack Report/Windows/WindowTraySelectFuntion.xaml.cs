@@ -19,10 +19,6 @@ namespace InkTrack_Report.Windows
 
     public partial class WindowTraySelectFuntion : Window
     {
-        List<Cabinet> cabinetsWithPrinters;
-        List<Employee> employeeInCabinet;
-        List<Printer> printersInCabinet;
-
         int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
         int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
@@ -46,6 +42,7 @@ namespace InkTrack_Report.Windows
                 Button_Service.Visibility = Visibility.Collapsed;
                 ServiceButtons.Visibility = Visibility.Visible;
             }
+            Button_GeneratePrintedFormRequeust.IsEnabled = SumPagesPrintouts == 0 ? false : true;
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
@@ -68,10 +65,20 @@ namespace InkTrack_Report.Windows
 
         private void GeneratePrintOutList(object sender, RoutedEventArgs e)
         {
+            
             GenerateFiles(App.printoutDatas);
+            App.printoutDatas = new List<PrintoutData>();
             Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
-            cartridge.Capacity = SumPagesPrintouts;
+            if (cartridge.Capacity <= SumPagesPrintouts)
+            {
+                cartridge.Capacity = SumPagesPrintouts;
+            }
             App.entities.SaveChanges();
+
+            string JsonData = JsonConvert.SerializeObject(App.printoutDatas, Formatting.Indented);
+            string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
+            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
+
         }
         public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
         {
@@ -84,10 +91,6 @@ namespace InkTrack_Report.Windows
 
 
 
-
-
-
-
             PdfWriter.GetInstance(document, new FileStream(pathToSavePdf, FileMode.Create));
             document.Open();
 
@@ -96,7 +99,6 @@ namespace InkTrack_Report.Windows
             Font regularFont = new Font(baseFont, 12);
             Font boldFont = new Font(baseFont, 12, Font.BOLD);
             Font titleFont = new Font(baseFont, 14, Font.BOLD);
-
 
 
             // Header Section
@@ -113,8 +115,6 @@ namespace InkTrack_Report.Windows
             title.Alignment = Element.ALIGN_CENTER;
             title.SpacingAfter = 10f;
             document.Add(title);
-
-
 
             int CartridgeIDInstalled = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge.CartridgeID;
             string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;

@@ -25,12 +25,11 @@ namespace InkTrack_Report
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             entities.CartridgeStatus.ToList();
 
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            string pathApplication = "C:\\ProgramData\\InkTrackReport";
+            string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
 
             if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
             {
@@ -130,7 +129,7 @@ namespace InkTrack_Report
                     printoutDatas.Add(record);
                 }
                 string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-                string pathApplication = "C:\\ProgramData\\InkTrackReport";
+                string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
                 File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
             }
         }
