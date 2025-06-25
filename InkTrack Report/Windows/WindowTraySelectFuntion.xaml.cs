@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 
 
 namespace InkTrack_Report.Windows
@@ -33,9 +34,19 @@ namespace InkTrack_Report.Windows
             }
             this.SourceInitialized += (s, e) =>
             {
-                var workingArea = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
-                this.Left = workingArea.Right - this.Width + 8;
-                this.Top = workingArea.Bottom - this.Height + 18;
+                // Получаем DPI окна
+                var dpi = VisualTreeHelper.GetDpi(this);
+
+                // Рабочая область экрана в WPF-единицах
+                Rect workArea = SystemParameters.WorkArea;
+
+                // Конвертируем физические отступы в WPF-единицы
+                double offsetX = dpi.DpiScaleX;
+                double offsetY = dpi.DpiScaleY;
+
+                // Позиционируем окно с учётом масштабирования
+                this.Left = workArea.Right - this.ActualWidth;
+                this.Top = workArea.Bottom - this.ActualHeight;
             };
             if (ServiceOn)
             {
