@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Timers;
 using System.Windows;
@@ -18,140 +19,41 @@ namespace InkTrack_Report
         ManagementEventWatcher watcherPrinting;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
-        System.Timers.Timer timerConnection = new System.Timers.Timer(20000);
 
-        bool isConnectedDB = false;
+        System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
+
+        string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
+        bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            timerConnection.Elapsed += TimerConnection_Elapsed;
-
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-            string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
-
-            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
+            if (isFirstStartup)
             {
-                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-                Directory.CreateDirectory(pathApplication);
-                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
-            }
+                ShutdownMode = ShutdownMode.OnLastWindowClose;
 
-            var query = new WqlEventQuery(
-                "SELECT * FROM __InstanceCreationEvent " +
-                "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
-            );
-
-            if (InkTrack_Report.Properties.Settings.Default.isFirstStartup)
-            {
-                if (new SettingsSetupWizard().ShowDialog() == true)
-                {
-                    // Создаем иконку в трее
-                    notifyIcon = new NotifyIcon();
-                    notifyIcon.MouseClick += NotifyIcon_MouseClick;
-                    if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                    {
-                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
-                    }
-                    else
-                    {
-                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
-                    }
-
-                    notifyIcon.Visible = true;
-
-                    watcherPrinting = new ManagementEventWatcher(query);
-                    watcherPrinting.EventArrived += OnPrintJobCreated;
-                    watcherPrinting.Start();
-                }
+                if (new SettingsSetupWizard().ShowDialog() == true) FirstInitApplication();
             }
             else
             {
-                string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
-                List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
-                printoutDatas = jsonData;
+                ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-
-                notifyIcon = new NotifyIcon(); 
-                notifyIcon.MouseClick += NotifyIcon_MouseClick;
-                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                {
-                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
-                }
-                else
-                {
-                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
-                }
-                notifyIcon.Visible = true;
-
-                watcherPrinting = new ManagementEventWatcher(query);
-                watcherPrinting.EventArrived += OnPrintJobCreated;
-                watcherPrinting.Start();
-
-                entities.Database.Connection.StateChange += Connection_StateChange;
-                try
-                {
-                    entities.Database.Connection.Open();
-                }
-                catch (Exception ex)
-                {
-                    entities.Database.Connection.Close();
-                    if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                    {
-                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_B;
-                    }
-                    else
-                    {
-                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_W;
-                    }
-                }
+                InitApplication();
             }
-            timerConnection.Start();
         }
         private void Connection_StateChange(object sender, System.Data.StateChangeEventArgs e)
         {
             switch (e.CurrentState)
             {
                 case System.Data.ConnectionState.Open:
-                    if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                    {
-                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Printer_B;
-                    }
-                    else
-                    {
-                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Printer_W;
-                    }
-                    break;
+                    notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Printer_B : InkTrack_Report.Properties.Resources.Printer_W;
+                break;
             }
         }
         private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e)
         {
-            try
-            {
-                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                {
-                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
-                }
-                else
-                {
-                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
-                }
-                entities.Database.Connection.Open();
-            }
-            catch (Exception ex)
-            {
-                entities.Database.Connection.Close();
-                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
-                {
-                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_B;
-                }
-                else
-                {
-                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_W;
-                }
-            }
+            CheckConnectionToDatabase();
         }
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
@@ -197,6 +99,121 @@ namespace InkTrack_Report
                 File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
             }
         }
+        void InitApplication()
+        {
+            timerConnection.Elapsed += TimerConnection_Elapsed;
 
+
+            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
+            {
+                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                Directory.CreateDirectory(pathApplication);
+                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
+            }
+
+            var query = new WqlEventQuery(
+                "SELECT * FROM __InstanceCreationEvent " +
+                "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
+            );
+
+            string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
+            List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
+            printoutDatas = jsonData;
+
+            notifyIcon = new NotifyIcon();
+            notifyIcon.MouseClick += NotifyIcon_MouseClick;
+            if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+            {
+                notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
+            }
+            else
+            {
+                notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
+            }
+            notifyIcon.Visible = true;
+
+            watcherPrinting = new ManagementEventWatcher(query);
+            watcherPrinting.EventArrived += OnPrintJobCreated;
+            watcherPrinting.Start();
+
+            entities.Database.Connection.StateChange += Connection_StateChange;
+            CheckConnectionToDatabase();
+            timerConnection.Start();
+        }
+        void FirstInitApplication()
+        {
+            timerConnection.Elapsed += TimerConnection_Elapsed;
+
+
+            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
+            {
+                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                Directory.CreateDirectory(pathApplication);
+                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
+            }
+
+            var query = new WqlEventQuery(
+                "SELECT * FROM __InstanceCreationEvent " +
+                "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
+            );
+
+            string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
+            List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
+            printoutDatas = jsonData;
+
+
+            notifyIcon = new NotifyIcon();
+            notifyIcon.MouseClick += NotifyIcon_MouseClick;
+            if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+            {
+                notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
+            }
+            else
+            {
+                notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
+            }
+            notifyIcon.Visible = true;
+
+            watcherPrinting = new ManagementEventWatcher(query);
+            watcherPrinting.EventArrived += OnPrintJobCreated;
+            watcherPrinting.Start();
+
+            entities.Database.Connection.StateChange += Connection_StateChange;
+            try
+            {
+                entities.Database.Connection.Open();
+            }
+            catch (Exception ex)
+            {
+                entities.Database.Connection.Close();
+                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                {
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_B;
+                }
+                else
+                {
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_W;
+                }
+            }
+            timerConnection.Start();
+        }
+        void CheckConnectionToDatabase()
+        {
+            try
+            {
+                if (entities.Database.Connection.State != System.Data.ConnectionState.Closed) entities.Database.Connection.Close();
+                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Load_B : InkTrack_Report.Properties.Resources.Load_W;
+                if (entities.Database.Connection.State != System.Data.ConnectionState.Open) entities.Database.Connection.Open();
+            }
+            catch (Exception ex)
+            {
+                entities.Database.Connection.Close();
+                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Alert_B : InkTrack_Report.Properties.Resources.Alert_W;
+            }
+        }
+        bool EnabledDeviceActualityInCabinet()
+        {
+            return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
+        }
     }
 }
