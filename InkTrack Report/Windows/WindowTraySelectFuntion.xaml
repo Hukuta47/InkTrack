@@ -27,10 +27,9 @@
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
 		<StackPanel >
-			<Button Content="Генерация печатной формы заявки" Click="GeneratePrintOutList" Name="Button_GeneratePrintedFormRequeust"/>
-			<Rectangle Height="10"/>
 			<Button Content="Сервис" Click="OpenServiceButtons_Click" Name="Button_Service"/>
-			<StackPanel Name="ServiceButtons" Visibility="Collapsed">
+			<StackPanel Name="ServiceButtons" Visibility="Visible">
+				<Rectangle Height="10"/>
 				<Button Content="Замена картриджа" Click="OpenReplaceCartridge">
 				</Button>
 				<Rectangle Height="10"/>

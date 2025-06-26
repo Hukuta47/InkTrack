@@ -268,9 +268,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\32\X.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Windows\CreateRequestRefill.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -313,39 +310,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\32\Chevron down.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\16\Printer W.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\16\File B.png" />
-    <Resource Include="Resources\16\File B.ico" />
-    <Resource Include="Resources\16\Settings B.png" />
-    <Resource Include="Resources\16\Settings B.ico" />
-    <Resource Include="Resources\16\Shutdown B.png" />
-    <Resource Include="Resources\16\Shutdown B.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\32\Printer W.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\16\IconB.ico" />
-    <Resource Include="Resources\16\IconW.ico" />
     <Resource Include="Icon.ico" />
     <Resource Include="Resources\Icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\24\Help circle.png" />
-    <Resource Include="Resources\24\X.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\40\" />
-    <Folder Include="Resources\48\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\DelaGothicOne-Regular.ttf" />
     <None Include="Resources\Professinalitet logo.png" />
@@ -361,6 +332,12 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\Alert B.ico" />
+    <None Include="Resources\Alert W.ico" />
+    <None Include="Resources\Printer B.ico" />
+    <None Include="Resources\Printer W.ico" />
+    <None Include="Resources\Load W.ico" />
+    <None Include="Resources\Load B.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -53,7 +53,6 @@ namespace InkTrack_Report.Windows
                 Button_Service.Visibility = Visibility.Collapsed;
                 ServiceButtons.Visibility = Visibility.Visible;
             }
-            Button_GeneratePrintedFormRequeust.IsEnabled = SumPagesPrintouts == 0 ? false : true;
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {

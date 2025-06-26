@@ -1,17 +1,14 @@
 ﻿using InkTrack_Report.Classes;
 using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
-using InkTrack_Report.Windows.Dialog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Management;
+using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Resources;
 
 namespace InkTrack_Report
 {
@@ -21,11 +18,15 @@ namespace InkTrack_Report
         ManagementEventWatcher watcherPrinting;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
+        System.Timers.Timer timerConnection = new System.Timers.Timer(20000);
+
+        bool isConnectedDB = false;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            entities.CartridgeStatus.ToList();
+
+            timerConnection.Elapsed += TimerConnection_Elapsed;
 
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
@@ -42,6 +43,7 @@ namespace InkTrack_Report
                 "SELECT * FROM __InstanceCreationEvent " +
                 "WITHIN 1 WHERE TargetInstance ISA 'Win32_PrintJob'"
             );
+
             if (InkTrack_Report.Properties.Settings.Default.isFirstStartup)
             {
                 if (new SettingsSetupWizard().ShowDialog() == true)
@@ -51,11 +53,11 @@ namespace InkTrack_Report
                     notifyIcon.MouseClick += NotifyIcon_MouseClick;
                     if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
                     {
-                        notifyIcon.Icon = SelectIcon("16/IconB.ico");
+                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
                     }
                     else
                     {
-                        notifyIcon.Icon = SelectIcon("16/IconW.ico");
+                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
                     }
 
                     notifyIcon.Visible = true;
@@ -72,21 +74,83 @@ namespace InkTrack_Report
                 printoutDatas = jsonData;
 
 
-                notifyIcon = new NotifyIcon();
+                notifyIcon = new NotifyIcon(); 
                 notifyIcon.MouseClick += NotifyIcon_MouseClick;
                 if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
                 {
-                    notifyIcon.Icon = SelectIcon("16/IconB.ico");
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
                 }
                 else
                 {
-                    notifyIcon.Icon = SelectIcon("16/IconW.ico");
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
                 }
                 notifyIcon.Visible = true;
 
                 watcherPrinting = new ManagementEventWatcher(query);
                 watcherPrinting.EventArrived += OnPrintJobCreated;
                 watcherPrinting.Start();
+
+                entities.Database.Connection.StateChange += Connection_StateChange;
+                try
+                {
+                    entities.Database.Connection.Open();
+                }
+                catch (Exception ex)
+                {
+                    entities.Database.Connection.Close();
+                    if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                    {
+                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_B;
+                    }
+                    else
+                    {
+                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_W;
+                    }
+                }
+            }
+            timerConnection.Start();
+        }
+        private void Connection_StateChange(object sender, System.Data.StateChangeEventArgs e)
+        {
+            switch (e.CurrentState)
+            {
+                case System.Data.ConnectionState.Open:
+                    if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                    {
+                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Printer_B;
+                    }
+                    else
+                    {
+                        notifyIcon.Icon = InkTrack_Report.Properties.Resources.Printer_W;
+                    }
+                    break;
+            }
+        }
+        private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                {
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_B;
+                }
+                else
+                {
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Load_W;
+                }
+                entities.Database.Connection.Open();
+            }
+            catch (Exception ex)
+            {
+                entities.Database.Connection.Close();
+                if (ThemeDetector.GetWindowsTheme() == AppTheme.Light)
+                {
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_B;
+                }
+                else
+                {
+                    notifyIcon.Icon = InkTrack_Report.Properties.Resources.Alert_W;
+                }
             }
         }
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -132,13 +196,6 @@ namespace InkTrack_Report
                 string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
                 File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
             }
-        }
-        Icon SelectIcon(string FileName)
-        {
-            Uri iconUri = new Uri($"pack://application:,,,/Resources/{FileName}", UriKind.Absolute);
-            StreamResourceInfo sri = GetResourceStream(iconUri);
-
-            return new Icon(sri.Stream);
         }
 
     }
