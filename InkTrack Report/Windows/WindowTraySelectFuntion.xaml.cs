@@ -20,9 +20,6 @@ namespace InkTrack_Report.Windows
 
     public partial class WindowTraySelectFuntion : Window
     {
-        int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
-        int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
-        int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
         int SumPagesPrintouts;
         public WindowTraySelectFuntion(bool ServiceOn)
         {
@@ -53,6 +50,7 @@ namespace InkTrack_Report.Windows
                 Button_Service.Visibility = Visibility.Collapsed;
                 ServiceButtons.Visibility = Visibility.Visible;
             }
+            TextBlock_CounterPages.Text = $"Страниц напечатано: {SumPagesPrintouts}";
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {

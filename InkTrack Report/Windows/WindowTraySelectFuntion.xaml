@@ -27,8 +27,9 @@
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
 		<StackPanel >
-			<Button Content="Сервис" Click="OpenServiceButtons_Click" Name="Button_Service"/>
-			<StackPanel Name="ServiceButtons" Visibility="Visible">
+			<TextBlock Text="Страниц напечатано: 000" Margin="10,10,10,15" Name="TextBlock_CounterPages"/>
+			<Button Content="Сервис" Click="OpenServiceButtons_Click" Name="Button_Service" Width="365"/>
+			<StackPanel Name="ServiceButtons" Visibility="Collapsed">
 				<Rectangle Height="10"/>
 				<Button Content="Замена картриджа" Click="OpenReplaceCartridge">
 				</Button>
