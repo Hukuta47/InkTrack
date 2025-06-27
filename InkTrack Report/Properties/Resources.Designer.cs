@@ -119,5 +119,25 @@ namespace InkTrack_Report.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon Save_B {
+            get {
+                object obj = ResourceManager.GetObject("Save_B", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon Save_W {
+            get {
+                object obj = ResourceManager.GetObject("Save_W", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }
