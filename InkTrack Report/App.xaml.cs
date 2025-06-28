@@ -22,8 +22,10 @@ namespace InkTrack_Report
         private NotifyIcon notifyIcon;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
+        private ManagementEventWatcher _watcherMod;
+        private HashSet<string> _loggedJobs = new HashSet<string>();
 
-        static HashSet<int> seenJobs = new HashSet<int>();
+
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
         System.Timers.Timer timerCheckPrintDocument = new System.Timers.Timer(100);
@@ -70,40 +72,49 @@ namespace InkTrack_Report
             notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Printer_B : InkTrack_Report.Properties.Resources.Printer_W;
             timerIconChange.Stop();
         }
-        private void TimerCheckPrintDocument_Elapsed(object sender, ElapsedEventArgs e)
+        private void StartModificationWatcher()
         {
-            var server = new LocalPrintServer();
-            var queue = server.DefaultPrintQueue;
+            // Слушаем события, когда у любого PrintJob меняется свойство TotalPages на >0
+            var query = new WqlEventQuery(
+                "__InstanceModificationEvent",
+                new TimeSpan(0, 0, 1),
+                "TargetInstance ISA 'Win32_PrintJob' " +
+                "AND TargetInstance.TotalPages > 0"
+            );
 
-            var jobs = queue.GetPrintJobInfoCollection();
+            _watcherMod = new ManagementEventWatcher(query);
+            _watcherMod.EventArrived += OnPrintJobModified;
+            _watcherMod.Start();
+        }
+        private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
+        {
+            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+            string jobName = job["Name"].ToString(); // содержит "PrinterName, JobID"
 
-            foreach (var job in jobs)
+            // Убедимся, что ещё не записывали это задание
+            if (_loggedJobs.Contains(jobName))
+                return;
+            _loggedJobs.Add(jobName);
+
+            int pages = Convert.ToInt32(job["TotalPages"]);
+
+            if (pages <= 0)
+                return; // Игнорируем задания с нулевым количеством страниц
+
+            // Логируем (код)
+            var info = new PrintoutData
             {
-                if (!seenJobs.Contains(job.JobIdentifier))
-                {
-                    seenJobs.Add(job.JobIdentifier);
-                    queue.Refresh();
+                NameDocument = job["Document"].ToString(),
+                CountPages = pages,
+                Date = DateTime.Now
+            };
 
-                    int pages = job.NumberOfPages;
-                    if (pages == 0)
-                    {
-                        Thread.Sleep(10000);
-                        pages = job.NumberOfPagesPrinted;
-                    }
+            printoutDatas.Add(info);
+            ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Save_B : InkTrack_Report.Properties.Resources.Save_W);
+            Debug.WriteLine($"Нашел печать {info.NameDocument}, страниц: {info.CountPages}");
 
-                    var info = new PrintoutData
-                    {
-                        NameDocument = job.Name,
-                        CountPages = job.NumberOfPages,
-                        Date = DateTime.Now
-                    };
-
-                    printoutDatas.Add(info);
-                    ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Save_B : InkTrack_Report.Properties.Resources.Save_W);
-                    System.Windows.MessageBox.Show($"Нашел печать {info.NameDocument}, страниц: {info.CountPages}");
-                    Debug.WriteLine($"Нашел печать {info.NameDocument}, страниц: {info.CountPages}"); // Пишем в консоль
-                }
-            }
+            string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
         }
         void ChangeIcon(Icon changeIcon)
         {
@@ -117,12 +128,14 @@ namespace InkTrack_Report
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon?.Dispose();
+            _watcherMod?.Stop();
+            _watcherMod?.Dispose();
             base.OnExit(e);
         }
         void InitApplication()
         {
+            StartModificationWatcher();
             timerConnection.Elapsed += TimerConnection_Elapsed;
-            timerCheckPrintDocument.Elapsed += TimerCheckPrintDocument_Elapsed;
 
             if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
             {
@@ -148,8 +161,8 @@ namespace InkTrack_Report
         }
         void FirstInitApplication()
         {
+            StartModificationWatcher();
             timerConnection.Elapsed += TimerConnection_Elapsed;
-            timerCheckPrintDocument.Elapsed += TimerCheckPrintDocument_Elapsed;
 
 
             if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
