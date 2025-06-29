@@ -17,22 +17,29 @@ namespace InkTrack_Report.Windows.Dialog
             if (string.IsNullOrEmpty(Username))
             {
                 MessageBox.Show("Введите логин", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
             }
-            DialogResult = ValidateCredentials(Username, Password);
-            Close();
+            else
+            {
+                if (ValidateCredentials(Username, Password))
+                {
+                    DialogResult = true;
+                }
+                else
+                {
+                    MessageBox.Show("Не верные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+                
         }
         private bool ValidateCredentials(string username, string password)
         {
             try
             {
                 // Если логин содержит \, значит это доменная учетка
-                ContextType contextType = username.Contains("\\") ?
-                    ContextType.Domain : ContextType.Machine;
+                ContextType contextType = username.Contains("\\") ? ContextType.Domain : ContextType.Machine;
 
                 // Удаляем домен из логина если есть
-                string pureUsername = username.Contains("\\") ?
-                    username.Split('\\')[1] : username;
+                string pureUsername = username.Contains("\\") ? username.Split('\\')[1] : username;
 
                 using (var context = new PrincipalContext(contextType))
                 {
@@ -47,7 +54,6 @@ namespace InkTrack_Report.Windows.Dialog
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            Close();
         }
     }
 }

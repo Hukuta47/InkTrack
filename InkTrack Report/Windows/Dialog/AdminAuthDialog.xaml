@@ -21,16 +21,15 @@
 
 		<Grid ClipToBounds="True">
 			<Grid.RowDefinitions>
-				<RowDefinition/>
+				<RowDefinition Height="auto"/>
 				<RowDefinition Height="76"/>
 			</Grid.RowDefinitions>
 
-			<StackPanel Grid.Row="0" Margin="32">
-
+			<StackPanel Grid.Row="0" Margin="32,32,32,8">
 				<StackPanel>
 					<TextBlock Text="Логин"/>
 					<Rectangle Height="8"/>
-					<TextBox FontFamily="{StaticResource Proletarsk}" Name="Textbox_Login"/>
+					<TextBox Name="Textbox_Login"/>
 				</StackPanel>
 				<Rectangle Height="16"/>
 				<StackPanel>
