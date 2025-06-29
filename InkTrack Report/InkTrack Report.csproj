@@ -319,10 +319,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Resources\DelaGothicOne-Regular.ttf" />
-    <None Include="Resources\Professinalitet logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Database\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
@@ -333,14 +329,14 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
-    <None Include="Resources\Save-B.ico" />
-    <None Include="Resources\Save-W.ico" />
-    <None Include="Resources\Alert B.ico" />
-    <None Include="Resources\Alert W.ico" />
-    <None Include="Resources\Printer B.ico" />
+    <None Include="Resources\Save W.ico" />
+    <None Include="Resources\Save B.ico" />
     <None Include="Resources\Printer W.ico" />
+    <None Include="Resources\Printer B.ico" />
     <None Include="Resources\Load W.ico" />
     <None Include="Resources\Load B.ico" />
+    <None Include="Resources\Alert W.ico" />
+    <None Include="Resources\Alert B.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
