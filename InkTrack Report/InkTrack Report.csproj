@@ -329,12 +329,12 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\Load B.ico" />
+    <None Include="Resources\Load W.ico" />
     <None Include="Resources\Alert B.ico" />
     <None Include="Resources\Printer W.ico" />
-    <None Include="Resources\Load B.ico" />
     <None Include="Resources\Alert W.ico" />
     <None Include="Resources\Printer B.ico" />
-    <None Include="Resources\Load W.ico" />
     <None Include="Resources\Save B.ico" />
     <None Include="Resources\Save W.ico" />
     <None Include="Resources\Proletarsk.ttf" />
