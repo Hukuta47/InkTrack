@@ -35,7 +35,9 @@
 				<StackPanel>
 					<TextBlock Text="Пароль" />
 					<Rectangle Height="8"/>
-					<PasswordBox FontFamily="{StaticResource Proletarsk}" Name="Passwordbox_Password"/>
+					<PasswordBox Name="Passwordbox_Password"/>
+					<Rectangle Height="8"/>
+					<TextBlock Text="*Ошибка*" TextAlignment="Center" Foreground="Red" Name="Textblock_Message" Visibility="Hidden"/>
 				</StackPanel>
 			</StackPanel>
 
@@ -44,6 +46,7 @@
 					<ColumnDefinition/>
 					<ColumnDefinition Width="8"/>
 					<ColumnDefinition/>
+					
 				</Grid.ColumnDefinitions>
 
 				<Button Grid.Column="0" Style="{StaticResource AcceptButton}" Width="230" Click="Accept_Click" Name="Button_Accept">

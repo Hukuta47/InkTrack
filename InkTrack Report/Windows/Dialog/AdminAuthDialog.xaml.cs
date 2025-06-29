@@ -14,9 +14,12 @@ namespace InkTrack_Report.Windows.Dialog
         }
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
+            Textblock_Message.Visibility = Visibility.Hidden;
+            Textblock_Message.Text = "";
             if (string.IsNullOrEmpty(Username))
             {
-                MessageBox.Show("Введите логин", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Textblock_Message.Visibility = Visibility.Visible;
+                Textblock_Message.Text = "Введите логин";
             }
             else
             {
@@ -26,7 +29,8 @@ namespace InkTrack_Report.Windows.Dialog
                 }
                 else
                 {
-                    MessageBox.Show("Не верные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Textblock_Message.Visibility = Visibility.Visible;
+                    Textblock_Message.Text = "Не верные данные";
                 }
             }
                 
