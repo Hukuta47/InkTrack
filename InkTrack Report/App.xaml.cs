@@ -45,6 +45,7 @@ namespace InkTrack_Report
             base.OnStartup(e);
 
             timerIconChange.Elapsed += TimerIconChange_Elapsed;
+            timerConnection.AutoReset = true;
 
             if (isFirstStartup)
             {
@@ -258,14 +259,21 @@ namespace InkTrack_Report
         {
             try
             {
-                if (entities.Database.Connection.State != System.Data.ConnectionState.Closed) entities.Database.Connection.Close();
-                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Load_B : InkTrack_Report.Properties.Resources.Load_W;
-                if (entities.Database.Connection.State != System.Data.ConnectionState.Open) entities.Database.Connection.Open();
+                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
+                    ? InkTrack_Report.Properties.Resources.Load_B
+                    : InkTrack_Report.Properties.Resources.Load_W;
+
+                entities.Database.ExecuteSqlCommand("SELECT 1");
+
+                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
+                    ? InkTrack_Report.Properties.Resources.Printer_B
+                    : InkTrack_Report.Properties.Resources.Printer_W;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                entities.Database.Connection.Close();
-                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Alert_B : InkTrack_Report.Properties.Resources.Alert_W;
+                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
+                    ? InkTrack_Report.Properties.Resources.Alert_B
+                    : InkTrack_Report.Properties.Resources.Alert_W;
             }
         }
         bool EnabledDeviceActualityInCabinet()
