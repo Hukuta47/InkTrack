@@ -103,6 +103,26 @@ namespace InkTrack_Report.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
+        internal static System.Drawing.Icon DataError_B {
+            get {
+                object obj = ResourceManager.GetObject("DataError_B", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon DataError_W {
+            get {
+                object obj = ResourceManager.GetObject("DataError_W", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
         internal static System.Drawing.Icon Load_B {
             get {
                 object obj = ResourceManager.GetObject("Load_B", resourceCulture);

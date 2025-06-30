@@ -336,6 +336,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\DataError B.ico" />
+    <None Include="Resources\DataError W.ico" />
     <None Include="Resources\CancelByUser B.ico" />
     <None Include="Resources\CancelByUser W.ico" />
     <None Include="Resources\Write W.ico" />

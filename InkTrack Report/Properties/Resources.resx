@@ -130,6 +130,12 @@
   <data name="CancelByUser_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CancelByUser W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DataError_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DataError B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DataError_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DataError W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Load_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Load B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

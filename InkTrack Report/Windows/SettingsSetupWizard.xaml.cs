@@ -42,7 +42,6 @@ namespace InkTrack_Report.Windows
                 "\nПри следующем запуске программы, вам в любом случае придется провести эту процедуру", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question))
             {
                 case MessageBoxResult.Yes:
-                    DialogResult = false;
                     App.Current.Shutdown();
                     break;
                 case MessageBoxResult.No:

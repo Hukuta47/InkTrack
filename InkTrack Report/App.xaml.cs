@@ -43,21 +43,24 @@ namespace InkTrack_Report
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
             timerIconChange.Elapsed += TimerIconChange_Elapsed;
             timerConnection.AutoReset = true;
 
             if (isFirstStartup)
             {
-                ShutdownMode = ShutdownMode.OnLastWindowClose;
-
                 if (new SettingsSetupWizard().ShowDialog() == true) FirstInitApplication();
             }
             else
             {
-                ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-                InitApplication();
+                if (EnabledDeviceActualityInCabinet() != true)
+                {
+                    if (new SettingsSetupWizard().ShowDialog() == true) InitApplication();
+                }
+                else
+                {
+                    InitApplication();
+                }
             }
         }
 
