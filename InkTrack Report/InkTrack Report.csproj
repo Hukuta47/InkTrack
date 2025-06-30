@@ -216,6 +216,9 @@
     <Compile Include="Windows\Dialog\AdminAuthDialog.xaml.cs">
       <DependentUpon>AdminAuthDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Dialog\PageCountDialog.xaml.cs">
+      <DependentUpon>PageCountDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Dialog\PrintoutInfo.xaml.cs">
       <DependentUpon>PrintoutInfo.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Dialog\AdminAuthDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Dialog\PageCountDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

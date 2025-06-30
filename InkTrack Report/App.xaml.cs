@@ -1,6 +1,7 @@
 ﻿using InkTrack_Report.Classes;
 using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
+using InkTrack_Report.Windows.Dialog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace InkTrack_Report
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
         private HashSet<string> _loggedJobs = new HashSet<string>();
+        private HashSet<int> _loggedJobIds = new HashSet<int>();
 
 
 
@@ -104,23 +106,50 @@ namespace InkTrack_Report
         private void OnPrintJobEvent(object sender, EventArrivedEventArgs e)
         {
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            string jobName = job["Name"]?.ToString() ?? "";
+            HandlePrintJob(job);
+        }
 
-            if (string.IsNullOrWhiteSpace(jobName) || _loggedJobs.Contains(jobName))
+        private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
+        {
+            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+            HandlePrintJob(job);
+        }
+
+        private void HandlePrintJob(ManagementBaseObject job)
+        {
+            if (!int.TryParse(job["JobId"]?.ToString(), out int jobId))
                 return;
+
+            if (_loggedJobIds.Contains(jobId))
+                return;
+
+            _loggedJobIds.Add(jobId);
+
+            string docName = job["Document"]?.ToString() ?? "Без названия";
 
             int pages = 0;
             if (job["TotalPages"] != null)
                 int.TryParse(job["TotalPages"].ToString(), out pages);
 
+            bool isPdf = docName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase);
+            if (pages <= 1 && isPdf)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    var dialog = new PageCountDialog(docName);
+                    if (dialog.ShowDialog() == true && dialog.PageCount.HasValue)
+                    {
+                        pages = dialog.PageCount.Value;
+                    }
+                });
+            }
+
             if (pages <= 0)
                 return;
 
-            _loggedJobs.Add(jobName);
-
             var info = new PrintoutData
             {
-                NameDocument = job["Document"]?.ToString() ?? "Без названия",
+                NameDocument = docName,
                 CountPages = pages,
                 Date = DateTime.Now
             };
@@ -132,44 +161,14 @@ namespace InkTrack_Report
                 ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light
                     ? InkTrack_Report.Properties.Resources.Save_B
                     : InkTrack_Report.Properties.Resources.Save_W);
+
                 Debug.WriteLine($"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}");
 
-                // Запись в JSON
                 string jsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
                 File.WriteAllText(Path.Combine(pathApplication, "printoutDatas.json"), jsonData);
             });
         }
 
-        private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
-        {
-            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            string jobName = job["Name"].ToString(); // содержит "PrinterName, JobID"
-
-            // Убедимся, что ещё не записывали это задание
-            if (_loggedJobs.Contains(jobName))
-                return;
-            _loggedJobs.Add(jobName);
-
-            int pages = Convert.ToInt32(job["TotalPages"]);
-
-            if (pages <= 0)
-                return; // Игнорируем задания с нулевым количеством страниц
-
-            // Логируем (код)
-            var info = new PrintoutData
-            {
-                NameDocument = job["Document"].ToString(),
-                CountPages = pages,
-                Date = DateTime.Now
-            };
-
-            printoutDatas.Add(info);
-            ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Save_B : InkTrack_Report.Properties.Resources.Save_W);
-            Debug.WriteLine($"Нашел печать {info.NameDocument}, страниц: {info.CountPages}");
-
-            string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
-        }
         void ChangeIcon(Icon changeIcon)
         {
             notifyIcon.Icon = changeIcon;
