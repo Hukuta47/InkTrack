@@ -28,7 +28,6 @@ namespace InkTrack_Report
 
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
-        private ManagementEventWatcher _deletionWatcher;
         private HashSet<string> _loggedJobs = new HashSet<string>();
 
 
@@ -100,20 +99,7 @@ namespace InkTrack_Report
             _modificationWatcher = new ManagementEventWatcher(modificationQuery);
             _modificationWatcher.EventArrived += OnPrintJobEvent;
             _modificationWatcher.Start();
-
-            // 3. Deletion (опционально, просто для отладки)
-            var deletionQuery = new WqlEventQuery(
-                "__InstanceDeletionEvent",
-                interval,
-                "TargetInstance ISA 'Win32_PrintJob'"
-            );
-            _deletionWatcher = new ManagementEventWatcher(deletionQuery);
-            _deletionWatcher.EventArrived += OnPrintJobDeleted;
-            _deletionWatcher.Start();
         }
-
-
-
 
         private void OnPrintJobEvent(object sender, EventArrivedEventArgs e)
         {
@@ -153,18 +139,6 @@ namespace InkTrack_Report
                 File.WriteAllText(Path.Combine(pathApplication, "printoutDatas.json"), jsonData);
             });
         }
-
-        private void OnPrintJobDeleted(object sender, EventArrivedEventArgs e)
-        {
-            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            string jobName = job["Name"]?.ToString() ?? "";
-            Debug.WriteLine($"Удалено задание: {jobName}");
-        }
-
-
-
-
-
 
         private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
         {
@@ -212,8 +186,6 @@ namespace InkTrack_Report
             _creationWatcher?.Dispose();
             _modificationWatcher?.Stop();
             _modificationWatcher?.Dispose();
-            _deletionWatcher?.Stop();
-            _deletionWatcher?.Dispose();
             base.OnExit(e);
         }
         void InitApplication()
