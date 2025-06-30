@@ -134,12 +134,18 @@ namespace InkTrack_Report
             bool isPdf = docName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase);
             if (pages <= 1 && isPdf)
             {
+                
                 Dispatcher.Invoke(() =>
                 {
                     var dialog = new PageCountDialog(docName);
+                    notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Write_B : InkTrack_Report.Properties.Resources.Write_W;
                     if (dialog.ShowDialog() == true && dialog.PageCount.HasValue)
                     {
                         pages = dialog.PageCount.Value;
+                    }
+                    else
+                    {
+                        ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.CancelByUser_B : InkTrack_Report.Properties.Resources.CancelByUser_W);
                     }
                 });
             }

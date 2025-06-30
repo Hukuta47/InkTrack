@@ -124,6 +124,12 @@
   <data name="Alert_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Alert W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CancelByUser_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CancelByUser B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CancelByUser_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CancelByUser W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Load_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Load B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -144,5 +150,11 @@
   </data>
   <data name="Save_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Write_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Write B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Write_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Write W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

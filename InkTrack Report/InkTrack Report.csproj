@@ -336,6 +336,10 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\CancelByUser B.ico" />
+    <None Include="Resources\CancelByUser W.ico" />
+    <None Include="Resources\Write W.ico" />
+    <None Include="Resources\Write B.ico" />
     <None Include="Resources\Load B.ico" />
     <None Include="Resources\Load W.ico" />
     <None Include="Resources\Alert B.ico" />
