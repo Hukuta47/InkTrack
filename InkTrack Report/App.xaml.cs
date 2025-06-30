@@ -22,13 +22,18 @@ namespace InkTrack_Report
         private NotifyIcon notifyIcon;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
-        private ManagementEventWatcher _watcherMod;
+
+
+
+
+        private ManagementEventWatcher _creationWatcher;
+        private ManagementEventWatcher _modificationWatcher;
+        private ManagementEventWatcher _deletionWatcher;
         private HashSet<string> _loggedJobs = new HashSet<string>();
 
 
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
-        System.Timers.Timer timerCheckPrintDocument = new System.Timers.Timer(100);
         System.Timers.Timer timerIconChange = new System.Timers.Timer(2000);
 
         string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
@@ -72,20 +77,95 @@ namespace InkTrack_Report
             notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Printer_B : InkTrack_Report.Properties.Resources.Printer_W;
             timerIconChange.Stop();
         }
-        private void StartModificationWatcher()
+        private void StartPrintWatchers()
         {
-            // Слушаем события, когда у любого PrintJob меняется свойство TotalPages на >0
-            var query = new WqlEventQuery(
-                "__InstanceModificationEvent",
-                new TimeSpan(0, 0, 1),
-                "TargetInstance ISA 'Win32_PrintJob' " +
-                "AND TargetInstance.TotalPages > 0"
-            );
+            TimeSpan interval = TimeSpan.FromSeconds(1);
 
-            _watcherMod = new ManagementEventWatcher(query);
-            _watcherMod.EventArrived += OnPrintJobModified;
-            _watcherMod.Start();
+            // 1. Creation
+            var creationQuery = new WqlEventQuery(
+                "__InstanceCreationEvent",
+                interval,
+                "TargetInstance ISA 'Win32_PrintJob'"
+            );
+            _creationWatcher = new ManagementEventWatcher(creationQuery);
+            _creationWatcher.EventArrived += OnPrintJobEvent;
+            _creationWatcher.Start();
+
+            // 2. Modification (TotalPages > 0)
+            var modificationQuery = new WqlEventQuery(
+                "__InstanceModificationEvent",
+                interval,
+                "TargetInstance ISA 'Win32_PrintJob' AND TargetInstance.TotalPages > 0"
+            );
+            _modificationWatcher = new ManagementEventWatcher(modificationQuery);
+            _modificationWatcher.EventArrived += OnPrintJobEvent;
+            _modificationWatcher.Start();
+
+            // 3. Deletion (опционально, просто для отладки)
+            var deletionQuery = new WqlEventQuery(
+                "__InstanceDeletionEvent",
+                interval,
+                "TargetInstance ISA 'Win32_PrintJob'"
+            );
+            _deletionWatcher = new ManagementEventWatcher(deletionQuery);
+            _deletionWatcher.EventArrived += OnPrintJobDeleted;
+            _deletionWatcher.Start();
         }
+
+
+
+
+        private void OnPrintJobEvent(object sender, EventArrivedEventArgs e)
+        {
+            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+            string jobName = job["Name"]?.ToString() ?? "";
+
+            if (string.IsNullOrWhiteSpace(jobName) || _loggedJobs.Contains(jobName))
+                return;
+
+            int pages = 0;
+            if (job["TotalPages"] != null)
+                int.TryParse(job["TotalPages"].ToString(), out pages);
+
+            if (pages <= 0)
+                return;
+
+            _loggedJobs.Add(jobName);
+
+            var info = new PrintoutData
+            {
+                NameDocument = job["Document"]?.ToString() ?? "Без названия",
+                CountPages = pages,
+                Date = DateTime.Now
+            };
+
+            printoutDatas.Add(info);
+
+            Dispatcher.Invoke(() =>
+            {
+                ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light
+                    ? InkTrack_Report.Properties.Resources.Save_B
+                    : InkTrack_Report.Properties.Resources.Save_W);
+                Debug.WriteLine($"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}");
+
+                // Запись в JSON
+                string jsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                File.WriteAllText(Path.Combine(pathApplication, "printoutDatas.json"), jsonData);
+            });
+        }
+
+        private void OnPrintJobDeleted(object sender, EventArrivedEventArgs e)
+        {
+            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+            string jobName = job["Name"]?.ToString() ?? "";
+            Debug.WriteLine($"Удалено задание: {jobName}");
+        }
+
+
+
+
+
+
         private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
         {
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
@@ -128,13 +208,17 @@ namespace InkTrack_Report
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon?.Dispose();
-            _watcherMod?.Stop();
-            _watcherMod?.Dispose();
+            _creationWatcher?.Stop();
+            _creationWatcher?.Dispose();
+            _modificationWatcher?.Stop();
+            _modificationWatcher?.Dispose();
+            _deletionWatcher?.Stop();
+            _deletionWatcher?.Dispose();
             base.OnExit(e);
         }
         void InitApplication()
         {
-            StartModificationWatcher();
+            StartPrintWatchers();
             timerConnection.Elapsed += TimerConnection_Elapsed;
 
             if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
@@ -157,11 +241,10 @@ namespace InkTrack_Report
             CheckConnectionToDatabase();
 
             timerConnection.Start();
-            timerCheckPrintDocument.Start();
         }
         void FirstInitApplication()
         {
-            StartModificationWatcher();
+            StartPrintWatchers();
             timerConnection.Elapsed += TimerConnection_Elapsed;
 
 
@@ -193,7 +276,6 @@ namespace InkTrack_Report
                 notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Alert_B : InkTrack_Report.Properties.Resources.Alert_W;
             }
             timerConnection.Start();
-            timerCheckPrintDocument.Start();
         }
         void CheckConnectionToDatabase()
         {
