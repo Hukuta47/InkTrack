@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Timers;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace InkTrack_Report.Classes
@@ -44,7 +42,6 @@ namespace InkTrack_Report.Classes
             _timer.AutoReset = false;
             _timer.Start();
         }
-
         public void ChangeIcon(StatusIcon statusIcon, string text = "Ink Track Report")
         {
             bool isLightTheme = ThemeDetector.GetWindowsTheme() == AppTheme.Light;

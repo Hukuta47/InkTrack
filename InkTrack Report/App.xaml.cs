@@ -3,20 +3,15 @@ using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Asn1.Cmp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
-
-
-
 
 namespace InkTrack_Report
 {
@@ -29,7 +24,6 @@ namespace InkTrack_Report
         private HashSet<int> _loggedJobIds = new HashSet<int>();
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
-        System.Timers.Timer timerCheckData = new System.Timers.Timer(3000);
 
         string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
 
@@ -37,17 +31,13 @@ namespace InkTrack_Report
 
         public TrayIcon trayIcon;
 
-        private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e)
+        void DefaultNotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion(false).Show();
+        private void SelectPrinterNotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            CheckConnectionToDatabase();
+            if (new SelectPrinter().ShowDialog() == true) InitApplication();
         }
-        private void TimerCheckData_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (EnabledDeviceActualityInCabinet() != true)
-            {
-                trayIcon.ChangeIcon(TrayIcon.StatusIcon.DataError, "Ошибка данных, воспроизведите настройку заново");
-            }
-        }
+        void Log(string category, string text) => Debug.WriteLine($"{DateTime.Now.ToLongTimeString()} | {category} | {text}");
+        private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e) => CheckConnectionToDatabase();
         private void StartPrintWatchers()
         {
             TimeSpan interval = TimeSpan.FromSeconds(1);
@@ -139,33 +129,36 @@ namespace InkTrack_Report
                 File.WriteAllText(Path.Combine(pathApplication, "printoutDatas.json"), jsonData);
             });
         }
-        void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
-        {
-            new WindowTraySelectFuntion(false).Show();
-        }
-        void InitApplication()
-        {
+        void InitApplication() {
             StartPrintWatchers();
-            timerCheckData.Start();
+            trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
         }
-        bool EnabledDeviceActualityInCabinet()
-        {
+        bool EnabledDeviceActualityInCabinet() {
             return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
         }
         bool CheckConnectionToDatabase()
         {
-            try
-            {
-                Log("SQL", "Попытка подключиться к SQL базе");
+            try {
                 entities.Database.Connection.Close();
+                Log("SQL", "Попытка подключиться к SQL базе");
                 trayIcon.ChangeIcon(TrayIcon.StatusIcon.Load, "Подключение к SQL базе данным...");
+                trayIcon.NotifyIcon.MouseClick -= DefaultNotifyIcon_MouseClick;
                 entities.Database.Connection.Open();
                 Log("SQL", "Подключение восстановлено");
                 trayIcon.ChangeIcon(TrayIcon.StatusIcon.Idle);
+                Log("Check", "Проверка данных на соответсвие");
+                if (!EnabledDeviceActualityInCabinet()) {
+                    Log("Check", "Проверка не пройдена, замена иконки и подписки метода");
+                    trayIcon.ChangeIcon(TrayIcon.StatusIcon.DataError, "Ошибка данных, воспроизведите настройку заново");
+                    trayIcon.NotifyIcon.MouseClick += SelectPrinterNotifyIcon_MouseClick; ;
+                }
+                else {
+                    Log("Check", "Проверка пройдена, все нормально");
+                    trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
+                }
                 return true;
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 Log("SQL", "Подключение к SQL базе не удачно");
                 trayIcon.ChangeIcon(TrayIcon.StatusIcon.Alert, "Нет подключения к SQL базе данным.");
                 return false;
@@ -186,10 +179,6 @@ namespace InkTrack_Report
             List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
             printoutDatas = jsonData;
         }
-        void Log(string category, string text)
-        {
-            Debug.WriteLine($"{DateTime.Now.ToLongTimeString()} | {category} | {text}");
-        }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -197,9 +186,6 @@ namespace InkTrack_Report
 
             trayIcon = new TrayIcon();
 
-            trayIcon.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
-
-            timerCheckData.Elapsed += TimerCheckData_Elapsed;
             timerConnection.Elapsed += TimerConnection_Elapsed;
             timerConnection.Start();
 
