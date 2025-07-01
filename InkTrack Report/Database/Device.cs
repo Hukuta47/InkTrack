@@ -14,12 +14,6 @@ namespace InkTrack_Report.Database
     
     public partial class Device
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Device()
-        {
-            this.Cabinet = new HashSet<Cabinet>();
-        }
-    
         public int DeviceID { get; set; }
         public int DeviceTypeID { get; set; }
         public string Manufacturer { get; set; }
@@ -31,12 +25,12 @@ namespace InkTrack_Report.Database
         {
             get
             {
-                return $"{Manufacturer} {Model}";
+                return $"{Manufacturer} {Model} ({DeviceID})";
             }
         }
-
+        public Nullable<int> CabinetID { get; set; }
+   
+        public virtual Cabinet Cabinet { get; set; }
         public virtual Printer Printer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cabinet> Cabinet { get; set; }
     }
 }

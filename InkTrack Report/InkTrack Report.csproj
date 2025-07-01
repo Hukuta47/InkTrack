@@ -165,9 +165,6 @@
     <Compile Include="Database\Cabinet.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\CabinetDevicesEmployees.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\Cartridge.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -224,6 +221,9 @@
     </Compile>
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectPrinter.xaml.cs">
+      <DependentUpon>SelectPrinter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -289,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ReplaceCartridge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SelectPrinter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

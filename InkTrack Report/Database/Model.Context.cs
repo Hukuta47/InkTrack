@@ -35,6 +35,5 @@ namespace InkTrack_Report.Database
         public virtual DbSet<EmployeeLIT> EmployeeLIT { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
         public virtual DbSet<ReasonForReplacement> ReasonForReplacement { get; set; }
-        public virtual DbSet<CabinetDevicesEmployees> CabinetDevicesEmployees { get; set; }
     }
 }

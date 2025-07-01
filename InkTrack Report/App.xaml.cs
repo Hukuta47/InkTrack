@@ -10,11 +10,16 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Printing;
-using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
+
+
+//notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
+//                    ? InkTrack_Report.Properties.Resources.Load_B
+//                    : InkTrack_Report.Properties.Resources.Load_W;
+
+
 
 namespace InkTrack_Report
 {
@@ -23,19 +28,14 @@ namespace InkTrack_Report
         private NotifyIcon notifyIcon;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
-
-
-
-
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
         private HashSet<string> _loggedJobs = new HashSet<string>();
         private HashSet<int> _loggedJobIds = new HashSet<int>();
 
-
-
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
         System.Timers.Timer timerIconChange = new System.Timers.Timer(2000);
+        System.Timers.Timer timerCheckData = new System.Timers.Timer(3000);
 
         string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
         bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
@@ -45,24 +45,43 @@ namespace InkTrack_Report
             base.OnStartup(e);
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
             timerIconChange.Elapsed += TimerIconChange_Elapsed;
+            timerCheckData.Elapsed += TimerCheckData_Elapsed; ;
             timerConnection.AutoReset = true;
 
-            if (isFirstStartup)
+
+            if (CheckConnectionToDatabase())
             {
-                if (new SettingsSetupWizard().ShowDialog() == true) FirstInitApplication();
+                DebugPrint("Подключен к базе данным SQL");
             }
             else
             {
-                if (EnabledDeviceActualityInCabinet() != true)
-                {
-                    if (new SettingsSetupWizard().ShowDialog() == true) InitApplication();
-                }
-                else
-                {
-                    InitApplication();
-                }
+                DebugPrint("Ошибка поключения к SQL базе данным");
             }
+
+
+            //if (CheckConnectionToDatabase())
+            //{
+            //    if (isFirstStartup)
+            //    {
+            //        if (new SettingsSetupWizard().ShowDialog() == true) FirstInitApplication();
+            //    }
+            //    else
+            //    {
+            //        if (EnabledDeviceActualityInCabinet() != true)
+            //        {
+            //            if (new SelectPrinter().ShowDialog() == true) InitApplication();
+            //        }
+            //        else
+            //        {
+            //            InitApplication();
+            //        }
+            //    }
+            //}
+
+            
         }
+
+        
 
         private void Connection_StateChange(object sender, System.Data.StateChangeEventArgs e)
         {
@@ -81,6 +100,10 @@ namespace InkTrack_Report
         {
             notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Printer_B : InkTrack_Report.Properties.Resources.Printer_W;
             timerIconChange.Stop();
+        }
+        private void TimerCheckData_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            //skip
         }
         private void StartPrintWatchers()
         {
@@ -219,9 +242,10 @@ namespace InkTrack_Report
             notifyIcon.Visible = true;
 
             entities.Database.Connection.StateChange += Connection_StateChange;
-            CheckConnectionToDatabase();
+
 
             timerConnection.Start();
+            timerCheckData.Start();
         }
         void FirstInitApplication()
         {
@@ -257,31 +281,34 @@ namespace InkTrack_Report
                 notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Alert_B : InkTrack_Report.Properties.Resources.Alert_W;
             }
             timerConnection.Start();
+            timerCheckData.Start();
         }
-        void CheckConnectionToDatabase()
+        bool CheckConnectionToDatabase()
         {
             try
             {
-                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
-                    ? InkTrack_Report.Properties.Resources.Load_B
-                    : InkTrack_Report.Properties.Resources.Load_W;
+                entities.Database.Connection.Close();
+                entities.Database.Connection.Open();
 
-                entities.Database.ExecuteSqlCommand("SELECT 1");
-
-                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
-                    ? InkTrack_Report.Properties.Resources.Printer_B
-                    : InkTrack_Report.Properties.Resources.Printer_W;
+                if (!EnabledDeviceActualityInCabinet())
+                {
+                    notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.DataError_B : InkTrack_Report.Properties.Resources.DataError_W;
+                }
+                return true;
             }
             catch (Exception)
             {
-                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
-                    ? InkTrack_Report.Properties.Resources.Alert_B
-                    : InkTrack_Report.Properties.Resources.Alert_W;
+
+                return false;
             }
         }
         bool EnabledDeviceActualityInCabinet()
         {
             return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
+        }
+        void DebugPrint(string text)
+        {
+            Debug.WriteLine($"{DateTime.Now.ToLongTimeString()} | {text}");
         }
     }
 }

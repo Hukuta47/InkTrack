@@ -1,16 +1,7 @@
 ﻿
 using InkTrack_Report.Classes;
-using InkTrack_Report.Database;
 using InkTrack_Report.Windows.Dialog;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
