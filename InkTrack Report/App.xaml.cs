@@ -197,11 +197,11 @@ namespace InkTrack_Report
                 Log("SQL", "Подключен к базе данным SQL");
                 if (isFirstStartup) {
                     Log("Program", "Первый запуск программы");
-                    if (new SettingsSetupWizard().ShowDialog() == true) InitApplication();
+                    if (new SettingsSetupWizard(true).ShowDialog() == true) InitApplication();
                 }
                 else {
                     if (EnabledDeviceActualityInCabinet() != true) {
-                        if (new SelectPrinter().ShowDialog() == true) InitApplication();
+                        if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
                     }
                     else InitApplication();
                 }

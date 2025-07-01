@@ -8,12 +8,24 @@ namespace InkTrack_Report.Windows
 {
     public partial class SettingsSetupWizard : Window
     {
-        public SettingsSetupWizard()
+        public SettingsSetupWizard(bool isFirstSetup)
         {
             InitializeComponent();
-
-            Combobox_SelectCabinet.ItemsSource = App.entities.Cabinet.Where(c => c.Device.Any(d => d.DeviceTypeID == 2)).ToList();
-            Combobox_SelectCabinet.SelectionChanged += ComboboxCabinetSelect_SelectionChanged;
+            if (isFirstSetup)
+            {
+                Combobox_SelectCabinet.ItemsSource = App.entities.Cabinet.Where(c => c.Device.Any(d => d.DeviceTypeID == 2)).ToList();
+                Combobox_SelectCabinet.SelectionChanged += ComboboxCabinetSelect_SelectionChanged;
+            }
+            else
+            {
+                Combobox_SelectCabinet.ItemsSource = App.entities.Cabinet.Where(c => c.Device.Any(d => d.DeviceTypeID == 2)).ToList();
+                Combobox_SelectCabinet.SelectedValue = Properties.Settings.Default.SelectedCabinetID;
+                Combobox_SelectEmployee.ItemsSource = (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee;
+                Combobox_SelectEmployee.SelectedValue = Properties.Settings.Default.SelectedEmployeeID;
+                Combobox_SelectEmployee.ItemsSource = (Combobox_SelectCabinet.SelectedItem as Cabinet).Employee;
+                Combobox_SelectPrinter.SelectedIndex = 0;
+            }
+                
         }
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
