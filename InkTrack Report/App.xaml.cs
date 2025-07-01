@@ -50,7 +50,7 @@ namespace InkTrack_Report
         }
         private void StartPrintWatchers()
         {
-            TimeSpan interval = TimeSpan.FromMilliseconds(500);
+            TimeSpan interval = TimeSpan.FromSeconds(1);
 
             // 1. Creation
             var creationQuery = new WqlEventQuery(
