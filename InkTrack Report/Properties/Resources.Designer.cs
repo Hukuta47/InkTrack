@@ -123,6 +123,26 @@ namespace InkTrack_Report.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
+        internal static System.Drawing.Icon Idle_B {
+            get {
+                object obj = ResourceManager.GetObject("Idle_B", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon Idle_W {
+            get {
+                object obj = ResourceManager.GetObject("Idle_W", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
         internal static System.Drawing.Icon Load_B {
             get {
                 object obj = ResourceManager.GetObject("Load_B", resourceCulture);
@@ -136,26 +156,6 @@ namespace InkTrack_Report.Properties {
         internal static System.Drawing.Icon Load_W {
             get {
                 object obj = ResourceManager.GetObject("Load_W", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
-        /// </summary>
-        internal static System.Drawing.Icon Printer_B {
-            get {
-                object obj = ResourceManager.GetObject("Printer_B", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
-        /// </summary>
-        internal static System.Drawing.Icon Printer_W {
-            get {
-                object obj = ResourceManager.GetObject("Printer_W", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

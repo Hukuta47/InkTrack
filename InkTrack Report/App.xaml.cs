@@ -3,6 +3,7 @@ using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.Cmp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,99 +16,41 @@ using System.Windows;
 using System.Windows.Forms;
 
 
-//notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light
-//                    ? InkTrack_Report.Properties.Resources.Load_B
-//                    : InkTrack_Report.Properties.Resources.Load_W;
-
 
 
 namespace InkTrack_Report
 {
     public partial class App : System.Windows.Application
     {
-        private NotifyIcon notifyIcon;
         static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
         static public LitDBEntities entities = new LitDBEntities();
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
-        private HashSet<string> _loggedJobs = new HashSet<string>();
         private HashSet<int> _loggedJobIds = new HashSet<int>();
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
-        System.Timers.Timer timerIconChange = new System.Timers.Timer(2000);
         System.Timers.Timer timerCheckData = new System.Timers.Timer(3000);
 
         string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
+
         bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            timerIconChange.Elapsed += TimerIconChange_Elapsed;
-            timerCheckData.Elapsed += TimerCheckData_Elapsed; ;
-            timerConnection.AutoReset = true;
+        public TrayIcon trayIcon;
 
-
-            if (CheckConnectionToDatabase())
-            {
-                DebugPrint("Подключен к базе данным SQL");
-            }
-            else
-            {
-                DebugPrint("Ошибка поключения к SQL базе данным");
-            }
-
-
-            //if (CheckConnectionToDatabase())
-            //{
-            //    if (isFirstStartup)
-            //    {
-            //        if (new SettingsSetupWizard().ShowDialog() == true) FirstInitApplication();
-            //    }
-            //    else
-            //    {
-            //        if (EnabledDeviceActualityInCabinet() != true)
-            //        {
-            //            if (new SelectPrinter().ShowDialog() == true) InitApplication();
-            //        }
-            //        else
-            //        {
-            //            InitApplication();
-            //        }
-            //    }
-            //}
-
-            
-        }
-
-        
-
-        private void Connection_StateChange(object sender, System.Data.StateChangeEventArgs e)
-        {
-            switch (e.CurrentState)
-            {
-                case System.Data.ConnectionState.Open:
-                    notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Printer_B : InkTrack_Report.Properties.Resources.Printer_W;
-                break;
-            }
-        }
         private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e)
         {
             CheckConnectionToDatabase();
         }
-        private void TimerIconChange_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Printer_B : InkTrack_Report.Properties.Resources.Printer_W;
-            timerIconChange.Stop();
-        }
         private void TimerCheckData_Elapsed(object sender, ElapsedEventArgs e)
         {
-            //skip
+            if (EnabledDeviceActualityInCabinet() != true)
+            {
+                trayIcon.ChangeIcon(TrayIcon.StatusIcon.DataError, "Ошибка данных, воспроизведите настройку заново");
+            }
         }
         private void StartPrintWatchers()
         {
-            TimeSpan interval = TimeSpan.FromSeconds(1);
+            TimeSpan interval = TimeSpan.FromMilliseconds(500);
 
             // 1. Creation
             var creationQuery = new WqlEventQuery(
@@ -129,19 +72,16 @@ namespace InkTrack_Report
             _modificationWatcher.EventArrived += OnPrintJobEvent;
             _modificationWatcher.Start();
         }
-
         private void OnPrintJobEvent(object sender, EventArrivedEventArgs e)
         {
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
             HandlePrintJob(job);
         }
-
         private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
         {
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
             HandlePrintJob(job);
         }
-
         private void HandlePrintJob(ManagementBaseObject job)
         {
             if (!int.TryParse(job["JobId"]?.ToString(), out int jobId))
@@ -165,14 +105,14 @@ namespace InkTrack_Report
                 Dispatcher.Invoke(() =>
                 {
                     var dialog = new PageCountDialog(docName);
-                    notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Write_B : InkTrack_Report.Properties.Resources.Write_W;
+                    trayIcon.ChangeIcon(TrayIcon.StatusIcon.Write);
                     if (dialog.ShowDialog() == true && dialog.PageCount.HasValue)
                     {
                         pages = dialog.PageCount.Value;
                     }
                     else
                     {
-                        ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.CancelByUser_B : InkTrack_Report.Properties.Resources.CancelByUser_W);
+                        trayIcon.ChangeIcon(TrayIcon.StatusIcon.CancelByUser, "Отказано пользователем");
                     }
                 });
             }
@@ -191,9 +131,7 @@ namespace InkTrack_Report
 
             Dispatcher.Invoke(() =>
             {
-                ChangeIcon(ThemeDetector.GetWindowsTheme() == AppTheme.Light
-                    ? InkTrack_Report.Properties.Resources.Save_B
-                    : InkTrack_Report.Properties.Resources.Save_W);
+                trayIcon.ChangeIconOnTime(TrayIcon.StatusIcon.Save, "Сохранение данных", 2000);
 
                 Debug.WriteLine($"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}");
 
@@ -201,114 +139,96 @@ namespace InkTrack_Report
                 File.WriteAllText(Path.Combine(pathApplication, "printoutDatas.json"), jsonData);
             });
         }
-
-        void ChangeIcon(Icon changeIcon)
-        {
-            notifyIcon.Icon = changeIcon;
-            timerIconChange.Start();
-        }
         void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             new WindowTraySelectFuntion(false).Show();
         }
-        protected override void OnExit(ExitEventArgs e)
-        {
-            notifyIcon?.Dispose();
-            _creationWatcher?.Stop();
-            _creationWatcher?.Dispose();
-            _modificationWatcher?.Stop();
-            _modificationWatcher?.Dispose();
-            base.OnExit(e);
-        }
         void InitApplication()
         {
             StartPrintWatchers();
-            timerConnection.Elapsed += TimerConnection_Elapsed;
-
-            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
-            {
-                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-                Directory.CreateDirectory(pathApplication);
-                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
-            }
-
-            string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
-            List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
-            printoutDatas = jsonData;
-
-            notifyIcon = new NotifyIcon();
-            notifyIcon.MouseClick += NotifyIcon_MouseClick;
-            notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Load_B : InkTrack_Report.Properties.Resources.Load_W;
-            notifyIcon.Visible = true;
-
-            entities.Database.Connection.StateChange += Connection_StateChange;
-
-
-            timerConnection.Start();
             timerCheckData.Start();
-        }
-        void FirstInitApplication()
-        {
-            StartPrintWatchers();
-            timerConnection.Elapsed += TimerConnection_Elapsed;
-
-
-            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
-            {
-                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-                Directory.CreateDirectory(pathApplication);
-                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
-            }
-
-            string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
-            List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
-            printoutDatas = jsonData;
-
-
-            notifyIcon = new NotifyIcon();
-            notifyIcon.MouseClick += NotifyIcon_MouseClick;
-            notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Load_B : InkTrack_Report.Properties.Resources.Load_W;
-            notifyIcon.Visible = true;
-
-            entities.Database.Connection.StateChange += Connection_StateChange;
-            try
-            {
-                entities.Database.Connection.Open();
-            }
-            catch (Exception ex)
-            {
-                entities.Database.Connection.Close();
-                notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.Alert_B : InkTrack_Report.Properties.Resources.Alert_W;
-            }
-            timerConnection.Start();
-            timerCheckData.Start();
-        }
-        bool CheckConnectionToDatabase()
-        {
-            try
-            {
-                entities.Database.Connection.Close();
-                entities.Database.Connection.Open();
-
-                if (!EnabledDeviceActualityInCabinet())
-                {
-                    notifyIcon.Icon = ThemeDetector.GetWindowsTheme() == AppTheme.Light ? InkTrack_Report.Properties.Resources.DataError_B : InkTrack_Report.Properties.Resources.DataError_W;
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
         }
         bool EnabledDeviceActualityInCabinet()
         {
             return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
         }
-        void DebugPrint(string text)
+        bool CheckConnectionToDatabase()
         {
-            Debug.WriteLine($"{DateTime.Now.ToLongTimeString()} | {text}");
+            try
+            {
+                Log("SQL", "Попытка подключиться к SQL базе");
+                entities.Database.Connection.Close();
+                trayIcon.ChangeIcon(TrayIcon.StatusIcon.Load, "Подключение к SQL базе данным...");
+                entities.Database.Connection.Open();
+                Log("SQL", "Подключение восстановлено");
+                trayIcon.ChangeIcon(TrayIcon.StatusIcon.Idle);
+                return true;
+            }
+            catch (Exception)
+            {
+                Log("SQL", "Подключение к SQL базе не удачно");
+                trayIcon.ChangeIcon(TrayIcon.StatusIcon.Alert, "Нет подключения к SQL базе данным.");
+                return false;
+            }
+        }
+        void CheckInitilizationData()
+        {
+            if (!File.Exists($"{pathApplication}\\printoutDatas.json"))
+            {
+                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
+                Directory.CreateDirectory(pathApplication);
+                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
+            }
+        }
+        void LoadData()
+        {
+            string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
+            List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
+            printoutDatas = jsonData;
+        }
+        void Log(string category, string text)
+        {
+            Debug.WriteLine($"{DateTime.Now.ToLongTimeString()} | {category} | {text}");
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            trayIcon = new TrayIcon();
+
+            trayIcon.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
+
+            timerCheckData.Elapsed += TimerCheckData_Elapsed;
+            timerConnection.Elapsed += TimerConnection_Elapsed;
+            timerConnection.Start();
+
+            CheckInitilizationData();
+            LoadData();
+
+            if (CheckConnectionToDatabase())
+            {
+                Log("SQL", "Подключен к базе данным SQL");
+                if (isFirstStartup) {
+                    Log("Program", "Первый запуск программы");
+                    if (new SettingsSetupWizard().ShowDialog() == true) InitApplication();
+                }
+                else {
+                    if (EnabledDeviceActualityInCabinet() != true) {
+                        if (new SelectPrinter().ShowDialog() == true) InitApplication();
+                    }
+                    else InitApplication();
+                }
+            }
+            else Log("SQL", "Ошибка поключения к SQL базе данным");
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _creationWatcher?.Stop();
+            _creationWatcher?.Dispose();
+            _modificationWatcher?.Stop();
+            _modificationWatcher?.Dispose();
+            base.OnExit(e);
         }
     }
 }

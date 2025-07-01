@@ -136,17 +136,17 @@
   <data name="DataError_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DataError W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Idle_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Idle B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Idle_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Idle W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Load_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Load B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Load_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Load W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Printer_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Printer B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Printer_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Printer W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Proletarsk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Proletarsk.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
