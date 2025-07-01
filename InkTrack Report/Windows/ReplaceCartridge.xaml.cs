@@ -1,8 +1,9 @@
 ﻿using InkTrack_Report.Classes;
 using InkTrack_Report.Database;
-using iTextSharp.text.pdf;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Newtonsoft.Json;
+using NPetrovich;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -78,7 +79,6 @@ namespace InkTrack_Report.Windows
         }
         private void GeneratePrintOutList(object sender, RoutedEventArgs e)
         {
-
             GenerateFiles(App.printoutDatas);
             App.printoutDatas = new List<PrintoutData>();
             Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
@@ -96,6 +96,22 @@ namespace InkTrack_Report.Windows
 
         public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
         {
+            string dbFIO = App.entities.Employee.First(employee => employee.EmployeeID == InkTrack_Report.Properties.Settings.Default.SelectedEmployeeID).FIO;
+
+            var petrovich = new Petrovich()
+            {
+                LastName = dbFIO.Split(' ')[0],
+                FirstName = dbFIO.Split(' ')[1],
+                MiddleName = dbFIO.Split(' ')[2],
+                AutoDetectGender = true
+            };
+            var inflectedFIO = petrovich.InflectTo(Case.Genitive);
+
+            string GenetiveFIO = $"{inflectedFIO.LastName} {inflectedFIO.FirstName} {inflectedFIO.MiddleName}";
+
+
+
+
             // Create document with A4 size and margins (approximately 2-3cm)
             Document document = new Document(PageSize.A4);
 
@@ -120,7 +136,7 @@ namespace InkTrack_Report.Windows
             header.Alignment = Element.ALIGN_LEFT;
             header.SpacingAfter = 10f;
             header.IndentationLeft = 325;
-            Phrase headerPhrase = new Phrase($"Директору ГАПОУ\n«Забайкальский горный колледж имени И.М. Агошкова»\nН.В. Зыкову\nот {App.entities.Employee.First(employee => employee.EmployeeID == SelectedEmployeeID).FIO}", regularFont);
+            Phrase headerPhrase = new Phrase($"Директору ГАПОУ\n«Забайкальский горный колледж имени И.М. Агошкова»\nН.В. Зыкову\nот {GenetiveFIO}", regularFont);
             headerPhrase.Leading = 1; // Высота строки = размер шрифта (12)
             header.Add(headerPhrase);
             document.Add(header);

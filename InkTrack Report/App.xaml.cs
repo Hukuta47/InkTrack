@@ -3,6 +3,7 @@ using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
 using Newtonsoft.Json;
+using NPetrovich;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,9 +33,9 @@ namespace InkTrack_Report
         public TrayIcon trayIcon;
 
         void DefaultNotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion(false).Show();
-        private void SelectPrinterNotifyIcon_MouseClick(object sender, MouseEventArgs e)
+        private void SetNewSettingsNotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            if (new SelectPrinter().ShowDialog() == true) InitApplication();
+            if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
         }
         void Log(string category, string text) => Debug.WriteLine($"{DateTime.Now.ToLongTimeString()} | {category} | {text}");
         private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e) => CheckConnectionToDatabase();
@@ -150,7 +151,7 @@ namespace InkTrack_Report
                 if (!EnabledDeviceActualityInCabinet()) {
                     Log("Check", "Проверка не пройдена, замена иконки и подписки метода");
                     trayIcon.ChangeIcon(TrayIcon.StatusIcon.DataError, "Ошибка данных, воспроизведите настройку заново");
-                    trayIcon.NotifyIcon.MouseClick += SelectPrinterNotifyIcon_MouseClick; ;
+                    trayIcon.NotifyIcon.MouseClick += SetNewSettingsNotifyIcon_MouseClick; ;
                 }
                 else {
                     Log("Check", "Проверка пройдена, все нормально");
