@@ -1,8 +1,10 @@
 ﻿using InkTrack_Report.Database;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace InkTrack_Report.Windows
 {
@@ -26,6 +28,17 @@ namespace InkTrack_Report.Windows
                 Combobox_SelectPrinter.SelectedIndex = 0;
             }
                 
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeIn = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 1.0,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                Duration = new Duration(TimeSpan.FromSeconds(1)) // Можно изменить время
+            };
+            this.BeginAnimation(OpacityProperty, fadeIn);
         }
         private void ComboboxCabinetSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -4,6 +4,7 @@ using InkTrack_Report.Windows.Dialog;
 using System;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 
 namespace InkTrack_Report.Windows
@@ -42,6 +43,17 @@ namespace InkTrack_Report.Windows
                 ServiceButtons.Visibility = Visibility.Visible;
             }
             TextBlock_CounterPages.Text = $"Страниц напечатано: {SumPagesPrintouts}";
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeIn = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 1.0,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                Duration = new Duration(TimeSpan.FromSeconds(1)) // Можно изменить время
+            };
+            this.BeginAnimation(OpacityProperty, fadeIn);
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {

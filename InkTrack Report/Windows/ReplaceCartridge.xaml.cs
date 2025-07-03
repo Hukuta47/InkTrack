@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace InkTrack_Report.Windows
 {
@@ -39,6 +40,17 @@ namespace InkTrack_Report.Windows
             Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForReplacement.ToList();
             Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
             Combobox_WhoReplaced.ItemsSource = App.entities.EmployeeLIT.ToList();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeIn = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 1.0,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                Duration = new Duration(TimeSpan.FromSeconds(1)) // Можно изменить время
+            };
+            this.BeginAnimation(OpacityProperty, fadeIn);
         }
         private void PanelDrag_MouseDown(object sender, MouseButtonEventArgs e)
         {

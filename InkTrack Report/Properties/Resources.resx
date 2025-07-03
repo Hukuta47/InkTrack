@@ -136,6 +136,9 @@
   <data name="DataError_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DataError W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Help_circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Help circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Idle_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Idle B.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -162,5 +165,8 @@
   </data>
   <data name="Write_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Write W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="X" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

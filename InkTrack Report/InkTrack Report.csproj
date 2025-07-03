@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>\\zabgc-rabota\LIT\7. Программы ЛИТа\InkTrack Report\</PublishUrl>
+    <PublishUrl>\\zabgc-rabota\LIT\6. Программы ЛИТа\InkTrack Report\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,7 +28,7 @@
     <MinimumRequiredVersion>1.0.0.4</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -175,6 +175,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\PrintoutData.cs" />
     <Compile Include="Classes\ThemeDetector.cs" />
     <Compile Include="Classes\TrayIcon.cs" />
@@ -223,17 +224,11 @@
     <Compile Include="Database\ReasonForReplacement.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CreateRequestRefill.xaml.cs">
-      <DependentUpon>CreateRequestRefill.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Dialog\AdminAuthDialog.xaml.cs">
       <DependentUpon>AdminAuthDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Dialog\PageCountDialog.xaml.cs">
       <DependentUpon>PageCountDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Dialog\PrintoutInfo.xaml.cs">
-      <DependentUpon>PrintoutInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
@@ -277,7 +272,7 @@
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
@@ -285,21 +280,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Windows\CreateRequestRefill.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\Dialog\AdminAuthDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Dialog\PageCountDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\Dialog\PrintoutInfo.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ReplaceCartridge.xaml">
       <SubType>Designer</SubType>
@@ -349,6 +336,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\Help circle.png" />
+    <None Include="Resources\X.png" />
     <None Include="Resources\Idle W.ico" />
     <None Include="Resources\Idle B.ico" />
     <None Include="Resources\DataError B.ico" />

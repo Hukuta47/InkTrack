@@ -13,7 +13,7 @@
 		Topmost="True"
 		Deactivated="Window_Deactivated"
 		SizeToContent="WidthAndHeight"
-		AllowsTransparency="True"  >
+		AllowsTransparency="True" Loaded="Window_Loaded">
 	
 	<Window.Resources>
 		<FontFamily x:Key="Proletarsk">

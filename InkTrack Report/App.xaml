@@ -256,12 +256,11 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-
 		<Style TargetType="TextBlock">
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
 		</Style>
-		
+
 		<Style TargetType="ComboBox">
 			<Setter Property="Height" Value="48"/>
 			<Setter Property="FontSize" Value="24"/>
@@ -270,7 +269,6 @@
 			<Setter Property="BorderBrush" Value="#3b62ed"/>
 			<Setter Property="Background" Value="#ffffff"/>
 		</Style>
-
 		<Style TargetType="TextBox">
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
@@ -286,6 +284,21 @@
 			</Style.Resources>
 		</Style>
 
+		<Style TargetType="ListBox">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontFamily" Value="{StaticResource Proletarsk}"/>
+			<Setter Property="Foreground" Value="#000000"/>
+			<Setter Property="BorderBrush" Value="#3b62ed"/>
+			<Setter Property="Background" Value="#ffffff"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="Padding" Value="12"/>
+			<Style.Resources>
+				<Style TargetType="Border">
+					<Setter Property="CornerRadius" Value="16"/>
+				</Style>
+			</Style.Resources>
+		</Style>
+		
 		<Style TargetType="PasswordBox">
 			<Setter Property="PasswordChar" Value="●"/>
 			<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
