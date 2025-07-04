@@ -189,7 +189,6 @@ namespace InkTrack_Report.Windows
             // Data Rows from listOfPrintedDocuments
             foreach (var item in listOfPrintedDocuments)
             {
-                table.AddCell(new PdfPCell(new Phrase(item.Number.ToString(), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
                 table.AddCell(new PdfPCell(new Phrase(item.NameDocument, regularFont)) { HorizontalAlignment = Element.ALIGN_LEFT });
                 table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd.MM.yy"), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
                 table.AddCell(new PdfPCell(new Phrase(item.CountPages.ToString(), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });

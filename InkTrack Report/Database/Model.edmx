@@ -106,6 +106,7 @@
           <Property Name="CartridgeID" Type="int" />
           <Property Name="PrinterStatusID" Type="int" />
           <Property Name="CartridgeReplacementDate" Type="date" />
+          <Property Name="PrintedDocumentsList" Type="xml" />
         </EntityType>
         <EntityType Name="ReasonForReplacement">
           <Key>
@@ -282,25 +283,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetCabinetsWithPrinters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetCompatibleCartridgesForPrinter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrinterID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetCompatibleCartridgesInStockForPrinter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrinterID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetEmployeesInCabinet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CabinetID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetPrintersInCabinet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CabinetID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="InstallCartridgeToPrinter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="NewCartridgeID" Type="int" Mode="In" />
-          <Parameter Name="ReasonID" Type="int" Mode="In" />
-          <Parameter Name="EmployeeLITID" Type="int" Mode="In" />
-          <Parameter Name="Comment" Type="nvarchar(max)" Mode="In" />
-        </Function>
         <EntityContainer Name="Хранилище LitDBModelContainer">
           <EntitySet Name="Cabinet" EntityType="Self.Cabinet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cabinet_Employee" EntityType="Self.Cabinet_Employee" Schema="dbo" store:Type="Tables" />
@@ -384,7 +366,6 @@
           <EntitySet Name="Device" EntityType="LitDBModel.Device" />
           <EntitySet Name="Employee" EntityType="LitDBModel.Employee" />
           <EntitySet Name="EmployeeLIT" EntityType="LitDBModel.EmployeeLIT" />
-          <EntitySet Name="Printer" EntityType="LitDBModel.Printer" />
           <EntitySet Name="ReasonForReplacement" EntityType="LitDBModel.ReasonForReplacement" />
           <AssociationSet Name="FK_Device_Cabinet" Association="LitDBModel.FK_Device_Cabinet">
             <End Role="Cabinet" EntitySet="Cabinet" />
@@ -406,21 +387,9 @@
             <End Role="Cartridge" EntitySet="Cartridge" />
             <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_Printer_Cartridge" Association="LitDBModel.FK_Printer_Cartridge">
-            <End Role="Cartridge" EntitySet="Cartridge" />
-            <End Role="Printer" EntitySet="Printer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CartridgeReplacement_Log_Printer" Association="LitDBModel.FK_CartridgeReplacement_Log_Printer">
-            <End Role="Printer" EntitySet="Printer" />
-            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
-          </AssociationSet>
           <AssociationSet Name="FK_CartridgeReplacement_Log_ReasonForReplacement" Association="LitDBModel.FK_CartridgeReplacement_Log_ReasonForReplacement">
             <End Role="ReasonForReplacement" EntitySet="ReasonForReplacement" />
             <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Printer__Printer__3C69FB99" Association="LitDBModel.FK__Printer__Printer__3C69FB99">
-            <End Role="Device" EntitySet="Device" />
-            <End Role="Printer" EntitySet="Printer" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeeLIT_Employee" Association="LitDBModel.FK_EmployeeLIT_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -429,6 +398,19 @@
           <AssociationSet Name="Cabinet_Employee" Association="LitDBModel.Cabinet_Employee">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <EntitySet Name="Printer" EntityType="LitDBModel.Printer" />
+          <AssociationSet Name="FK_Printer_Cartridge" Association="LitDBModel.FK_Printer_Cartridge">
+            <End Role="Cartridge" EntitySet="Cartridge" />
+            <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartridgeReplacement_Log_Printer" Association="LitDBModel.FK_CartridgeReplacement_Log_Printer">
+            <End Role="Printer" EntitySet="Printer" />
+            <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Printer__Printer__3C69FB99" Association="LitDBModel.FK__Printer__Printer__3C69FB99">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Printer" EntitySet="Printer" />
           </AssociationSet>
           <AssociationSet Name="CartridgeCompatibility" Association="LitDBModel.CartridgeCompatibility">
             <End Role="CartridgeModel" EntitySet="CartridgeModel" />
@@ -486,8 +468,8 @@
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cartridge" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Cartridge" FromRole="CartridgeReplacement_Log" ToRole="Cartridge" />
           <NavigationProperty Name="Cartridge1" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Cartridge1" FromRole="CartridgeReplacement_Log" ToRole="Cartridge" />
-          <NavigationProperty Name="Printer" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Printer" FromRole="CartridgeReplacement_Log" ToRole="Printer" />
           <NavigationProperty Name="ReasonForReplacement" Relationship="LitDBModel.FK_CartridgeReplacement_Log_ReasonForReplacement" FromRole="CartridgeReplacement_Log" ToRole="ReasonForReplacement" />
+          <NavigationProperty Name="Printer" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Printer" FromRole="CartridgeReplacement_Log" ToRole="Printer" />
         </EntityType>
         <EntityType Name="CartridgeStatus">
           <Key>
@@ -529,20 +511,6 @@
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
           <Property Name="EmployeePositionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="LitDBModel.FK_EmployeeLIT_Employee" FromRole="EmployeeLIT" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="Printer">
-          <Key>
-            <PropertyRef Name="PrinterID" />
-          </Key>
-          <Property Name="PrinterID" Type="Int32" Nullable="false" />
-          <Property Name="NumbersOfRepairs" Type="Int32" Nullable="false" />
-          <Property Name="CartridgeID" Type="Int32" />
-          <Property Name="PrinterStatusID" Type="Int32" />
-          <Property Name="CartridgeReplacementDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Cartridge" Relationship="LitDBModel.FK_Printer_Cartridge" FromRole="Printer" ToRole="Cartridge" />
-          <NavigationProperty Name="CartridgeReplacement_Log" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Printer" FromRole="Printer" ToRole="CartridgeReplacement_Log" />
-          <NavigationProperty Name="Device" Relationship="LitDBModel.FK__Printer__Printer__3C69FB99" FromRole="Printer" ToRole="Device" />
-          <NavigationProperty Name="CartridgeModel" Relationship="LitDBModel.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
         </EntityType>
         <EntityType Name="ReasonForReplacement">
           <Key>
@@ -612,6 +580,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CartridgeReplacement_Log_ReasonForReplacement">
+          <End Type="LitDBModel.ReasonForReplacement" Role="ReasonForReplacement" Multiplicity="1" />
+          <End Type="LitDBModel.CartridgeReplacement_Log" Role="CartridgeReplacement_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReasonForReplacement">
+              <PropertyRef Name="ReasonID" />
+            </Principal>
+            <Dependent Role="CartridgeReplacement_Log">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeLIT_Employee">
+          <End Type="LitDBModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="LitDBModel.EmployeeLIT" Role="EmployeeLIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeLIT">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cabinet_Employee">
+          <End Type="LitDBModel.Cabinet" Role="Cabinet" Multiplicity="*" />
+          <End Type="LitDBModel.Employee" Role="Employee" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Printer">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="Int32" Nullable="false" />
+          <Property Name="NumbersOfRepairs" Type="Int32" Nullable="false" />
+          <Property Name="CartridgeID" Type="Int32" />
+          <Property Name="PrinterStatusID" Type="Int32" />
+          <Property Name="CartridgeReplacementDate" Type="DateTime" Precision="0" />
+          <Property Name="PrintedDocumentsList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cartridge" Relationship="LitDBModel.FK_Printer_Cartridge" FromRole="Printer" ToRole="Cartridge" />
+          <NavigationProperty Name="CartridgeReplacement_Log" Relationship="LitDBModel.FK_CartridgeReplacement_Log_Printer" FromRole="Printer" ToRole="CartridgeReplacement_Log" />
+          <NavigationProperty Name="Device" Relationship="LitDBModel.FK__Printer__Printer__3C69FB99" FromRole="Printer" ToRole="Device" />
+          <NavigationProperty Name="CartridgeModel" Relationship="LitDBModel.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
+        </EntityType>
         <Association Name="FK_Printer_Cartridge">
           <End Type="LitDBModel.Cartridge" Role="Cartridge" Multiplicity="0..1" />
           <End Type="LitDBModel.Printer" Role="Printer" Multiplicity="*" />
@@ -636,18 +647,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CartridgeReplacement_Log_ReasonForReplacement">
-          <End Type="LitDBModel.ReasonForReplacement" Role="ReasonForReplacement" Multiplicity="1" />
-          <End Type="LitDBModel.CartridgeReplacement_Log" Role="CartridgeReplacement_Log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReasonForReplacement">
-              <PropertyRef Name="ReasonID" />
-            </Principal>
-            <Dependent Role="CartridgeReplacement_Log">
-              <PropertyRef Name="ReasonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Printer__Printer__3C69FB99">
           <End Type="LitDBModel.Device" Role="Device" Multiplicity="1" />
           <End Type="LitDBModel.Printer" Role="Printer" Multiplicity="0..1" />
@@ -659,22 +658,6 @@
               <PropertyRef Name="PrinterID" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeLIT_Employee">
-          <End Type="LitDBModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="LitDBModel.EmployeeLIT" Role="EmployeeLIT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="EmployeeLIT">
-              <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Cabinet_Employee">
-          <End Type="LitDBModel.Cabinet" Role="Cabinet" Multiplicity="*" />
-          <End Type="LitDBModel.Employee" Role="Employee" Multiplicity="*" />
         </Association>
         <Association Name="CartridgeCompatibility">
           <End Type="LitDBModel.CartridgeModel" Role="CartridgeModel" Multiplicity="*" />
@@ -769,17 +752,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Printer">
-            <EntityTypeMapping TypeName="LitDBModel.Printer">
-              <MappingFragment StoreEntitySet="Printer">
-                <ScalarProperty Name="CartridgeReplacementDate" ColumnName="CartridgeReplacementDate" />
-                <ScalarProperty Name="PrinterStatusID" ColumnName="PrinterStatusID" />
-                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
-                <ScalarProperty Name="NumbersOfRepairs" ColumnName="NumbersOfRepairs" />
-                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ReasonForReplacement">
             <EntityTypeMapping TypeName="LitDBModel.ReasonForReplacement">
               <MappingFragment StoreEntitySet="ReasonForReplacement">
@@ -796,6 +768,18 @@
               <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Printer">
+            <EntityTypeMapping TypeName="LitDBModel.Printer">
+              <MappingFragment StoreEntitySet="Printer">
+                <ScalarProperty Name="PrintedDocumentsList" ColumnName="PrintedDocumentsList" />
+                <ScalarProperty Name="CartridgeReplacementDate" ColumnName="CartridgeReplacementDate" />
+                <ScalarProperty Name="PrinterStatusID" ColumnName="PrinterStatusID" />
+                <ScalarProperty Name="CartridgeID" ColumnName="CartridgeID" />
+                <ScalarProperty Name="NumbersOfRepairs" ColumnName="NumbersOfRepairs" />
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="CartridgeCompatibility" TypeName="LitDBModel.CartridgeCompatibility" StoreEntitySet="CartridgeCompatibility">
             <EndProperty Name="Printer">
               <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />

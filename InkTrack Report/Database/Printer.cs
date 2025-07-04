@@ -26,6 +26,7 @@ namespace InkTrack_Report.Database
         public Nullable<int> CartridgeID { get; set; }
         public Nullable<int> PrinterStatusID { get; set; }
         public Nullable<System.DateTime> CartridgeReplacementDate { get; set; }
+        public string PrintedDocumentsList { get; set; }
     
         public virtual Cartridge Cartridge { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

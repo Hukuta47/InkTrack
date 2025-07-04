@@ -2,7 +2,6 @@
 using InkTrack_Report.Database;
 using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,20 +11,19 @@ using System.Management;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace InkTrack_Report
 {
     public partial class App : System.Windows.Application
     {
-        static public List<PrintoutData> printoutDatas = new List<PrintoutData>();
+        static public List<PrintoutData> printoutDatas;
         static public LitDBEntities entities = new LitDBEntities();
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
         private HashSet<int> _loggedJobIds = new HashSet<int>();
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
-
-        string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
 
         bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
 
@@ -105,11 +103,8 @@ namespace InkTrack_Report
 
             Dispatcher.Invoke(() => {
                 trayIcon.ChangeIconOnTime(TrayIcon.StatusIcon.Save, "Сохранение данных", 2000);
-
                 Debug.WriteLine($"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}");
-
-                string jsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-                File.WriteAllText(Path.Combine(pathApplication, "printoutDatas.json"), jsonData);
+                SavePrintOutDatasToDatabase();
             });
         }
         void InitApplication() {
@@ -149,21 +144,42 @@ namespace InkTrack_Report
                 return false;
             }
         }
-        void CheckInitilizationData()
-        {
-            if (!File.Exists($"{pathApplication}\\printoutDatas.json")) {
-                string JsonData = JsonConvert.SerializeObject(printoutDatas, Formatting.Indented);
-                Directory.CreateDirectory(pathApplication);
-                File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
-            }
+        void CheckInitilizationData() {
+            Logger.Log("Check", "Проверка наличия папки отладки...");
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs")) {
+                Logger.Log("Check", "Папка не найдена, создание...");
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs");
+                Logger.Log("Check", "Папка создана");
+            }
+            else {
+               Logger.Log("Check", "Проверка пройдена");
             }
         }
-        void LoadData() {
-            string FileData = File.ReadAllText($"{pathApplication}\\printoutDatas.json");
-            List<PrintoutData> jsonData = JsonConvert.DeserializeObject<List<PrintoutData>>(FileData);
-            printoutDatas = jsonData;
+        public static void SavePrintOutDatasToDatabase() {
+            Logger.Log("SQL", "Сохранение списка документов");
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            using (var stringWriter = new StringWriter()) {
+                serializer.Serialize(stringWriter, printoutDatas);
+                Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
+                printer.PrintedDocumentsList = stringWriter.ToString();
+                entities.SaveChanges();
+            }
+        }
+        public static void LoadPrintOutDataFromXmlDatabase() {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
+            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList)) {
+                printoutDatas = new List<PrintoutData>();
+                return;
+            }
+            try {
+                using (var stringReader = new StringReader(printer.PrintedDocumentsList)) {
+                    printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
+                }
+            }
+            catch {
+                printoutDatas = new List<PrintoutData>();
+            }
         }
         protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
@@ -175,8 +191,6 @@ namespace InkTrack_Report
             timerConnection.Start();
 
             CheckInitilizationData();
-            LoadData();
-
 
             if (CheckConnectionToDatabase(true)) {
                 Logger.Log("SQL", "Подключен к базе данным SQL");
@@ -192,6 +206,7 @@ namespace InkTrack_Report
                 }
             }
             else Logger.Log("SQL", "Ошибка поключения к SQL базе данным");
+            LoadPrintOutDataFromXmlDatabase();
         }
         protected override void OnExit(ExitEventArgs e)
         {

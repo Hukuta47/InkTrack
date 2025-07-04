@@ -24,7 +24,7 @@ namespace InkTrack_Report.Database
     
         public virtual Cartridge Cartridge { get; set; }
         public virtual Cartridge Cartridge1 { get; set; }
-        public virtual Printer Printer { get; set; }
         public virtual ReasonForReplacement ReasonForReplacement { get; set; }
+        public virtual Printer Printer { get; set; }
     }
 }
