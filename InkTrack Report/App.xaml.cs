@@ -163,6 +163,16 @@ namespace InkTrack_Report
 
             string docName = job["Document"]?.ToString() ?? "Без названия";
 
+            string printerFullName = job["Name"]?.ToString() ?? "Неизвестный принтер";
+            string printerName = printerFullName.Split(',')[0].Trim();
+            int colonIndex = printerFullName.LastIndexOf(':');
+            if (colonIndex > 0)
+            {
+                printerName = printerFullName.Substring(0, colonIndex).Trim();
+            }
+
+
+
             int pages = 0;
             if (job["TotalPages"] != null) int.TryParse(job["TotalPages"].ToString(), out pages);
 
@@ -192,7 +202,7 @@ namespace InkTrack_Report
 
             Dispatcher.Invoke(() => {
                 trayIcon.ChangeIconOnTime(TrayIcon.StatusIcon.Save, "Сохранение данных", 2000);
-                Debug.WriteLine($"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}");
+                Logger.Log("Printed", $"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}, Принтер:{printerName}");
                 SavePrintOutDatasToDatabase();
             });
         }
