@@ -88,6 +88,7 @@
           </Key>
           <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FIO" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DomainName" Type="nvarchar" MaxLength="63" />
         </EntityType>
         <EntityType Name="EmployeeLIT">
           <Key>
@@ -115,7 +116,7 @@
           <Property Name="ReasonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Cabinet_E__Cabin__656C112C">
+        <Association Name="FK__Cabinet_E__Cabin__73BA3083">
           <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="1" />
           <End Role="Cabinet_Employee" Type="Self.Cabinet_Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -296,7 +297,7 @@
           <EntitySet Name="EmployeeLIT" EntityType="Self.EmployeeLIT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Printer" EntityType="Self.Printer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReasonForReplacement" EntityType="Self.ReasonForReplacement" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Cabinet_E__Cabin__656C112C" Association="Self.FK__Cabinet_E__Cabin__656C112C">
+          <AssociationSet Name="FK__Cabinet_E__Cabin__73BA3083" Association="Self.FK__Cabinet_E__Cabin__73BA3083">
             <End Role="Cabinet" EntitySet="Cabinet" />
             <End Role="Cabinet_Employee" EntitySet="Cabinet_Employee" />
           </AssociationSet>
@@ -502,6 +503,7 @@
           <Property Name="FIO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EmployeeLIT" Relationship="LitDBModel.FK_EmployeeLIT_Employee" FromRole="Employee" ToRole="EmployeeLIT" />
           <NavigationProperty Name="Cabinet" Relationship="LitDBModel.Cabinet_Employee" FromRole="Employee" ToRole="Cabinet" />
+          <Property Name="DomainName" Type="String" MaxLength="63" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmployeeLIT">
           <Key>
@@ -739,6 +741,7 @@
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="LitDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="DomainName" ColumnName="DomainName" />
                 <ScalarProperty Name="FIO" ColumnName="FIO" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
               </MappingFragment>

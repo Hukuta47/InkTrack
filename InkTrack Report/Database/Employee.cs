@@ -23,6 +23,7 @@ namespace InkTrack_Report.Database
     
         public int EmployeeID { get; set; }
         public string FIO { get; set; }
+        public string DomainName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeLIT> EmployeeLIT { get; set; }

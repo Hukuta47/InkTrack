@@ -79,6 +79,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
@@ -177,6 +180,7 @@
     </Compile>
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\PrintoutData.cs" />
+    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\ThemeDetector.cs" />
     <Compile Include="Classes\TrayIcon.cs" />
     <Compile Include="Database\Cabinet.cs">
@@ -272,7 +276,7 @@
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>

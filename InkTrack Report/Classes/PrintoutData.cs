@@ -2,7 +2,7 @@
 
 namespace InkTrack_Report.Classes
 {
-    public class PrintoutData
+    public struct PrintoutData
     {
         public string NameDocument { get; set; }
         public DateTime Date { get; set; }

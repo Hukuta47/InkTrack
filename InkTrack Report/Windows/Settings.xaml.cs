@@ -50,7 +50,7 @@ namespace InkTrack_Report.Windows
             Properties.Settings.Default.SelectedCabinetID = (int)Combobox_SelectCabinet.SelectedValue;
             Properties.Settings.Default.SelectedEmployeeID = (int)Combobox_SelectEmployee.SelectedValue;
             Properties.Settings.Default.SelectedPrinterID = (int)Combobox_SelectPrinter.SelectedValue;
-
+            MessageBox.Show("Настройки сохранены");
             Properties.Settings.Default.Save();
         }
     }

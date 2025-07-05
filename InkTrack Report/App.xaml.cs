@@ -167,6 +167,7 @@ namespace InkTrack_Report
         /// Метод для инициализации программы
         /// </summary>
         void InitApplication() {
+            Classes.Settings.Init();
             StartPrintWatchers();
             trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
         }

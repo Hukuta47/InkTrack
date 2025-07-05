@@ -4,7 +4,7 @@ using System.IO;
 
 namespace InkTrack_Report.Classes
 {
-    public class Logger
+    public struct Logger
     {
         public static void Log(string category, string text, Exception exception = null)
         {
