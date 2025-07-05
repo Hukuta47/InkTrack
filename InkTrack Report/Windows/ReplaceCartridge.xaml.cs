@@ -62,6 +62,7 @@ namespace InkTrack_Report.Windows
         {
             GenerateFiles(App.printoutDatas);
             App.printoutDatas = new List<PrintoutData>();
+            App.SavePrintOutDatasToDatabase();
             Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
             if (cartridge.Capacity <= SumPagesPrintouts)
             {
@@ -87,20 +88,8 @@ namespace InkTrack_Report.Windows
             string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
             File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
 
-        }
-        private void GeneratePrintOutList(object sender, RoutedEventArgs e)
-        {
-            GenerateFiles(App.printoutDatas);
-            App.printoutDatas = new List<PrintoutData>();
-            App.SavePrintOutDatasToDatabase();
-            Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
-            if (cartridge.Capacity <= SumPagesPrintouts) {
-                cartridge.Capacity = SumPagesPrintouts;
-            }
-            App.entities.SaveChanges();
             MessageBox.Show("Картридж заменен.");
         }
-
         public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
         {
             string dbFIO = App.entities.Employee.First(employee => employee.EmployeeID == InkTrack_Report.Properties.Settings.Default.SelectedEmployeeID).FIO;

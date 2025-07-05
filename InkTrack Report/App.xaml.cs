@@ -202,6 +202,7 @@ namespace InkTrack_Report
                     else {
                         Logger.Log("Check", "Проверка пройдена, все нормально");
                         trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
+                        SyncPrintOutData();
                     }
                 }
                 return true;
