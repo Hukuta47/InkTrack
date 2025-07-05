@@ -28,11 +28,58 @@ namespace InkTrack_Report
         bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
 
         public TrayIcon trayIcon;
+        /// <summary>
+        /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
+        /// </summary>
         void DefaultNotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion(false).Show();
+        /// <summary>
+        /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
+        /// </summary>
         private void SetNewSettingsNotifyIcon_MouseClick(object sender, MouseEventArgs e) {
             if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
         }
+        /// <summary>
+        /// Выполняемый метод при запуске программы
+        /// </summary>
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            trayIcon = new TrayIcon();
+
+            timerConnection.Elapsed += TimerConnection_Elapsed;
+            timerConnection.Start();
+
+            CheckInitilizationData();
+
+            if (CheckConnectionToDatabase(true))
+            {
+                Logger.Log("SQL", "Подключен к базе данным SQL");
+                if (isFirstStartup)
+                {
+                    Logger.Log("Program", "Первый запуск программы");
+                    if (new SettingsSetupWizard(true).ShowDialog() == true) InitApplication();
+                }
+                else
+                {
+                    if (EnabledDeviceActualityInCabinet() != true)
+                    {
+                        if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
+                    }
+                    else InitApplication();
+                }
+            }
+            else Logger.Log("SQL", "Ошибка поключения к SQL базе данным");
+            LoadPrintOutDataFromXmlDatabase();
+        }
+        /// <summary>
+        /// Метод который выполняется когда таймер "timerConnection" заканчивается
+        /// </summary>
         private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e) => CheckConnectionToDatabase(false);
+        /// <summary>
+        /// Метод запускаемый прослушивание очереди печати
+        /// </summary>
         private void StartPrintWatchers()
         {
             TimeSpan interval = TimeSpan.FromSeconds(1);
@@ -57,16 +104,25 @@ namespace InkTrack_Report
             _modificationWatcher.EventArrived += OnPrintJobEvent;
             _modificationWatcher.Start();
         }
+        /// <summary>
+        /// Триггер когда появляется задача на печать
+        /// </summary>
         private void OnPrintJobEvent(object sender, EventArrivedEventArgs e)
         {
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
             HandlePrintJob(job);
         }
+        /// <summary>
+        /// Триггер когда изменяеся задача на печать
+        /// </summary>
         private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
         {
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
             HandlePrintJob(job);
         }
+        /// <summary>
+        /// Метод который сохраняет данные о задаче печати и сохраняет в базу информацию
+        /// </summary>
         private void HandlePrintJob(ManagementBaseObject job)
         {
             if (!int.TryParse(job["JobId"]?.ToString(), out int jobId)) return;
@@ -107,13 +163,25 @@ namespace InkTrack_Report
                 SavePrintOutDatasToDatabase();
             });
         }
+        /// <summary>
+        /// Метод для инициализации программы
+        /// </summary>
         void InitApplication() {
             StartPrintWatchers();
             trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
         }
+        /// <summary>
+        /// Метод который проверяет есть ли изменение в базе данных, для исключения момента кода принтер не в кабинете, а программа понимает иначе
+        /// </summary>
+        /// <returns>Когда есть изменение данных true, иначе false</returns>
         bool EnabledDeviceActualityInCabinet() {
             return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
         }
+        /// <summary>
+        /// Проверка на подключение к базе данным
+        /// </summary>
+        /// <param name="isFirst">Парамет для самого первого запуска для предотвращения исключения при нехвате данных</param>
+        /// <returns>Если подключение удачно, возвращает true, инчае false</returns>
         bool CheckConnectionToDatabase(bool isFirst)
         {
             try {
@@ -144,6 +212,9 @@ namespace InkTrack_Report
                 return false;
             }
         }
+        /// <summary>
+        /// Метод который проверяет наличие папок в системе, если таковых нет, то создает
+        /// </summary>
         void CheckInitilizationData() {
             Logger.Log("Check", "Проверка наличия папки отладки...");
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs")) {
@@ -155,6 +226,82 @@ namespace InkTrack_Report
                Logger.Log("Check", "Проверка пройдена");
             }
         }
+        /// <summary>
+        /// Синхронизация данных о печатаемых документах между устройством и базы данных
+        /// </summary>
+        void SyncPrintOutData()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
+            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
+            {
+                printoutDatas = new List<PrintoutData>();
+                return;
+            }
+            try
+            {
+                using (var stringReader = new StringReader(printer.PrintedDocumentsList))
+                {
+                    printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
+                }
+            }
+            catch
+            {
+                printoutDatas = new List<PrintoutData>();
+            }
+
+
+
+            int SumDatasInDatabase = 0;
+            int SumDatasOnMachine = 0;
+
+            List<PrintoutData> DatasInDatabase;
+            List<PrintoutData> DatasOnMachine;
+
+            DatasOnMachine = printoutDatas;
+            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
+            {
+                DatasInDatabase = new List<PrintoutData>();
+                return;
+            }
+            try
+            {
+                using (var stringReader = new StringReader(printer.PrintedDocumentsList))
+                {
+                    DatasInDatabase = (List<PrintoutData>)serializer.Deserialize(stringReader);
+                }
+            }
+            catch
+            {
+                DatasInDatabase = new List<PrintoutData>();
+            }
+
+
+
+
+            foreach (PrintoutData printoutData in DatasOnMachine)
+            {
+                SumDatasOnMachine += printoutData.CountPages;
+            }
+            foreach (PrintoutData printoutData in DatasInDatabase)
+            {
+                SumDatasInDatabase += printoutData.CountPages;
+            }
+
+
+
+            if (SumDatasOnMachine > SumDatasInDatabase)
+            {
+                SavePrintOutDatasToDatabase();
+            }
+            else
+            {
+                LoadPrintOutDataFromXmlDatabase();
+            }
+        }
+        /// <summary>
+        /// Метод который сохраняет данные о печати в базу данных в формате XML
+        /// </summary>
         public static void SavePrintOutDatasToDatabase() {
             Logger.Log("SQL", "Сохранение списка документов");
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
@@ -165,6 +312,9 @@ namespace InkTrack_Report
                 entities.SaveChanges();
             }
         }
+        /// <summary>
+        /// Метод который загружает данные о печати в переменую из формата XML в список printoutDatas
+        /// </summary>
         public static void LoadPrintOutDataFromXmlDatabase() {
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
             Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
@@ -181,33 +331,10 @@ namespace InkTrack_Report
                 printoutDatas = new List<PrintoutData>();
             }
         }
-        protected override void OnStartup(StartupEventArgs e) {
-            base.OnStartup(e);
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-            trayIcon = new TrayIcon();
-
-            timerConnection.Elapsed += TimerConnection_Elapsed;
-            timerConnection.Start();
-
-            CheckInitilizationData();
-
-            if (CheckConnectionToDatabase(true)) {
-                Logger.Log("SQL", "Подключен к базе данным SQL");
-                if (isFirstStartup) {
-                    Logger.Log("Program", "Первый запуск программы");
-                    if (new SettingsSetupWizard(true).ShowDialog() == true) InitApplication();
-                }
-                else {
-                    if (EnabledDeviceActualityInCabinet() != true) {
-                        if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
-                    }
-                    else InitApplication();
-                }
-            }
-            else Logger.Log("SQL", "Ошибка поключения к SQL базе данным");
-            LoadPrintOutDataFromXmlDatabase();
-        }
+        /// <summary>
+        /// Метод выполняемый при завершении работы программы
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
             _creationWatcher?.Stop();

@@ -21,7 +21,6 @@ namespace InkTrack_Report.Windows
         List<Cartridge> ListCartritgesForReplace;
 
         int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
-        int SelectedEmployeeID = Properties.Settings.Default.SelectedEmployeeID;
         int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
         int SumPagesPrintouts;
 
@@ -93,17 +92,13 @@ namespace InkTrack_Report.Windows
         {
             GenerateFiles(App.printoutDatas);
             App.printoutDatas = new List<PrintoutData>();
+            App.SavePrintOutDatasToDatabase();
             Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
-            if (cartridge.Capacity <= SumPagesPrintouts)
-            {
+            if (cartridge.Capacity <= SumPagesPrintouts) {
                 cartridge.Capacity = SumPagesPrintouts;
             }
             App.entities.SaveChanges();
-
-            string JsonData = JsonConvert.SerializeObject(App.printoutDatas, Formatting.Indented);
-            string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
-            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
-
+            MessageBox.Show("Картридж заменен.");
         }
 
         public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
@@ -220,7 +215,6 @@ namespace InkTrack_Report.Windows
 
             Process.Start(new ProcessStartInfo(pathToSavePdf) { UseShellExecute = true });
         }
-
         string GetDeviceName(int DeviceId)
         {
             Device device = App.entities.Device.FirstOrDefault(d => d.DeviceID == DeviceId);
