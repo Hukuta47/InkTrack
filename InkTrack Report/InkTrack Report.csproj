@@ -348,8 +348,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
-    <None Include="Resources\Help circle.png" />
-    <None Include="Resources\X.png" />
+    <Resource Include="Resources\Help circle.png" />
+    <Resource Include="Resources\X.png" />
     <None Include="Resources\Idle W.ico" />
     <None Include="Resources\Idle B.ico" />
     <None Include="Resources\DataError B.ico" />

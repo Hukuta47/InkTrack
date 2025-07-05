@@ -5,7 +5,7 @@ namespace InkTrack_Report.Windows.Dialog
 {
     public partial class GetEmployeeIdDialog : Window
     {
-        public int EmployeeId;
+        public int EmployeeId = 0;
         public GetEmployeeIdDialog()
         {
             InitializeComponent();

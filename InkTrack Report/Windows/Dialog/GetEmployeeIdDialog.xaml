@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InkTrack_Report.Windows.Dialog"
         mc:Ignorable="d"
+		WindowStartupLocation="CenterScreen"
+		WindowStyle="None"
         Title="GetEmployeeIdDialog" Height="450" Width="800">
     <Grid>
 		<Grid.RowDefinitions>
@@ -12,11 +14,10 @@
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 
-		<ComboBox Name="Combobox_SelectEmployee" SelectedValuePath="EmployeeId" DisplayMemberPath="FIO"/>
+		<ComboBox Name="Combobox_SelectEmployee" SelectedValuePath="EmployeeID" DisplayMemberPath="FIO"/>
 
 		<StackPanel Grid.Row="1">
 			<Button Content="Ок" Click="Ok_Click"/>
-			<Button Content="Нет" Click="Cancel_Click"/>
 		</StackPanel>
 	</Grid>
 </Window>

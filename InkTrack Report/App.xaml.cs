@@ -19,12 +19,14 @@ namespace InkTrack_Report
     {
         static public List<PrintoutData> printoutDatas;
         static public LitDBEntities entities = new LitDBEntities();
+
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
+        
         private HashSet<int> _loggedJobIds = new HashSet<int>();
+        static public Employee LoginedEmployee;
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
-
         bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
 
         public TrayIcon trayIcon;
@@ -32,51 +34,78 @@ namespace InkTrack_Report
         /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
         /// </summary>
         void DefaultNotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion(false).Show();
+        
         /// <summary>
         /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
         /// </summary>
         private void SetNewSettingsNotifyIcon_MouseClick(object sender, MouseEventArgs e) {
             if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
         }
+        
         /// <summary>
         /// Выполняемый метод при запуске программы
         /// </summary>
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-            trayIcon = new TrayIcon();
-
-            timerConnection.Elapsed += TimerConnection_Elapsed;
-            timerConnection.Start();
-
-            CheckInitilizationData();
-
-            if (CheckConnectionToDatabase(true))
+            try
             {
-                Logger.Log("SQL", "Подключен к базе данным SQL");
-                if (isFirstStartup)
+                base.OnStartup(e);
+                ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                CheckInitilizationData();
+                trayIcon = new TrayIcon();
+                timerConnection.Elapsed += TimerConnection_Elapsed;
+
+
+                if (CheckConnectionToDatabase(true))
                 {
-                    Logger.Log("Program", "Первый запуск программы");
-                    if (new SettingsSetupWizard(true).ShowDialog() == true) InitApplication();
+                    Logger.Log("SQL", "Подключен к базе данным SQL");
+                    if (isFirstStartup)
+                    {
+                        Logger.Log("Program", "Первый запуск программы");
+                        if (new SettingsSetupWizard(true).ShowDialog() == true)
+                        {
+                            InitApplication();
+                            timerConnection.Start();
+                            LoadPrintOutDataFromXmlDatabase();
+                        }
+                    }
+                    else
+                    {
+                        if (EnabledDeviceActualityInCabinet() != true)
+                        {
+                            if (new SettingsSetupWizard(false).ShowDialog() == true)
+                            {
+                                InitApplication();
+                                timerConnection.Start();
+                                LoadPrintOutDataFromXmlDatabase();
+                            }
+                        }
+                        else
+                        {
+                            InitApplication();
+                            timerConnection.Start();
+                            LoadPrintOutDataFromXmlDatabase();
+                        }
+                    }
                 }
                 else
                 {
-                    if (EnabledDeviceActualityInCabinet() != true)
-                    {
-                        if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
-                    }
-                    else InitApplication();
+                    Logger.Log("SQL", "Ошибка поключения к SQL базе данным");
+                    timerConnection.Start();
                 }
             }
-            else Logger.Log("SQL", "Ошибка поключения к SQL базе данным");
-            LoadPrintOutDataFromXmlDatabase();
+            catch (Exception ex)
+            {
+                Logger.Log("Error", "Ошибочка...", ex);
+            }
+            
         }
+        
         /// <summary>
         /// Метод который выполняется когда таймер "timerConnection" заканчивается
         /// </summary>
         private void TimerConnection_Elapsed(object sender, ElapsedEventArgs e) => CheckConnectionToDatabase(false);
+        
         /// <summary>
         /// Метод запускаемый прослушивание очереди печати
         /// </summary>
@@ -104,6 +133,7 @@ namespace InkTrack_Report
             _modificationWatcher.EventArrived += OnPrintJobEvent;
             _modificationWatcher.Start();
         }
+        
         /// <summary>
         /// Триггер когда появляется задача на печать
         /// </summary>
@@ -112,6 +142,7 @@ namespace InkTrack_Report
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
             HandlePrintJob(job);
         }
+        
         /// <summary>
         /// Триггер когда изменяеся задача на печать
         /// </summary>
@@ -120,6 +151,7 @@ namespace InkTrack_Report
             var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
             HandlePrintJob(job);
         }
+        
         /// <summary>
         /// Метод который сохраняет данные о задаче печати и сохраняет в базу информацию
         /// </summary>
@@ -151,6 +183,7 @@ namespace InkTrack_Report
             if (pages <= 0) return;
 
             var info = new PrintoutData {
+                FIOWhoPrinting = LoginedEmployee.FIO,
                 NameDocument = docName,
                 CountPages = pages,
                 Date = DateTime.Now
@@ -163,14 +196,18 @@ namespace InkTrack_Report
                 SavePrintOutDatasToDatabase();
             });
         }
+        
         /// <summary>
         /// Метод для инициализации программы
         /// </summary>
         void InitApplication() {
+            int EmployeeId = User.GetID();
+            LoginedEmployee = entities.Employee.FirstOrDefault(e => e.EmployeeID == EmployeeId);
             Classes.Settings.Init();
             StartPrintWatchers();
             trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
         }
+        
         /// <summary>
         /// Метод который проверяет есть ли изменение в базе данных, для исключения момента кода принтер не в кабинете, а программа понимает иначе
         /// </summary>
@@ -178,6 +215,7 @@ namespace InkTrack_Report
         bool EnabledDeviceActualityInCabinet() {
             return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
         }
+        
         /// <summary>
         /// Проверка на подключение к базе данным
         /// </summary>
@@ -214,20 +252,16 @@ namespace InkTrack_Report
                 return false;
             }
         }
+        
         /// <summary>
         /// Метод который проверяет наличие папок в системе, если таковых нет, то создает
         /// </summary>
         void CheckInitilizationData() {
-            Logger.Log("Check", "Проверка наличия папки отладки...");
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs")) {
-                Logger.Log("Check", "Папка не найдена, создание...");
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs");
-                Logger.Log("Check", "Папка создана");
-            }
-            else {
-               Logger.Log("Check", "Проверка пройдена");
             }
         }
+        
         /// <summary>
         /// Синхронизация данных о печатаемых документах между устройством и базы данных
         /// </summary>
@@ -301,6 +335,7 @@ namespace InkTrack_Report
                 LoadPrintOutDataFromXmlDatabase();
             }
         }
+        
         /// <summary>
         /// Метод который сохраняет данные о печати в базу данных в формате XML
         /// </summary>
@@ -314,6 +349,7 @@ namespace InkTrack_Report
                 entities.SaveChanges();
             }
         }
+        
         /// <summary>
         /// Метод который загружает данные о печати в переменую из формата XML в список printoutDatas
         /// </summary>
@@ -333,6 +369,7 @@ namespace InkTrack_Report
                 printoutDatas = new List<PrintoutData>();
             }
         }
+        
         /// <summary>
         /// Метод выполняемый при завершении работы программы
         /// </summary>

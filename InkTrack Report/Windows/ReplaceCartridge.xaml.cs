@@ -68,6 +68,7 @@ namespace InkTrack_Report.Windows
             {
                 cartridge.Capacity = SumPagesPrintouts;
             }
+            cartridge.StatusID = 3;
 
             Cartridge SelectedCartridge = Combobox_CartridgeOnReplace.SelectedItem as Cartridge;
             CartridgeReplacement_Log cartridgeReplacement_Log = new CartridgeReplacement_Log()
@@ -81,7 +82,7 @@ namespace InkTrack_Report.Windows
             };
             App.entities.CartridgeReplacement_Log.Add(cartridgeReplacement_Log);
             SelectedPrinter.Cartridge = SelectedCartridge;
-            SelectedCartridge.StatusID = 3;
+            SelectedCartridge.StatusID = 1;
 
             App.entities.SaveChanges();
             string JsonData = JsonConvert.SerializeObject(App.printoutDatas, Formatting.Indented);
@@ -92,7 +93,7 @@ namespace InkTrack_Report.Windows
         }
         public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
         {
-            string dbFIO = App.entities.Employee.First(employee => employee.EmployeeID == InkTrack_Report.Properties.Settings.Default.SelectedEmployeeID).FIO;
+            string dbFIO = App.LoginedEmployee.FIO;
 
             var petrovich = new Petrovich()
             {
