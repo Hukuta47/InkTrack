@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Xml.Serialization;
 
 namespace InkTrack_Report.Windows
 {
@@ -60,7 +62,24 @@ namespace InkTrack_Report.Windows
         private void Cancel_Click(object sender, RoutedEventArgs e) => CloseWindow_Click();
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            GenerateFiles(App.printoutDatas);
+            List<PrintoutData> printoutDatas;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            //if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
+            //{
+            //    printoutDatas = new List<PrintoutData>();
+            //}
+            //else
+            //{
+            //    using (var stringReader = new StringReader(printer.PrintedDocumentsList))
+            //    {
+            //        printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
+            //    }
+            //}
+
+
+            //lkjkljkljljljkllkjkljkllkjkklljljljlkjjlklkjlkjljkljlkjl
+            //GenerateFiles(printoutDatas);
             App.printoutDatas = new List<PrintoutData>();
             App.SavePrintOutDatasToDatabase();
             Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;

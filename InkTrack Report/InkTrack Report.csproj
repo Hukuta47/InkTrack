@@ -180,7 +180,6 @@
     </Compile>
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\PrintoutData.cs" />
-    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\ThemeDetector.cs" />
     <Compile Include="Classes\TrayIcon.cs" />
     <Compile Include="Classes\User.cs" />
@@ -241,12 +240,6 @@
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\SettingsSetupWizard.xaml.cs">
-      <DependentUpon>SettingsSetupWizard.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\WindowTraySelectFuntion.xaml.cs">
       <DependentUpon>WindowTraySelectFuntion.xaml</DependentUpon>
     </Compile>
@@ -269,7 +262,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Fonts\Proletarsk.ttf" />
     <EntityDeploy Include="Database\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -301,14 +293,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ReplaceCartridge.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\SettingsSetupWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -364,7 +348,7 @@
     <None Include="Resources\Alert W.ico" />
     <None Include="Resources\Save B.ico" />
     <None Include="Resources\Save W.ico" />
-    <None Include="Resources\Proletarsk.ttf" />
+    <Resource Include="Resources\Proletarsk.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

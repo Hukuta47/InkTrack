@@ -78,7 +78,7 @@
           <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
           <Property Name="Model" Type="nvarchar" MaxLength="50" />
           <Property Name="Characteristics" Type="xml" />
-          <Property Name="InventoryNumber" Type="nchar" MaxLength="10" />
+          <Property Name="InventoryNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="CabinetID" Type="int" />
         </EntityType>
@@ -489,7 +489,7 @@
           <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Characteristics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="InventoryNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="InventoryNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CabinetID" Type="Int32" />
           <NavigationProperty Name="Cabinet" Relationship="LitDBModel.FK_Device_Cabinet" FromRole="Device" ToRole="Cabinet" />

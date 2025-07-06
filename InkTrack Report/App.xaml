@@ -5,7 +5,7 @@
 	<Application.Resources>
 		
 		<FontFamily x:Key="Proletarsk">
-			pack://application:,,,/Fonts/Proletarsk.ttf#Proletarsk
+			pack://application:,,,/resources/#Proletarsk
 		</FontFamily>
 		<SolidColorBrush Color="#3B62ED" x:Key="DefaultColor"/>
 		<SolidColorBrush Color="#ed3b62" x:Key="CancelColor"/>

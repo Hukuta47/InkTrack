@@ -1,5 +1,4 @@
-﻿
-using InkTrack_Report.Classes;
+﻿using InkTrack_Report.Classes;
 using InkTrack_Report.Windows.Dialog;
 using System;
 using System.Windows;
@@ -42,7 +41,6 @@ namespace InkTrack_Report.Windows
                 Button_Service.Visibility = Visibility.Collapsed;
                 ServiceButtons.Visibility = Visibility.Visible;
             }
-            TextBlock_CounterPages.Text = $"Страниц напечатано: {SumPagesPrintouts}";
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -60,7 +58,6 @@ namespace InkTrack_Report.Windows
             Deactivated -= Window_Deactivated;
             Application.Current.Shutdown();
         }
-        private void OpenSettings_Click(object sender, RoutedEventArgs e) => new Settings().Show();
         private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().Show();
         private void Window_Deactivated(object sender, EventArgs e)
         {

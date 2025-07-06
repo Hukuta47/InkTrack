@@ -4,7 +4,6 @@ using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -27,21 +26,13 @@ namespace InkTrack_Report
         static public Employee LoginedEmployee;
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
-        bool isFirstStartup = InkTrack_Report.Properties.Settings.Default.isFirstStartup;
 
         public TrayIcon trayIcon;
         /// <summary>
         /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
         /// </summary>
         void DefaultNotifyIcon_MouseClick(object sender, MouseEventArgs e) => new WindowTraySelectFuntion(false).Show();
-        
-        /// <summary>
-        /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
-        /// </summary>
-        private void SetNewSettingsNotifyIcon_MouseClick(object sender, MouseEventArgs e) {
-            if (new SettingsSetupWizard(false).ShowDialog() == true) InitApplication();
-        }
-        
+                
         /// <summary>
         /// Выполняемый метод при запуске программы
         /// </summary>
@@ -55,38 +46,12 @@ namespace InkTrack_Report
                 trayIcon = new TrayIcon();
                 timerConnection.Elapsed += TimerConnection_Elapsed;
 
-
                 if (CheckConnectionToDatabase(true))
                 {
                     Logger.Log("SQL", "Подключен к базе данным SQL");
-                    if (isFirstStartup)
-                    {
-                        Logger.Log("Program", "Первый запуск программы");
-                        if (new SettingsSetupWizard(true).ShowDialog() == true)
-                        {
-                            InitApplication();
-                            timerConnection.Start();
-                            LoadPrintOutDataFromXmlDatabase();
-                        }
-                    }
-                    else
-                    {
-                        if (EnabledDeviceActualityInCabinet() != true)
-                        {
-                            if (new SettingsSetupWizard(false).ShowDialog() == true)
-                            {
-                                InitApplication();
-                                timerConnection.Start();
-                                LoadPrintOutDataFromXmlDatabase();
-                            }
-                        }
-                        else
-                        {
-                            InitApplication();
-                            timerConnection.Start();
-                            LoadPrintOutDataFromXmlDatabase();
-                        }
-                    }
+                    InitApplication();
+                    trayIcon.ChangeIcon(TrayIcon.StatusIcon.Idle);
+                    timerConnection.Start();
                 }
                 else
                 {
@@ -165,13 +130,15 @@ namespace InkTrack_Report
 
             string printerFullName = job["Name"]?.ToString() ?? "Неизвестный принтер";
             string printerName = printerFullName.Split(',')[0].Trim();
+            
+            int index = printerName.IndexOf("#") + 1;
+            string printerInventoryNumber = printerName.Substring(index);
+
             int colonIndex = printerFullName.LastIndexOf(':');
             if (colonIndex > 0)
             {
                 printerName = printerFullName.Substring(0, colonIndex).Trim();
             }
-
-
 
             int pages = 0;
             if (job["TotalPages"] != null) int.TryParse(job["TotalPages"].ToString(), out pages);
@@ -198,12 +165,15 @@ namespace InkTrack_Report
                 CountPages = pages,
                 Date = DateTime.Now
             };
-            printoutDatas.Add(info);
+            //printoutDatas.Add(info);
 
             Dispatcher.Invoke(() => {
                 trayIcon.ChangeIconOnTime(TrayIcon.StatusIcon.Save, "Сохранение данных", 2000);
-                Logger.Log("Printed", $"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}, Принтер:{printerName}");
-                SavePrintOutDatasToDatabase();
+                Logger.Log("Printed", $"Найдено задание: {info.NameDocument}, страниц: {info.CountPages}, Принтер:{printerInventoryNumber}");
+
+                Printer printer = entities.Device.FirstOrDefault(d => d.InventoryNumber == printerInventoryNumber).Printer;
+
+                SavePrintDataToDatabase(info, printer);
             });
         }
         
@@ -213,7 +183,6 @@ namespace InkTrack_Report
         void InitApplication() {
             int EmployeeId = User.GetID();
             LoginedEmployee = entities.Employee.FirstOrDefault(e => e.EmployeeID == EmployeeId);
-            Classes.Settings.Init();
             StartPrintWatchers();
             trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
         }
@@ -242,18 +211,6 @@ namespace InkTrack_Report
                 Logger.Log("SQL", "Подключение восстановлено");
                 trayIcon.ChangeIcon(TrayIcon.StatusIcon.Idle);
                 Logger.Log("Check", "Проверка данных на соответсвие");
-                if (!isFirst) {
-                    if (!EnabledDeviceActualityInCabinet()) {
-                        Logger.Log("Check", "Проверка не пройдена, замена иконки и подписки метода");
-                        trayIcon.ChangeIcon(TrayIcon.StatusIcon.DataError, "Ошибка данных, воспроизведите настройку заново");
-                        trayIcon.NotifyIcon.MouseClick += SetNewSettingsNotifyIcon_MouseClick; ;
-                    }
-                    else {
-                        Logger.Log("Check", "Проверка пройдена, все нормально");
-                        trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
-                        SyncPrintOutData();
-                    }
-                }
                 return true;
             }
             catch (Exception e) {
@@ -271,113 +228,69 @@ namespace InkTrack_Report
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs");
             }
         }
-        
-        /// <summary>
-        /// Синхронизация данных о печатаемых документах между устройством и базы данных
-        /// </summary>
-        void SyncPrintOutData()
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
-            Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
-            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
-            {
-                printoutDatas = new List<PrintoutData>();
-                return;
-            }
-            try
-            {
-                using (var stringReader = new StringReader(printer.PrintedDocumentsList))
-                {
-                    printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
-                }
-            }
-            catch
-            {
-                printoutDatas = new List<PrintoutData>();
-            }
 
-
-
-            int SumDatasInDatabase = 0;
-            int SumDatasOnMachine = 0;
-
-            List<PrintoutData> DatasInDatabase;
-            List<PrintoutData> DatasOnMachine;
-
-            DatasOnMachine = printoutDatas;
-            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
-            {
-                DatasInDatabase = new List<PrintoutData>();
-                return;
-            }
-            try
-            {
-                using (var stringReader = new StringReader(printer.PrintedDocumentsList))
-                {
-                    DatasInDatabase = (List<PrintoutData>)serializer.Deserialize(stringReader);
-                }
-            }
-            catch
-            {
-                DatasInDatabase = new List<PrintoutData>();
-            }
-
-
-
-
-            foreach (PrintoutData printoutData in DatasOnMachine)
-            {
-                SumDatasOnMachine += printoutData.CountPages;
-            }
-            foreach (PrintoutData printoutData in DatasInDatabase)
-            {
-                SumDatasInDatabase += printoutData.CountPages;
-            }
-
-
-
-            if (SumDatasOnMachine > SumDatasInDatabase)
-            {
-                SavePrintOutDatasToDatabase();
-            }
-            else
-            {
-                LoadPrintOutDataFromXmlDatabase();
-            }
-        }
-        
         /// <summary>
         /// Метод который сохраняет данные о печати в базу данных в формате XML
         /// </summary>
-        public static void SavePrintOutDatasToDatabase() {
+        public static void SavePrintOutDatasToDatabase()
+        {
             Logger.Log("SQL", "Сохранение списка документов");
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
-            using (var stringWriter = new StringWriter()) {
+            using (var stringWriter = new StringWriter())
+            {
                 serializer.Serialize(stringWriter, printoutDatas);
                 Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
                 printer.PrintedDocumentsList = stringWriter.ToString();
                 entities.SaveChanges();
             }
         }
-        
-        /// <summary>
-        /// Метод который загружает данные о печати в переменую из формата XML в список printoutDatas
-        /// </summary>
-        public static void LoadPrintOutDataFromXmlDatabase() {
+
+        ///// <summary>
+        ///// Метод который загружает данные о печати в переменую из формата XML в список printoutDatas
+        ///// </summary>
+        //public static void LoadPrintOutDataFromXmlDatabase() {
+
+
+
+        //}
+        public static void ResetPrintoutDataHistory(Printer printer)
+        {
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
-            Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
-            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList)) {
-                printoutDatas = new List<PrintoutData>();
-                return;
+            using (var stringWriter = new StringWriter())
+            {
+                serializer.Serialize(stringWriter, printoutDatas);
+                printer.PrintedDocumentsList = stringWriter.ToString();
+                entities.SaveChanges();
             }
-            try {
-                using (var stringReader = new StringReader(printer.PrintedDocumentsList)) {
+        }
+        public static void SavePrintDataToDatabase(PrintoutData printoutData, Printer printer)
+        {
+            List<PrintoutData> printoutDatas;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
+            {
+                printoutDatas = new List<PrintoutData>();
+            }
+            else
+            {
+                using (var stringReader = new StringReader(printer.PrintedDocumentsList))
+                {
                     printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
                 }
             }
-            catch {
-                printoutDatas = new List<PrintoutData>();
+
+            printoutDatas.Add(printoutData);
+
+
+            serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            using (var stringWriter = new StringWriter())
+            {
+                serializer.Serialize(stringWriter, printoutDatas);
+                printer.PrintedDocumentsList = stringWriter.ToString();
+                entities.SaveChanges();
             }
+
         }
         
         /// <summary>

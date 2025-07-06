@@ -6,7 +6,7 @@ namespace InkTrack_Report.Classes
     public class TrayIcon
     {
         public NotifyIcon NotifyIcon { get; private set; }
-        StatusIcon statusIcon = StatusIcon.Idle;
+        StatusIcon statusIcon = StatusIcon.Load;
 
         public enum StatusIcon { Idle, Alert, CancelByUser, DataError, Load, Save, Write }
         public TrayIcon()
