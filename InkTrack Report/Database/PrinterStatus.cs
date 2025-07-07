@@ -12,22 +12,18 @@ namespace InkTrack_Report.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Cabinet
+    public partial class PrinterStatus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cabinet()
+        public PrinterStatus()
         {
-            this.Device = new HashSet<Device>();
-            this.Employee = new HashSet<Employee>();
+            this.Printer = new HashSet<Printer>();
         }
     
-        public int CabinetID { get; set; }
-        public int BuldingID { get; set; }
-        public string CabinetName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Device> Device { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Printer> Printer { get; set; }
     }
 }

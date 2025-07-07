@@ -12,26 +12,18 @@ namespace InkTrack_Report.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Device
+    public partial class Building
     {
-        public int Id { get; set; }
-        public int DeviceTypeId { get; set; }
-        public string Manufacturer { get; set; }
-        public string Model { get; set; }
-        public string Characteristics { get; set; }
-        public string InventoryNumber { get; set; }
-        public string SerialNumber { get; set; }
-        public Nullable<int> RoomId { get; set; }
-        public string DeviceName
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Building()
         {
-            get
-            {
-                return $"{Manufacturer} {Model} ({Id})";
-            }
+            this.Room = new HashSet<Room>();
         }
-
-        public virtual DeviceType DeviceType { get; set; }
-        public virtual Room Room { get; set; }
-        public virtual Printer Printer { get; set; }
+    
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Room { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace InkTrack_Report.Database
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LitDBEntities : DbContext
+    public partial class LitEntities : DbContext
     {
-        public LitDBEntities()
-            : base("name=LitDBEntities")
+        public LitEntities()
+            : base("name=LitEntities")
         {
         }
     
@@ -25,15 +25,19 @@ namespace InkTrack_Report.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Cabinet> Cabinet { get; set; }
+        public virtual DbSet<Building> Building { get; set; }
         public virtual DbSet<Cartridge> Cartridge { get; set; }
         public virtual DbSet<CartridgeModel> CartridgeModel { get; set; }
         public virtual DbSet<CartridgeReplacement_Log> CartridgeReplacement_Log { get; set; }
         public virtual DbSet<CartridgeStatus> CartridgeStatus { get; set; }
+        public virtual DbSet<CartridgeType> CartridgeType { get; set; }
         public virtual DbSet<Device> Device { get; set; }
+        public virtual DbSet<DeviceType> DeviceType { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<EmployeeLIT> EmployeeLIT { get; set; }
-        public virtual DbSet<ReasonForReplacement> ReasonForReplacement { get; set; }
+        public virtual DbSet<EmployeePosition> EmployeePosition { get; set; }
         public virtual DbSet<Printer> Printer { get; set; }
+        public virtual DbSet<PrinterStatus> PrinterStatus { get; set; }
+        public virtual DbSet<ReasonForRelpacement> ReasonForRelpacement { get; set; }
+        public virtual DbSet<Room> Room { get; set; }
     }
 }

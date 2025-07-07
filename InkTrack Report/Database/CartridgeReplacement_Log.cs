@@ -14,17 +14,15 @@ namespace InkTrack_Report.Database
     
     public partial class CartridgeReplacement_Log
     {
-        public int ReplacementID { get; set; }
-        public int OldCartridgeID { get; set; }
-        public int NewCartridgeID { get; set; }
-        public int PrinterID { get; set; }
-        public int EmployeeLitID { get; set; }
-        public int ReasonID { get; set; }
+        public int Id { get; set; }
+        public int OldCartridgeId { get; set; }
+        public int NewCartridgeId { get; set; }
+        public int PrinterId { get; set; }
+        public int EmployeeLitId { get; set; }
+        public int ReasonId { get; set; }
         public string Comment { get; set; }
     
-        public virtual Cartridge Cartridge { get; set; }
-        public virtual Cartridge Cartridge1 { get; set; }
-        public virtual ReasonForReplacement ReasonForReplacement { get; set; }
         public virtual Printer Printer { get; set; }
+        public virtual ReasonForRelpacement ReasonForRelpacement { get; set; }
     }
 }

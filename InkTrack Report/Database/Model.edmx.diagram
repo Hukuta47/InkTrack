@@ -4,29 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="340a30007f6d420692ce5558ad090c68" Name="Diagram1" ZoomLevel="79">
-        <EntityTypeShape EntityType="LitDBModel.Cabinet" Width="1.5" PointX="0.75" PointY="8.375" />
-        <EntityTypeShape EntityType="LitDBModel.Cartridge" Width="1.5" PointX="3" PointY="3.625" />
-        <EntityTypeShape EntityType="LitDBModel.CartridgeModel" Width="1.5" PointX="0.75" PointY="4.375" />
-        <EntityTypeShape EntityType="LitDBModel.CartridgeReplacement_Log" Width="1.5" PointX="7.5" PointY="3.875" />
-        <EntityTypeShape EntityType="LitDBModel.CartridgeStatus" Width="1.5" PointX="0.75" PointY="1.625" />
-        <EntityTypeShape EntityType="LitDBModel.Device" Width="1.5" PointX="3" PointY="7.875" />
-        <EntityTypeShape EntityType="LitDBModel.Employee" Width="1.5" PointX="3" PointY="12.5" />
-        <EntityTypeShape EntityType="LitDBModel.EmployeeLIT" Width="1.5" PointX="5.25" PointY="12.625" />
-        <EntityTypeShape EntityType="LitDBModel.ReasonForReplacement" Width="1.5" PointX="5.25" PointY="0.75" />
-        <AssociationConnector Association="LitDBModel.FK_Device_Cabinet" />
-        <AssociationConnector Association="LitDBModel.FK__Cartridge__Cartr__46E78A0C" />
-        <AssociationConnector Association="LitDBModel.FK__Cartridge__Statu__47DBAE45" />
-        <AssociationConnector Association="LitDBModel.FK_CartridgeReplacement_Log_Cartridge" />
-        <AssociationConnector Association="LitDBModel.FK_CartridgeReplacement_Log_Cartridge1" />
-        <AssociationConnector Association="LitDBModel.FK_CartridgeReplacement_Log_ReasonForReplacement" />
-        <AssociationConnector Association="LitDBModel.FK_EmployeeLIT_Employee" />
-        <AssociationConnector Association="LitDBModel.Cabinet_Employee" />
-        <EntityTypeShape EntityType="LitDBModel.Printer" Width="1.5" PointX="5.25" PointY="5.75" />
-        <AssociationConnector Association="LitDBModel.FK_Printer_Cartridge" />
-        <AssociationConnector Association="LitDBModel.FK_CartridgeReplacement_Log_Printer" />
-        <AssociationConnector Association="LitDBModel.FK__Printer__Printer__3C69FB99" />
-        <AssociationConnector Association="LitDBModel.CartridgeCompatibility" />
+      <Diagram DiagramId="65cd5da448de4014a49ee7dfbd08979b" Name="Diagram1">
+        <EntityTypeShape EntityType="LitModel.Building" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="LitModel.Cartridge" Width="1.5" PointX="5.25" PointY="14.5" />
+        <EntityTypeShape EntityType="LitModel.CartridgeModel" Width="1.5" PointX="5.25" PointY="18.875" />
+        <EntityTypeShape EntityType="LitModel.CartridgeReplacement_Log" Width="1.5" PointX="9.75" PointY="4.125" />
+        <EntityTypeShape EntityType="LitModel.CartridgeStatus" Width="1.5" PointX="3" PointY="16.625" />
+        <EntityTypeShape EntityType="LitModel.CartridgeType" Width="1.5" PointX="3" PointY="14.25" />
+        <EntityTypeShape EntityType="LitModel.Device" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="LitModel.DeviceType" Width="1.5" PointX="3" PointY="1.75" />
+        <EntityTypeShape EntityType="LitModel.Employee" Width="1.5" PointX="5.25" PointY="8.375" />
+        <EntityTypeShape EntityType="LitModel.EmployeePosition" Width="1.5" PointX="7.5" PointY="8.625" />
+        <EntityTypeShape EntityType="LitModel.Printer" Width="1.5" PointX="7.5" PointY="3.875" />
+        <EntityTypeShape EntityType="LitModel.PrinterStatus" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="LitModel.ReasonForRelpacement" Width="1.5" PointX="7.5" PointY="0.75" />
+        <EntityTypeShape EntityType="LitModel.Room" Width="1.5" PointX="3" PointY="4.375" />
+        <AssociationConnector Association="LitModel.FK_Room_Building" />
+        <AssociationConnector Association="LitModel.FK_Cartridge_CartridgeStatus" />
+        <AssociationConnector Association="LitModel.FK_Cartridge_CartridgeType" />
+        <AssociationConnector Association="LitModel.FK_Printer_Cartridge" />
+        <AssociationConnector Association="LitModel.FK_CartridgeReplacement_Log_Printer" />
+        <AssociationConnector Association="LitModel.FK_CartridgeReplacement_Log_ReasonForRelpacement" />
+        <AssociationConnector Association="LitModel.FK_Device_DeviceType" />
+        <AssociationConnector Association="LitModel.FK_Device_Room" />
+        <AssociationConnector Association="LitModel.FK_Printer_Device" />
+        <AssociationConnector Association="LitModel.FK_Employee_Room" />
+        <AssociationConnector Association="LitModel.FK_Printer_PrinterStatus" />
+        <AssociationConnector Association="LitModel.Cartridge_CartridgeModel" />
+        <AssociationConnector Association="LitModel.CartridgeCompatibility" />
+        <AssociationConnector Association="LitModel.Employee_EmployeePosition" />
+        <AssociationConnector Association="LitModel.NoCartridgeCompatibility" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

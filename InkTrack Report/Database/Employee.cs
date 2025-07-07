@@ -17,17 +17,16 @@ namespace InkTrack_Report.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.EmployeeLIT = new HashSet<EmployeeLIT>();
-            this.Cabinet = new HashSet<Cabinet>();
+            this.EmployeePosition = new HashSet<EmployeePosition>();
         }
     
-        public int EmployeeID { get; set; }
-        public string FIO { get; set; }
+        public int Id { get; set; }
+        public string FullName { get; set; }
         public string DomainName { get; set; }
+        public Nullable<int> RoomId { get; set; }
     
+        public virtual Room Room { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeLIT> EmployeeLIT { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cabinet> Cabinet { get; set; }
+        public virtual ICollection<EmployeePosition> EmployeePosition { get; set; }
     }
 }

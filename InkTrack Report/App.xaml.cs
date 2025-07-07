@@ -16,8 +16,7 @@ namespace InkTrack_Report
 {
     public partial class App : System.Windows.Application
     {
-        static public List<PrintoutData> printoutDatas;
-        static public LitDBEntities entities = new LitDBEntities();
+        static public LitEntities entities = new LitEntities();
 
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
@@ -160,12 +159,11 @@ namespace InkTrack_Report
             if (pages <= 0) return;
 
             var info = new PrintoutData {
-                FIOWhoPrinting = LoginedEmployee.FIO,
+                FIOWhoPrinting = LoginedEmployee.FullName,
                 NameDocument = docName,
                 CountPages = pages,
                 Date = DateTime.Now
             };
-            //printoutDatas.Add(info);
 
             Dispatcher.Invoke(() => {
                 trayIcon.ChangeIconOnTime(TrayIcon.StatusIcon.Save, "Сохранение данных", 2000);
@@ -182,19 +180,10 @@ namespace InkTrack_Report
         /// </summary>
         void InitApplication() {
             int EmployeeId = User.GetID();
-            LoginedEmployee = entities.Employee.FirstOrDefault(e => e.EmployeeID == EmployeeId);
+            LoginedEmployee = entities.Employee.FirstOrDefault(Employee => Employee.Id == EmployeeId);
             StartPrintWatchers();
             trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
-        }
-        
-        /// <summary>
-        /// Метод который проверяет есть ли изменение в базе данных, для исключения момента кода принтер не в кабинете, а программа понимает иначе
-        /// </summary>
-        /// <returns>Когда есть изменение данных true, иначе false</returns>
-        bool EnabledDeviceActualityInCabinet() {
-            return entities.Cabinet.First(c => c.CabinetID == InkTrack_Report.Properties.Settings.Default.SelectedCabinetID).Device.Any(d => d.DeviceID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
-        }
-        
+        }        
         /// <summary>
         /// Проверка на подключение к базе данным
         /// </summary>
@@ -229,37 +218,14 @@ namespace InkTrack_Report
             }
         }
 
-        /// <summary>
-        /// Метод который сохраняет данные о печати в базу данных в формате XML
-        /// </summary>
-        public static void SavePrintOutDatasToDatabase()
-        {
-            Logger.Log("SQL", "Сохранение списка документов");
-            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
-            using (var stringWriter = new StringWriter())
-            {
-                serializer.Serialize(stringWriter, printoutDatas);
-                Printer printer = entities.Printer.First(p => p.PrinterID == InkTrack_Report.Properties.Settings.Default.SelectedPrinterID);
-                printer.PrintedDocumentsList = stringWriter.ToString();
-                entities.SaveChanges();
-            }
-        }
 
-        ///// <summary>
-        ///// Метод который загружает данные о печати в переменую из формата XML в список printoutDatas
-        ///// </summary>
-        //public static void LoadPrintOutDataFromXmlDatabase() {
-
-
-
-        //}
         public static void ResetPrintoutDataHistory(Printer printer)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
             using (var stringWriter = new StringWriter())
             {
-                serializer.Serialize(stringWriter, printoutDatas);
-                printer.PrintedDocumentsList = stringWriter.ToString();
+                serializer.Serialize(stringWriter, new List<PrintoutData>());
+                printer.PrinterDocumentsList = stringWriter.ToString();
                 entities.SaveChanges();
             }
         }
@@ -268,13 +234,13 @@ namespace InkTrack_Report
             List<PrintoutData> printoutDatas;
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
-            if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
+            if (string.IsNullOrWhiteSpace(printer.PrinterDocumentsList))
             {
                 printoutDatas = new List<PrintoutData>();
             }
             else
             {
-                using (var stringReader = new StringReader(printer.PrintedDocumentsList))
+                using (var stringReader = new StringReader(printer.PrinterDocumentsList))
                 {
                     printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
                 }
@@ -287,7 +253,7 @@ namespace InkTrack_Report
             using (var stringWriter = new StringWriter())
             {
                 serializer.Serialize(stringWriter, printoutDatas);
-                printer.PrintedDocumentsList = stringWriter.ToString();
+                printer.PrinterDocumentsList = stringWriter.ToString();
                 entities.SaveChanges();
             }
 

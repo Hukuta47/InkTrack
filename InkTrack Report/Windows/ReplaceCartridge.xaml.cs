@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -19,7 +20,7 @@ namespace InkTrack_Report.Windows
 {
     public partial class ReplaceCartridge : Window
     {
-        Printer SelectedPrinter = App.entities.Printer.First(p => p.PrinterID == Properties.Settings.Default.SelectedPrinterID);
+        Printer SelectedPrinter = App.entities.Printer.First(Printer => Printer.Id == Properties.Settings.Default.SelectedPrinterID);
         List<Cartridge> ListCartritgesForReplace;
 
         int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
@@ -29,7 +30,19 @@ namespace InkTrack_Report.Windows
 
         public ReplaceCartridge()
         {
-            ListCartritgesForReplace = App.entities.Cartridge.Where(c => c.CartridgeModel.Printer.Any(p => p.PrinterID == SelectedPrinter.PrinterID) && c.StatusID == 2).ToList();
+            int printerId = 123; // подставь нужный ID принтера
+
+            var compatibleCartridges = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(Printer => Printer.id == SelectedPrinter.Id) && Cartridge.)
+
+
+
+
+            App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.)))
+
+
+
+            //ListCartritgesForReplace = App.entities.Cartridge.Where(Cartridge => Cartridge.
+            //ListCartritgesForReplace = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(p => p.PrinterID == SelectedPrinter.PrinterID) && Cartridge.StatusID == 2).ToList();
             SumPagesPrintouts = 0;
             foreach (PrintoutData printoutData in App.printoutDatas)
             {

@@ -12,15 +12,15 @@ namespace InkTrack_Report.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class ReasonForReplacement
+    public partial class ReasonForRelpacement
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReasonForReplacement()
+        public ReasonForRelpacement()
         {
             this.CartridgeReplacement_Log = new HashSet<CartridgeReplacement_Log>();
         }
     
-        public int ReasonID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -17,27 +17,26 @@ namespace InkTrack_Report.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cartridge()
         {
-            this.CartridgeReplacement_Log = new HashSet<CartridgeReplacement_Log>();
-            this.CartridgeReplacement_Log1 = new HashSet<CartridgeReplacement_Log>();
             this.Printer = new HashSet<Printer>();
+            this.CartridgeModel = new HashSet<CartridgeModel>();
+            this.Printer1 = new HashSet<Printer>();
         }
     
-        public int CartridgeID { get; set; }
-        public int CartridgeModelID { get; set; }
-        public string CartridgeNumber { get; set; }
-        public int StatusID { get; set; }
-        public int CartridgeTypeID { get; set; }
+        public int Id { get; set; }
+        public string Number { get; set; }
+        public int Status { get; set; }
+        public int Type { get; set; }
         public Nullable<int> Capacity { get; set; }
         public Nullable<int> NumberOfRefills { get; set; }
         public Nullable<System.DateTime> LastDateOfRefill { get; set; }
     
-        public virtual CartridgeModel CartridgeModel { get; set; }
         public virtual CartridgeStatus CartridgeStatus { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartridgeReplacement_Log> CartridgeReplacement_Log { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartridgeReplacement_Log> CartridgeReplacement_Log1 { get; set; }
+        public virtual CartridgeType CartridgeType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Printer> Printer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartridgeModel> CartridgeModel { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Printer> Printer1 { get; set; }
     }
 }

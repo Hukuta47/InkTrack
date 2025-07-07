@@ -12,11 +12,18 @@ namespace InkTrack_Report.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeLIT
+    public partial class CartridgeType
     {
-        public int EmployeeID { get; set; }
-        public int EmployeePositionID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CartridgeType()
+        {
+            this.Cartridge = new HashSet<Cartridge>();
+        }
     
-        public virtual Employee Employee { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cartridge> Cartridge { get; set; }
     }
 }

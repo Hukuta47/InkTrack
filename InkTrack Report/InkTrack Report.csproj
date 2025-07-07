@@ -183,7 +183,7 @@
     <Compile Include="Classes\ThemeDetector.cs" />
     <Compile Include="Classes\TrayIcon.cs" />
     <Compile Include="Classes\User.cs" />
-    <Compile Include="Database\Cabinet.cs">
+    <Compile Include="Database\Building.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Cartridge.cs">
@@ -198,13 +198,19 @@
     <Compile Include="Database\CartridgeStatus.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\CartridgeType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Device.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\DeviceType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Employee.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\EmployeeLIT.cs">
+    <Compile Include="Database\EmployeePosition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Model.Context.cs">
@@ -225,7 +231,13 @@
     <Compile Include="Database\Printer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\ReasonForReplacement.cs">
+    <Compile Include="Database\PrinterStatus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\ReasonForRelpacement.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Room.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Windows\Dialog\AdminAuthDialog.xaml.cs">
@@ -320,7 +332,6 @@
     <Resource Include="Icon.ico" />
     <Resource Include="Resources\Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Database\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -332,6 +343,8 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\Help circle.png" />
     <Resource Include="Resources\X.png" />
     <None Include="Resources\Idle W.ico" />
