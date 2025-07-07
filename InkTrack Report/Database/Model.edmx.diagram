@@ -9,8 +9,8 @@
         <EntityTypeShape EntityType="LitModel.Cartridge" Width="1.5" PointX="5.25" PointY="14.5" />
         <EntityTypeShape EntityType="LitModel.CartridgeModel" Width="1.5" PointX="5.25" PointY="18.875" />
         <EntityTypeShape EntityType="LitModel.CartridgeReplacement_Log" Width="1.5" PointX="9.75" PointY="4.125" />
-        <EntityTypeShape EntityType="LitModel.CartridgeStatus" Width="1.5" PointX="3" PointY="16.625" />
-        <EntityTypeShape EntityType="LitModel.CartridgeType" Width="1.5" PointX="3" PointY="14.25" />
+        <EntityTypeShape EntityType="LitModel.CartridgeStatus" Width="1.5" PointX="3" PointY="14.25" />
+        <EntityTypeShape EntityType="LitModel.CartridgeType" Width="1.5" PointX="3" PointY="16.625" />
         <EntityTypeShape EntityType="LitModel.Device" Width="1.5" PointX="5.25" PointY="4" />
         <EntityTypeShape EntityType="LitModel.DeviceType" Width="1.5" PointX="3" PointY="1.75" />
         <EntityTypeShape EntityType="LitModel.Employee" Width="1.5" PointX="5.25" PointY="8.375" />

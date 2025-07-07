@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Reflection;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
@@ -227,6 +228,21 @@ namespace InkTrack_Report
                 serializer.Serialize(stringWriter, new List<PrintoutData>());
                 printer.PrinterDocumentsList = stringWriter.ToString();
                 entities.SaveChanges();
+            }
+        }
+        public static List<PrintoutData> GetPrintOutDataList(Printer printer)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
+            if (string.IsNullOrWhiteSpace(printer.PrinterDocumentsList))
+            {
+                return new List<PrintoutData>();
+            }
+            else
+            {
+                using (var stringReader = new StringReader(printer.PrinterDocumentsList))
+                {
+                    return (List<PrintoutData>)serializer.Deserialize(stringReader);
+                }
             }
         }
         public static void SavePrintDataToDatabase(PrintoutData printoutData, Printer printer)

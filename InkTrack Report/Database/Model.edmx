@@ -18,8 +18,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Status" Type="int" Nullable="false" />
-          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
           <Property Name="Capacity" Type="int" />
           <Property Name="NumberOfRefills" Type="int" />
           <Property Name="LastDateOfRefill" Type="date" />
@@ -42,9 +42,9 @@
         </EntityType>
         <EntityType Name="CartridgeModel">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CartridgeReplacement_Log">
@@ -176,7 +176,7 @@
           <End Role="Cartridge_CartridgeModel" Type="Self.Cartridge_CartridgeModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CartridgeModel">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cartridge_CartridgeModel">
               <PropertyRef Name="CartridgeModelId" />
@@ -191,7 +191,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cartridge">
-              <PropertyRef Name="Status" />
+              <PropertyRef Name="StatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -203,7 +203,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cartridge">
-              <PropertyRef Name="Type" />
+              <PropertyRef Name="TypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -212,7 +212,7 @@
           <End Role="CartridgeCompatibility" Type="Self.CartridgeCompatibility" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CartridgeModel">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CartridgeCompatibility">
               <PropertyRef Name="CartridgeModelId" />
@@ -577,8 +577,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="Capacity" Type="Int32" />
           <Property Name="NumberOfRefills" Type="Int32" />
           <Property Name="LastDateOfRefill" Type="DateTime" Precision="0" />
@@ -590,9 +590,9 @@
         </EntityType>
         <EntityType Name="CartridgeModel">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cartridge" Relationship="LitModel.Cartridge_CartridgeModel" FromRole="CartridgeModel" ToRole="Cartridge" />
           <NavigationProperty Name="Printer" Relationship="LitModel.CartridgeCompatibility" FromRole="CartridgeModel" ToRole="Printer" />
@@ -735,7 +735,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cartridge">
-              <PropertyRef Name="Status" />
+              <PropertyRef Name="StatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -747,7 +747,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cartridge">
-              <PropertyRef Name="Type" />
+              <PropertyRef Name="TypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -863,7 +863,7 @@
           <End Type="LitModel.Cartridge" Role="Cartridge" Multiplicity="*" />
           <End Type="LitModel.Printer" Role="Printer" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -883,8 +883,8 @@
                 <ScalarProperty Name="LastDateOfRefill" ColumnName="LastDateOfRefill" />
                 <ScalarProperty Name="NumberOfRefills" ColumnName="NumberOfRefills" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -894,7 +894,7 @@
             <EntityTypeMapping TypeName="LitModel.CartridgeModel">
               <MappingFragment StoreEntitySet="CartridgeModel">
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1007,7 +1007,7 @@
           </EntitySetMapping>
           <AssociationSetMapping Name="Cartridge_CartridgeModel" TypeName="LitModel.Cartridge_CartridgeModel" StoreEntitySet="Cartridge_CartridgeModel">
             <EndProperty Name="CartridgeModel">
-              <ScalarProperty Name="id" ColumnName="CartridgeModelId" />
+              <ScalarProperty Name="Id" ColumnName="CartridgeModelId" />
             </EndProperty>
             <EndProperty Name="Cartridge">
               <ScalarProperty Name="Id" ColumnName="CartridgeId" />
@@ -1018,7 +1018,7 @@
               <ScalarProperty Name="Id" ColumnName="PrinterId" />
             </EndProperty>
             <EndProperty Name="CartridgeModel">
-              <ScalarProperty Name="id" ColumnName="CartridgeModelId" />
+              <ScalarProperty Name="Id" ColumnName="CartridgeModelId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Employee_EmployeePosition" TypeName="LitModel.Employee_EmployeePosition" StoreEntitySet="Employee_EmployeePosition">

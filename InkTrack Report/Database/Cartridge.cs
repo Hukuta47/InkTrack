@@ -24,8 +24,8 @@ namespace InkTrack_Report.Database
     
         public int Id { get; set; }
         public string Number { get; set; }
-        public int Status { get; set; }
-        public int Type { get; set; }
+        public int StatusId { get; set; }
+        public int TypeId { get; set; }
         public Nullable<int> Capacity { get; set; }
         public Nullable<int> NumberOfRefills { get; set; }
         public Nullable<System.DateTime> LastDateOfRefill { get; set; }

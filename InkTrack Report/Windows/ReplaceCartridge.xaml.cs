@@ -30,30 +30,19 @@ namespace InkTrack_Report.Windows
 
         public ReplaceCartridge()
         {
-            int printerId = 123; // подставь нужный ID принтера
-
-            var compatibleCartridges = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(Printer => Printer.id == SelectedPrinter.Id) && Cartridge.)
-
-
-
-
-            App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.)))
-
-
-
-            //ListCartritgesForReplace = App.entities.Cartridge.Where(Cartridge => Cartridge.
-            //ListCartritgesForReplace = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(p => p.PrinterID == SelectedPrinter.PrinterID) && Cartridge.StatusID == 2).ToList();
+            
+            ListCartritgesForReplace = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.Id == SelectedPrinter.Id) && Cartridge.StatusId == 2)).ToList();
             SumPagesPrintouts = 0;
-            foreach (PrintoutData printoutData in App.printoutDatas)
+            foreach (PrintoutData printoutData in App.GetPrintOutDataList(SelectedPrinter))
             {
                 SumPagesPrintouts += printoutData.CountPages;
             }
 
             InitializeComponent();
 
-            Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForReplacement.ToList();
+            Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForRelpacement.ToList();
             Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
-            Combobox_WhoReplaced.ItemsSource = App.entities.EmployeeLIT.ToList();
+            Combobox_WhoReplaced.ItemsSource = App.entities.Employee.Where(Employee => Employee.EmployeePosition.Any(Po => Po.));
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
