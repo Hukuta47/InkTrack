@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="65cd5da448de4014a49ee7dfbd08979b" Name="Diagram1">
         <EntityTypeShape EntityType="LitModel.Building" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="LitModel.Cartridge" Width="1.5" PointX="5.25" PointY="14.5" />
+        <EntityTypeShape EntityType="LitModel.Cartridge" Width="1.5" PointX="5.25" PointY="14.625" />
         <EntityTypeShape EntityType="LitModel.CartridgeModel" Width="1.5" PointX="5.25" PointY="18.875" />
         <EntityTypeShape EntityType="LitModel.CartridgeReplacement_Log" Width="1.5" PointX="9.75" PointY="4.125" />
         <EntityTypeShape EntityType="LitModel.CartridgeStatus" Width="1.5" PointX="3" PointY="14.25" />
@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="LitModel.DeviceType" Width="1.5" PointX="3" PointY="1.75" />
         <EntityTypeShape EntityType="LitModel.Employee" Width="1.5" PointX="5.25" PointY="8.375" />
         <EntityTypeShape EntityType="LitModel.EmployeePosition" Width="1.5" PointX="7.5" PointY="8.625" />
-        <EntityTypeShape EntityType="LitModel.Printer" Width="1.5" PointX="7.5" PointY="3.875" />
+        <EntityTypeShape EntityType="LitModel.Printer" Width="1.5" PointX="7.5" PointY="4" />
         <EntityTypeShape EntityType="LitModel.PrinterStatus" Width="1.5" PointX="5.25" PointY="11.875" />
         <EntityTypeShape EntityType="LitModel.ReasonForRelpacement" Width="1.5" PointX="7.5" PointY="0.75" />
         <EntityTypeShape EntityType="LitModel.Room" Width="1.5" PointX="3" PointY="4.375" />
@@ -33,7 +33,6 @@
         <AssociationConnector Association="LitModel.Cartridge_CartridgeModel" />
         <AssociationConnector Association="LitModel.CartridgeCompatibility" />
         <AssociationConnector Association="LitModel.Employee_EmployeePosition" />
-        <AssociationConnector Association="LitModel.NoCartridgeCompatibility" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

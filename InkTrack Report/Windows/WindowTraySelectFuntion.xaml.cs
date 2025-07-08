@@ -15,11 +15,7 @@ namespace InkTrack_Report.Windows
         public WindowTraySelectFuntion(bool ServiceOn)
         {
             InitializeComponent();
-            SumPagesPrintouts = 0;
-            foreach (PrintoutData printoutData in App.printoutDatas)
-            {
-                SumPagesPrintouts += printoutData.CountPages;
-            }
+
             this.SourceInitialized += (s, e) =>
             {
                 // Получаем DPI окна

@@ -13,7 +13,7 @@
 		ResizeMode="NoResize" Loaded="Window_Loaded"
 		>
 
-	<Border Background="White" CornerRadius="16" Width="663" Height="796" Margin="20,20,20,30" RenderTransformOrigin="0.5,0.5">
+	<Border Background="White" CornerRadius="16" Width="663" Height="920" Margin="20,20,20,30" RenderTransformOrigin="0.5,0.5">
 		<Border.RenderTransform>
 			<TransformGroup>
 				<ScaleTransform ScaleX="1"/>
@@ -61,38 +61,38 @@
 
 			</Grid>
 
-			<Grid Grid.Row="1" Width="631">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="16"/>
-					<RowDefinition />
+			<StackPanel Grid.Row="1" Width="631" Margin="16">
 
-					<RowDefinition Height="16"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="16"/>
-					<RowDefinition Height="48"/>
-
-					<RowDefinition Height="16"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="16"/>
-					<RowDefinition Height="48"/>
-
-					<RowDefinition Height="16"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="16"/>
-					<RowDefinition/>
-				</Grid.RowDefinitions>
-
-				<TextBlock Grid.Row="0" Text="Причина замены" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<ListBox Grid.Row="2" Name="Listbox_CauseReplaceCartridge" DisplayMemberPath="Name" SelectedValuePath="ReasonID"/>
-				<TextBlock Grid.Row="4" Text="Картридж на замену" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<ComboBox Grid.Row="6" Name="Combobox_CartridgeOnReplace" BorderBrush="#FF3B62ED" DisplayMemberPath="CartridgeNumber" FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48" SelectedValuePath="CartridgeID"/>
-				<TextBlock Grid.Row="8" Text="Кто заменил" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<ComboBox Grid.Row="10" Name="Combobox_WhoReplaced" BorderBrush="#FF3B62ED" DisplayMemberPath="Employee.FIO" FontFamily="{StaticResource Proletarsk}" FontSize="24" Height="48" SelectedValuePath="EmployeeID"/>
-				<TextBlock Grid.Row="12" Text="Комментарий" FontFamily="{StaticResource Proletarsk}" FontSize="24"/>
-				<TextBox Grid.Row="14" Height="auto" Name="Textbox_Description" FontFamily="{StaticResource Proletarsk}" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
-
-			</Grid>
+				<StackPanel Margin="10">
+					<TextBlock Text="Принтер у которого заменяется картридж"/>
+					<Rectangle Height="16"/>
+					<ComboBox Name="Combobox_SelectPrinter" SelectionChanged="Combobox_SelectPrinter_SelectionChanged" DisplayMemberPath="DeviceName"/>
+				</StackPanel>
+				<Rectangle Height="16"/>
+				<StackPanel Margin="10">
+					<TextBlock Text="Причина замены"/>
+					<Rectangle Height="16"/>
+					<ListBox Grid.Row="2" Name="Listbox_CauseReplaceCartridge" DisplayMemberPath="Name" SelectedValuePath="Id" Height="68" />
+				</StackPanel>
+				<Rectangle Height="16"/>
+				<StackPanel Margin="10">
+					<TextBlock Text="Картридж на замену"/>
+					<Rectangle Height="16"/>
+					<ComboBox Name="Combobox_CartridgeOnReplace" DisplayMemberPath="Number" SelectedValuePath="Id"/>
+				</StackPanel>
+				<Rectangle Height="16"/>
+				<StackPanel Margin="10">
+					<TextBlock Text="Кто заменил"/>
+					<Rectangle Height="16"/>
+					<ComboBox Name="Combobox_WhoReplaced" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+				</StackPanel>
+				<Rectangle Height="16"/>
+				<StackPanel Margin="10">
+					<TextBlock Text="Комментарий"/>
+					<Rectangle Height="16"/>
+					<TextBox Grid.Row="14" Height="150" Name="Textbox_Description" FontFamily="{StaticResource Proletarsk}" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
+				</StackPanel>
+			</StackPanel>
 
 			<Grid Grid.Row="2" HorizontalAlignment="Center" Margin="8">
 				<Grid.ColumnDefinitions>

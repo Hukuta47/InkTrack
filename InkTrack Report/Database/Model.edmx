@@ -117,14 +117,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="NoCartridgeCompatibility">
-          <Key>
-            <PropertyRef Name="PrinterId" />
-            <PropertyRef Name="CartridgeId" />
-          </Key>
-          <Property Name="PrinterId" Type="int" Nullable="false" />
-          <Property Name="CartridgeId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Printer">
           <Key>
             <PropertyRef Name="Id" />
@@ -315,30 +307,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NoCartridgeCompatibility_Cartridge">
-          <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="1" />
-          <End Role="NoCartridgeCompatibility" Type="Self.NoCartridgeCompatibility" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cartridge">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="NoCartridgeCompatibility">
-              <PropertyRef Name="CartridgeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NoCartridgeCompatibility_Printer">
-          <End Role="Printer" Type="Self.Printer" Multiplicity="1" />
-          <End Role="NoCartridgeCompatibility" Type="Self.NoCartridgeCompatibility" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Printer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="NoCartridgeCompatibility">
-              <PropertyRef Name="PrinterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Printer_Cartridge">
           <End Role="Cartridge" Type="Self.Cartridge" Multiplicity="0..1" />
           <End Role="Printer" Type="Self.Printer" Multiplicity="*" />
@@ -401,7 +369,6 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_EmployeePosition" EntityType="Self.Employee_EmployeePosition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeePosition" EntityType="Self.EmployeePosition" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NoCartridgeCompatibility" EntityType="Self.NoCartridgeCompatibility" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Printer" EntityType="Self.Printer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrinterStatus" EntityType="Self.PrinterStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReasonForRelpacement" EntityType="Self.ReasonForRelpacement" Schema="dbo" store:Type="Tables" />
@@ -457,14 +424,6 @@
           <AssociationSet Name="FK_Employee_Room" Association="Self.FK_Employee_Room">
             <End Role="Room" EntitySet="Room" />
             <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NoCartridgeCompatibility_Cartridge" Association="Self.FK_NoCartridgeCompatibility_Cartridge">
-            <End Role="Cartridge" EntitySet="Cartridge" />
-            <End Role="NoCartridgeCompatibility" EntitySet="NoCartridgeCompatibility" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NoCartridgeCompatibility_Printer" Association="Self.FK_NoCartridgeCompatibility_Printer">
-            <End Role="Printer" EntitySet="Printer" />
-            <End Role="NoCartridgeCompatibility" EntitySet="NoCartridgeCompatibility" />
           </AssociationSet>
           <AssociationSet Name="FK_Printer_Cartridge" Association="Self.FK_Printer_Cartridge">
             <End Role="Cartridge" EntitySet="Cartridge" />
@@ -558,10 +517,6 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeePosition" EntitySet="EmployeePosition" />
           </AssociationSet>
-          <AssociationSet Name="NoCartridgeCompatibility" Association="LitModel.NoCartridgeCompatibility">
-            <End Role="Cartridge" EntitySet="Cartridge" />
-            <End Role="Printer" EntitySet="Printer" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Building">
           <Key>
@@ -586,7 +541,6 @@
           <NavigationProperty Name="CartridgeType" Relationship="LitModel.FK_Cartridge_CartridgeType" FromRole="Cartridge" ToRole="CartridgeType" />
           <NavigationProperty Name="Printer" Relationship="LitModel.FK_Printer_Cartridge" FromRole="Cartridge" ToRole="Printer" />
           <NavigationProperty Name="CartridgeModel" Relationship="LitModel.Cartridge_CartridgeModel" FromRole="Cartridge" ToRole="CartridgeModel" />
-          <NavigationProperty Name="Printer1" Relationship="LitModel.NoCartridgeCompatibility" FromRole="Cartridge" ToRole="Printer" />
         </EntityType>
         <EntityType Name="CartridgeModel">
           <Key>
@@ -685,7 +639,6 @@
           <NavigationProperty Name="Device" Relationship="LitModel.FK_Printer_Device" FromRole="Printer" ToRole="Device" />
           <NavigationProperty Name="PrinterStatus" Relationship="LitModel.FK_Printer_PrinterStatus" FromRole="Printer" ToRole="PrinterStatus" />
           <NavigationProperty Name="CartridgeModel" Relationship="LitModel.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
-          <NavigationProperty Name="Cartridge1" Relationship="LitModel.NoCartridgeCompatibility" FromRole="Printer" ToRole="Cartridge" />
         </EntityType>
         <EntityType Name="PrinterStatus">
           <Key>
@@ -859,10 +812,6 @@
           <End Type="LitModel.Employee" Role="Employee" Multiplicity="*" />
           <End Type="LitModel.EmployeePosition" Role="EmployeePosition" Multiplicity="*" />
         </Association>
-        <Association Name="NoCartridgeCompatibility">
-          <End Type="LitModel.Cartridge" Role="Cartridge" Multiplicity="*" />
-          <End Type="LitModel.Printer" Role="Printer" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1027,14 +976,6 @@
             </EndProperty>
             <EndProperty Name="Employee">
               <ScalarProperty Name="Id" ColumnName="EmployeeId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="NoCartridgeCompatibility" TypeName="LitModel.NoCartridgeCompatibility" StoreEntitySet="NoCartridgeCompatibility">
-            <EndProperty Name="Printer">
-              <ScalarProperty Name="Id" ColumnName="PrinterId" />
-            </EndProperty>
-            <EndProperty Name="Cartridge">
-              <ScalarProperty Name="Id" ColumnName="CartridgeId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

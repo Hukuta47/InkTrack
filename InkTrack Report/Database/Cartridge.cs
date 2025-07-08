@@ -19,7 +19,6 @@ namespace InkTrack_Report.Database
         {
             this.Printer = new HashSet<Printer>();
             this.CartridgeModel = new HashSet<CartridgeModel>();
-            this.Printer1 = new HashSet<Printer>();
         }
     
         public int Id { get; set; }
@@ -36,7 +35,5 @@ namespace InkTrack_Report.Database
         public virtual ICollection<Printer> Printer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartridgeModel> CartridgeModel { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Printer> Printer1 { get; set; }
     }
 }

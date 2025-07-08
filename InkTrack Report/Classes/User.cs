@@ -18,7 +18,7 @@ namespace InkTrack_Report.Classes
             }
             else
             {
-                return App.entities.Employee.FirstOrDefault(e => e.DomainName == Environment.UserName.ToLower()).EmployeeID;
+                return App.entities.Employee.FirstOrDefault(e => e.DomainName == Environment.UserName.ToLower()).Id;
             }
             return 0;
         }

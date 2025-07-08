@@ -2,15 +2,13 @@
 using InkTrack_Report.Database;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Newtonsoft.Json;
 using NPetrovich;
 using System;
+using System.Drawing.Printing;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -20,29 +18,30 @@ namespace InkTrack_Report.Windows
 {
     public partial class ReplaceCartridge : Window
     {
-        Printer SelectedPrinter = App.entities.Printer.First(Printer => Printer.Id == Properties.Settings.Default.SelectedPrinterID);
+        Device SelectedPrinter;
         List<Cartridge> ListCartritgesForReplace;
 
-        int SelectedCabinetID = Properties.Settings.Default.SelectedCabinetID;
-        int SelectedPrinterID = Properties.Settings.Default.SelectedPrinterID;
         int SumPagesPrintouts;
 
 
         public ReplaceCartridge()
         {
-            
-            ListCartritgesForReplace = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.Id == SelectedPrinter.Id) && Cartridge.StatusId == 2)).ToList();
-            SumPagesPrintouts = 0;
-            foreach (PrintoutData printoutData in App.GetPrintOutDataList(SelectedPrinter))
-            {
-                SumPagesPrintouts += printoutData.CountPages;
-            }
 
+            List<Device> printers = new List<Device>();
+            foreach (string Printer in PrinterSettings.InstalledPrinters.Cast<string>().ToArray())
+            {
+                int index = Printer.IndexOf("#") + 1;
+                string printerInventoryNumber = Printer.Substring(index);
+                printers.Add(App.entities.Device.First(Device => Device.InventoryNumber == printerInventoryNumber));
+            }
+            
             InitializeComponent();
+            Combobox_SelectPrinter.ItemsSource = printers;
+
 
             Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForRelpacement.ToList();
             Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
-            Combobox_WhoReplaced.ItemsSource = App.entities.Employee.Where(Employee => Employee.EmployeePosition.Any(Po => Po.));
+            Combobox_WhoReplaced.ItemsSource = App.entities.Employee.Where(Employee => Employee.EmployeePosition.Any(Po => Po.Name == "ГПХ" || Po.Name == "Лаборант ЛИТ" || Po.Name == "Техник ЛИТ" || Po.Name == "Начальник ЛИТ")).ToList();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -64,68 +63,57 @@ namespace InkTrack_Report.Windows
         private void Cancel_Click(object sender, RoutedEventArgs e) => CloseWindow_Click();
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            List<PrintoutData> printoutDatas;
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
-            //if (string.IsNullOrWhiteSpace(printer.PrintedDocumentsList))
-            //{
-            //    printoutDatas = new List<PrintoutData>();
-            //}
-            //else
-            //{
-            //    using (var stringReader = new StringReader(printer.PrintedDocumentsList))
-            //    {
-            //        printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
-            //    }
-            //}
+            GenerateFiles(App.GetPrintOutDataList(SelectedPrinter.Printer));
 
 
-            //lkjkljkljljljkllkjkljkllkjkklljljljlkjjlklkjlkjljkljlkjl
-            //GenerateFiles(printoutDatas);
-            App.printoutDatas = new List<PrintoutData>();
-            App.SavePrintOutDatasToDatabase();
-            Cartridge cartridge = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge;
-            if (cartridge.Capacity <= SumPagesPrintouts)
-            {
-                cartridge.Capacity = SumPagesPrintouts;
-            }
-            cartridge.StatusID = 3;
+            Cartridge cartridge = SelectedPrinter.Printer.Cartridge;
+            cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;
+
+            cartridge.StatusId = 3;
 
             Cartridge SelectedCartridge = Combobox_CartridgeOnReplace.SelectedItem as Cartridge;
+
+
             CartridgeReplacement_Log cartridgeReplacement_Log = new CartridgeReplacement_Log()
             {
-                OldCartridgeID = SelectedPrinter.Cartridge.CartridgeID,
-                NewCartridgeID = (int)Combobox_CartridgeOnReplace.SelectedValue,
-                PrinterID = SelectedPrinter.PrinterID,
-                EmployeeLitID = (int)Combobox_WhoReplaced.SelectedValue,
-                ReasonID = (int)Listbox_CauseReplaceCartridge.SelectedValue,
+                OldCartridgeId = SelectedPrinter.Printer.Cartridge.Id,
+                NewCartridgeId = (int)Combobox_CartridgeOnReplace.SelectedValue,
+                PrinterId = SelectedPrinter.Id,
+                EmployeeLitId = (int)Combobox_WhoReplaced.SelectedValue,
+                ReasonId = (int)Listbox_CauseReplaceCartridge.SelectedValue,
                 Comment = Textbox_Description.Text
             };
             App.entities.CartridgeReplacement_Log.Add(cartridgeReplacement_Log);
-            SelectedPrinter.Cartridge = SelectedCartridge;
-            SelectedCartridge.StatusID = 1;
+            SelectedPrinter.Printer.Cartridge = SelectedCartridge;
+            SelectedCartridge.StatusId = 1;
 
-            App.entities.SaveChanges();
-            string JsonData = JsonConvert.SerializeObject(App.printoutDatas, Formatting.Indented);
-            string pathApplication = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\InkTrack Report";
-            File.WriteAllText($"{pathApplication}\\printoutDatas.json", JsonData);
+            App.ResetPrintoutDataHistory(SelectedPrinter.Printer);
 
             MessageBox.Show("Картридж заменен.");
         }
         public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
         {
-            string dbFIO = App.LoginedEmployee.FIO;
+            string dbFIO = App.LoginedEmployee.FullName;
+            var fioParts = dbFIO.Split(' ');
+
+            string lastName = fioParts.Length > 0 ? fioParts[0] : "";
+            string firstName = fioParts.Length > 1 ? fioParts[1] : "";
+            string middleName = fioParts.Length > 2 ? fioParts[2] : "";
 
             var petrovich = new Petrovich()
             {
-                LastName = dbFIO.Split(' ')[0],
-                FirstName = dbFIO.Split(' ')[1],
-                MiddleName = dbFIO.Split(' ')[2],
+                LastName = lastName,
+                FirstName = firstName,
+                MiddleName = middleName,
                 AutoDetectGender = true
             };
+
             var inflectedFIO = petrovich.InflectTo(Case.Genitive);
 
-            string GenetiveFIO = $"{inflectedFIO.LastName} {inflectedFIO.FirstName} {inflectedFIO.MiddleName}";
+            // Если отчества нет, просто не включаем его в строку
+            string GenetiveFIO = string.IsNullOrWhiteSpace(inflectedFIO.MiddleName)
+                ? $"{inflectedFIO.LastName} {inflectedFIO.FirstName}"
+                : $"{inflectedFIO.LastName} {inflectedFIO.FirstName} {inflectedFIO.MiddleName}";
 
 
 
@@ -164,10 +152,10 @@ namespace InkTrack_Report.Windows
             title.SpacingAfter = 10f;
             document.Add(title);
 
-            int CartridgeIDInstalled = App.entities.Printer.First(printer => printer.PrinterID == SelectedPrinterID).Cartridge.CartridgeID;
-            string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.CartridgeID == CartridgeIDInstalled).CartridgeNumber;
-            string PrinterName = GetDeviceName(SelectedPrinterID);
-            string CabinetName = App.entities.Cabinet.First(cabinet => cabinet.CabinetID == SelectedCabinetID).CabinetName;
+            int CartridgeIDInstalled = SelectedPrinter.Printer.Cartridge.Id;
+            string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.Id == CartridgeIDInstalled).Number;
+            string PrinterName = GetDeviceName(SelectedPrinter.Id);
+            string CabinetName = SelectedPrinter.Room.Name;
 
 
             Paragraph request = new Paragraph(
@@ -228,9 +216,17 @@ namespace InkTrack_Report.Windows
         }
         string GetDeviceName(int DeviceId)
         {
-            Device device = App.entities.Device.FirstOrDefault(d => d.DeviceID == DeviceId);
+            Device device = App.entities.Device.FirstOrDefault(d => d.Id == DeviceId);
 
             return $"{device.Manufacturer} {device.Model}";
+        }
+
+        private void Combobox_SelectPrinter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            SelectedPrinter = Combobox_SelectPrinter.SelectedItem as Device;
+            
+            Combobox_CartridgeOnReplace.ItemsSource = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.Id == SelectedPrinter.Id) && Cartridge.StatusId == 2)).ToList();
+
         }
     }
 }
