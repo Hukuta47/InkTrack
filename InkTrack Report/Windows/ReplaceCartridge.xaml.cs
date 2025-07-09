@@ -4,9 +4,9 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using NPetrovich;
 using System;
-using System.Drawing.Printing;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -22,10 +22,8 @@ namespace InkTrack_Report.Windows
 
         int SumPagesPrintouts;
 
-
         public ReplaceCartridge()
         {
-
             List<Device> printers = new List<Device>();
             foreach (string Printer in PrinterSettings.InstalledPrinters.Cast<string>().ToArray())
             {
@@ -63,14 +61,12 @@ namespace InkTrack_Report.Windows
         {
             GenerateFiles(App.GetPrintOutDataList(SelectedPrinter.Printer));
 
-
             Cartridge cartridge = SelectedPrinter.Printer.Cartridge;
             cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;
 
             cartridge.StatusId = 3;
 
             Cartridge SelectedCartridge = Combobox_CartridgeOnReplace.SelectedItem as Cartridge;
-
 
             CartridgeReplacement_Log cartridgeReplacement_Log = new CartridgeReplacement_Log()
             {
@@ -112,9 +108,6 @@ namespace InkTrack_Report.Windows
             string GenetiveFIO = string.IsNullOrWhiteSpace(inflectedFIO.MiddleName)
                 ? $"{inflectedFIO.LastName} {inflectedFIO.FirstName}"
                 : $"{inflectedFIO.LastName} {inflectedFIO.FirstName} {inflectedFIO.MiddleName}";
-
-
-
 
             // Create document with A4 size and margins (approximately 2-3cm)
             Document document = new Document(PageSize.A4);
@@ -222,10 +215,18 @@ namespace InkTrack_Report.Windows
         private void Combobox_SelectPrinter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             SelectedPrinter = Combobox_SelectPrinter.SelectedItem as Device;
-            
-            //Combobox_CartridgeOnReplace.ItemsSource = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.Id == SelectedPrinter.Id) && Cartridge.StatusId == 2)).ToList();
+            ListCartritgesForReplace = new List<Cartridge>();
 
-            //App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.DeviceModel.Any(Model => Model)))
+            var compatibleModels = App.entities.CartridgeModel.Where(Model => Model.DeviceModel.Any(DM => DM.Device.Any(D => D.Id == SelectedPrinter.Id)));
+
+            foreach (var model in compatibleModels)
+            {
+                foreach (var cart in model.Cartridge.Where(Cartridge => Cartridge.StatusId == 2))
+                {
+                    ListCartritgesForReplace.Add(cart);
+                }
+            }
+            Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
         }
     }
 }
