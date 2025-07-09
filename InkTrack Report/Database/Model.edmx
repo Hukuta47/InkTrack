@@ -35,10 +35,10 @@
         <EntityType Name="CartridgeCompatibility">
           <Key>
             <PropertyRef Name="CartridgeModelId" />
-            <PropertyRef Name="PrinterId" />
+            <PropertyRef Name="DeviceModelId" />
           </Key>
           <Property Name="CartridgeModelId" Type="int" Nullable="false" />
-          <Property Name="PrinterId" Type="int" Nullable="false" />
+          <Property Name="DeviceModelId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CartridgeModel">
           <Key>
@@ -79,12 +79,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeviceTypeId" Type="int" Nullable="false" />
-          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
-          <Property Name="Model" Type="nvarchar" MaxLength="50" />
           <Property Name="Characteristics" Type="xml" />
           <Property Name="InventoryNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="RoomId" Type="int" />
+          <Property Name="DeviceModelId" Type="int" />
+        </EntityType>
+        <EntityType Name="DeviceModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeviceTypeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -211,15 +219,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CartridgeCompatibility_Printer">
-          <End Role="Printer" Type="Self.Printer" Multiplicity="1" />
+        <Association Name="FK_CartridgeCompatibility_DeviceModel">
+          <End Role="DeviceModel" Type="Self.DeviceModel" Multiplicity="1" />
           <End Role="CartridgeCompatibility" Type="Self.CartridgeCompatibility" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Printer">
+            <Principal Role="DeviceModel">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CartridgeCompatibility">
-              <PropertyRef Name="PrinterId" />
+              <PropertyRef Name="DeviceModelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -247,6 +255,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Device_DeviceModel">
+          <End Role="DeviceModel" Type="Self.DeviceModel" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Device_DeviceType">
           <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
           <End Role="Device" Type="Self.Device" Multiplicity="*" />
@@ -268,6 +288,18 @@
             </Principal>
             <Dependent Role="Device">
               <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceModel_DeviceType">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="DeviceModel" Type="Self.DeviceModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeviceModel">
+              <PropertyRef Name="DeviceTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -365,6 +397,7 @@
           <EntitySet Name="CartridgeStatus" EntityType="Self.CartridgeStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CartridgeType" EntityType="Self.CartridgeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceModel" EntityType="Self.DeviceModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_EmployeePosition" EntityType="Self.Employee_EmployeePosition" Schema="dbo" store:Type="Tables" />
@@ -393,8 +426,8 @@
             <End Role="CartridgeModel" EntitySet="CartridgeModel" />
             <End Role="CartridgeCompatibility" EntitySet="CartridgeCompatibility" />
           </AssociationSet>
-          <AssociationSet Name="FK_CartridgeCompatibility_Printer" Association="Self.FK_CartridgeCompatibility_Printer">
-            <End Role="Printer" EntitySet="Printer" />
+          <AssociationSet Name="FK_CartridgeCompatibility_DeviceModel" Association="Self.FK_CartridgeCompatibility_DeviceModel">
+            <End Role="DeviceModel" EntitySet="DeviceModel" />
             <End Role="CartridgeCompatibility" EntitySet="CartridgeCompatibility" />
           </AssociationSet>
           <AssociationSet Name="FK_CartridgeReplacement_Log_Printer" Association="Self.FK_CartridgeReplacement_Log_Printer">
@@ -405,6 +438,10 @@
             <End Role="ReasonForRelpacement" EntitySet="ReasonForRelpacement" />
             <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
           </AssociationSet>
+          <AssociationSet Name="FK_Device_DeviceModel" Association="Self.FK_Device_DeviceModel">
+            <End Role="DeviceModel" EntitySet="DeviceModel" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
           <AssociationSet Name="FK_Device_DeviceType" Association="Self.FK_Device_DeviceType">
             <End Role="DeviceType" EntitySet="DeviceType" />
             <End Role="Device" EntitySet="Device" />
@@ -412,6 +449,10 @@
           <AssociationSet Name="FK_Device_Room" Association="Self.FK_Device_Room">
             <End Role="Room" EntitySet="Room" />
             <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceModel_DeviceType" Association="Self.FK_DeviceModel_DeviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="DeviceModel" EntitySet="DeviceModel" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_EmployeePosition_Employee" Association="Self.FK_Employee_EmployeePosition_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -454,6 +495,7 @@
           <EntitySet Name="CartridgeStatus" EntityType="LitModel.CartridgeStatus" />
           <EntitySet Name="CartridgeType" EntityType="LitModel.CartridgeType" />
           <EntitySet Name="Device" EntityType="LitModel.Device" />
+          <EntitySet Name="DeviceModel" EntityType="LitModel.DeviceModel" />
           <EntitySet Name="DeviceType" EntityType="LitModel.DeviceType" />
           <EntitySet Name="Employee" EntityType="LitModel.Employee" />
           <EntitySet Name="EmployeePosition" EntityType="LitModel.EmployeePosition" />
@@ -485,6 +527,10 @@
             <End Role="ReasonForRelpacement" EntitySet="ReasonForRelpacement" />
             <End Role="CartridgeReplacement_Log" EntitySet="CartridgeReplacement_Log" />
           </AssociationSet>
+          <AssociationSet Name="FK_Device_DeviceModel" Association="LitModel.FK_Device_DeviceModel">
+            <End Role="DeviceModel" EntitySet="DeviceModel" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
           <AssociationSet Name="FK_Device_DeviceType" Association="LitModel.FK_Device_DeviceType">
             <End Role="DeviceType" EntitySet="DeviceType" />
             <End Role="Device" EntitySet="Device" />
@@ -496,6 +542,10 @@
           <AssociationSet Name="FK_Printer_Device" Association="LitModel.FK_Printer_Device">
             <End Role="Device" EntitySet="Device" />
             <End Role="Printer" EntitySet="Printer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceModel_DeviceType" Association="LitModel.FK_DeviceModel_DeviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="DeviceModel" EntitySet="DeviceModel" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Room" Association="LitModel.FK_Employee_Room">
             <End Role="Room" EntitySet="Room" />
@@ -511,7 +561,7 @@
           </AssociationSet>
           <AssociationSet Name="CartridgeCompatibility" Association="LitModel.CartridgeCompatibility">
             <End Role="CartridgeModel" EntitySet="CartridgeModel" />
-            <End Role="Printer" EntitySet="Printer" />
+            <End Role="DeviceModel" EntitySet="DeviceModel" />
           </AssociationSet>
           <AssociationSet Name="Employee_EmployeePosition" Association="LitModel.Employee_EmployeePosition">
             <End Role="Employee" EntitySet="Employee" />
@@ -549,7 +599,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cartridge" Relationship="LitModel.Cartridge_CartridgeModel" FromRole="CartridgeModel" ToRole="Cartridge" />
-          <NavigationProperty Name="Printer" Relationship="LitModel.CartridgeCompatibility" FromRole="CartridgeModel" ToRole="Printer" />
+          <NavigationProperty Name="DeviceModel" Relationship="LitModel.CartridgeCompatibility" FromRole="CartridgeModel" ToRole="DeviceModel" />
         </EntityType>
         <EntityType Name="CartridgeReplacement_Log">
           <Key>
@@ -587,15 +637,27 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DeviceTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Characteristics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="InventoryNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RoomId" Type="Int32" />
+          <Property Name="DeviceModelId" Type="Int32" />
+          <NavigationProperty Name="DeviceModel" Relationship="LitModel.FK_Device_DeviceModel" FromRole="Device" ToRole="DeviceModel" />
           <NavigationProperty Name="DeviceType" Relationship="LitModel.FK_Device_DeviceType" FromRole="Device" ToRole="DeviceType" />
           <NavigationProperty Name="Room" Relationship="LitModel.FK_Device_Room" FromRole="Device" ToRole="Room" />
           <NavigationProperty Name="Printer" Relationship="LitModel.FK_Printer_Device" FromRole="Device" ToRole="Printer" />
+        </EntityType>
+        <EntityType Name="DeviceModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="LitModel.FK_Device_DeviceModel" FromRole="DeviceModel" ToRole="Device" />
+          <NavigationProperty Name="DeviceType" Relationship="LitModel.FK_DeviceModel_DeviceType" FromRole="DeviceModel" ToRole="DeviceType" />
+          <NavigationProperty Name="CartridgeModel" Relationship="LitModel.CartridgeCompatibility" FromRole="DeviceModel" ToRole="CartridgeModel" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -604,6 +666,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Device" Relationship="LitModel.FK_Device_DeviceType" FromRole="DeviceType" ToRole="Device" />
+          <NavigationProperty Name="DeviceModel" Relationship="LitModel.FK_DeviceModel_DeviceType" FromRole="DeviceType" ToRole="DeviceModel" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -638,7 +701,6 @@
           <NavigationProperty Name="CartridgeReplacement_Log" Relationship="LitModel.FK_CartridgeReplacement_Log_Printer" FromRole="Printer" ToRole="CartridgeReplacement_Log" />
           <NavigationProperty Name="Device" Relationship="LitModel.FK_Printer_Device" FromRole="Printer" ToRole="Device" />
           <NavigationProperty Name="PrinterStatus" Relationship="LitModel.FK_Printer_PrinterStatus" FromRole="Printer" ToRole="PrinterStatus" />
-          <NavigationProperty Name="CartridgeModel" Relationship="LitModel.CartridgeCompatibility" FromRole="Printer" ToRole="CartridgeModel" />
         </EntityType>
         <EntityType Name="PrinterStatus">
           <Key>
@@ -740,6 +802,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Device_DeviceModel">
+          <End Type="LitModel.DeviceModel" Role="DeviceModel" Multiplicity="0..1" />
+          <End Type="LitModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Device_DeviceType">
           <End Type="LitModel.DeviceType" Role="DeviceType" Multiplicity="1" />
           <End Type="LitModel.Device" Role="Device" Multiplicity="*" />
@@ -776,6 +850,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeviceModel_DeviceType">
+          <End Type="LitModel.DeviceType" Role="DeviceType" Multiplicity="1" />
+          <End Type="LitModel.DeviceModel" Role="DeviceModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeviceModel">
+              <PropertyRef Name="DeviceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Room">
           <End Type="LitModel.Room" Role="Room" Multiplicity="0..1" />
           <End Type="LitModel.Employee" Role="Employee" Multiplicity="*" />
@@ -806,7 +892,7 @@
         </Association>
         <Association Name="CartridgeCompatibility">
           <End Type="LitModel.CartridgeModel" Role="CartridgeModel" Multiplicity="*" />
-          <End Type="LitModel.Printer" Role="Printer" Multiplicity="*" />
+          <End Type="LitModel.DeviceModel" Role="DeviceModel" Multiplicity="*" />
         </Association>
         <Association Name="Employee_EmployeePosition">
           <End Type="LitModel.Employee" Role="Employee" Multiplicity="*" />
@@ -879,13 +965,22 @@
           <EntitySetMapping Name="Device">
             <EntityTypeMapping TypeName="LitModel.Device">
               <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="DeviceModelId" ColumnName="DeviceModelId" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
                 <ScalarProperty Name="Characteristics" ColumnName="Characteristics" />
+                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceModel">
+            <EntityTypeMapping TypeName="LitModel.DeviceModel">
+              <MappingFragment StoreEntitySet="DeviceModel">
+                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
-                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -963,8 +1058,8 @@
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="CartridgeCompatibility" TypeName="LitModel.CartridgeCompatibility" StoreEntitySet="CartridgeCompatibility">
-            <EndProperty Name="Printer">
-              <ScalarProperty Name="Id" ColumnName="PrinterId" />
+            <EndProperty Name="DeviceModel">
+              <ScalarProperty Name="Id" ColumnName="DeviceModelId" />
             </EndProperty>
             <EndProperty Name="CartridgeModel">
               <ScalarProperty Name="Id" ColumnName="CartridgeModelId" />

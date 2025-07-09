@@ -204,6 +204,9 @@
     <Compile Include="Database\Device.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\DeviceModel.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\DeviceType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

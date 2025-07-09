@@ -12,7 +12,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Xml.Serialization;
 
 namespace InkTrack_Report.Windows
 {
@@ -37,7 +36,6 @@ namespace InkTrack_Report.Windows
             
             InitializeComponent();
             Combobox_SelectPrinter.ItemsSource = printers;
-
 
             Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForRelpacement.ToList();
             Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
@@ -218,15 +216,16 @@ namespace InkTrack_Report.Windows
         {
             Device device = App.entities.Device.FirstOrDefault(d => d.Id == DeviceId);
 
-            return $"{device.Manufacturer} {device.Model}";
+            return $"{device.DeviceModel.Manufacturer} {device.DeviceModel.Model}";
         }
 
         private void Combobox_SelectPrinter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             SelectedPrinter = Combobox_SelectPrinter.SelectedItem as Device;
             
-            Combobox_CartridgeOnReplace.ItemsSource = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.Id == SelectedPrinter.Id) && Cartridge.StatusId == 2)).ToList();
+            //Combobox_CartridgeOnReplace.ItemsSource = App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.Printer.Any(Printer => Printer.Id == SelectedPrinter.Id) && Cartridge.StatusId == 2)).ToList();
 
+            //App.entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel.Any(CartridgeModel => CartridgeModel.DeviceModel.Any(Model => Model)))
         }
     }
 }

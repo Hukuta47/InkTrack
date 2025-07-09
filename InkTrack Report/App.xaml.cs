@@ -181,6 +181,21 @@ namespace InkTrack_Report
         /// </summary>
         void InitApplication() {
             int EmployeeId = User.GetID();
+
+
+            Device printer = entities.Device.FirstOrDefault(device => device.Id == 15);
+
+            foreach (var cartridge in entities.Cartridge.Where(Cartridge => Cartridge.CartridgeModel == printer.DeviceModel).ToList())
+            {
+                System.Windows.MessageBox.Show(cartridge.Number);
+            }
+
+
+            
+
+
+
+
             LoginedEmployee = entities.Employee.FirstOrDefault(Employee => Employee.Id == EmployeeId);
             StartPrintWatchers();
             trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;

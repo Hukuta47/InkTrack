@@ -16,20 +16,13 @@ namespace InkTrack_Report.Database
     {
         public int Id { get; set; }
         public int DeviceTypeId { get; set; }
-        public string Manufacturer { get; set; }
-        public string Model { get; set; }
         public string Characteristics { get; set; }
         public string InventoryNumber { get; set; }
         public string SerialNumber { get; set; }
         public Nullable<int> RoomId { get; set; }
-        public string DeviceName
-        {
-            get
-            {
-                return $"{Manufacturer} {Model} ({Id})";
-            }
-        }
-
+        public Nullable<int> DeviceModelId { get; set; }
+    
+        public virtual DeviceModel DeviceModel { get; set; }
         public virtual DeviceType DeviceType { get; set; }
         public virtual Room Room { get; set; }
         public virtual Printer Printer { get; set; }

@@ -32,6 +32,7 @@ namespace InkTrack_Report.Database
         public virtual DbSet<CartridgeStatus> CartridgeStatus { get; set; }
         public virtual DbSet<CartridgeType> CartridgeType { get; set; }
         public virtual DbSet<Device> Device { get; set; }
+        public virtual DbSet<DeviceModel> DeviceModel { get; set; }
         public virtual DbSet<DeviceType> DeviceType { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<EmployeePosition> EmployeePosition { get; set; }

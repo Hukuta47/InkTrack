@@ -18,7 +18,7 @@ namespace InkTrack_Report.Database
         public CartridgeModel()
         {
             this.Cartridge = new HashSet<Cartridge>();
-            this.Printer = new HashSet<Printer>();
+            this.DeviceModel = new HashSet<DeviceModel>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace InkTrack_Report.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cartridge> Cartridge { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Printer> Printer { get; set; }
+        public virtual ICollection<DeviceModel> DeviceModel { get; set; }
     }
 }
