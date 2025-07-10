@@ -178,6 +178,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\DatabaseActionHelper.cs" />
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\PrintoutData.cs" />
     <Compile Include="Classes\ThemeDetector.cs" />

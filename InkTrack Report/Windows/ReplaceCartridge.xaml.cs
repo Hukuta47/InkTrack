@@ -61,8 +61,8 @@ namespace InkTrack_Report.Windows
         {
             try 
             {
-                GenerateRequestPDF(App.GetPrintOutDataList(SelectedPrinter.Printer));
-                GenerateResultPrintingFiles(App.GetPrintOutDataList(SelectedPrinter.Printer));
+                GenerateRequestPDF(DatabaseActionHelper.GetPrintOutDataList(SelectedPrinter.Printer));
+                GenerateResultPrintingFiles(DatabaseActionHelper.GetPrintOutDataList(SelectedPrinter.Printer));
 
                 Cartridge cartridge = SelectedPrinter.Printer.Cartridge;
                 cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;
@@ -83,7 +83,7 @@ namespace InkTrack_Report.Windows
                 SelectedPrinter.Printer.Cartridge = SelectedCartridge;
                 SelectedCartridge.StatusId = 1;
 
-                App.ResetPrintoutDataHistory(SelectedPrinter.Printer);
+                DatabaseActionHelper.ResetPrintoutDataHistory(SelectedPrinter.Printer);
 
                 MessageBox.Show("Картридж заменен.");
             }
