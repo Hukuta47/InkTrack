@@ -8,19 +8,21 @@ namespace InkTrack_Report.Classes
     {
         static public int GetID()
         {
-            if (Environment.UserName.ToLower() == "сотрудник")
+            switch (Environment.UserName.ToLower())
             {
-                var dialog = new GetEmployeeIdDialog();
-                if (dialog.ShowDialog() == true)
-                {
-                    return dialog.EmployeeId;
-                }
+                case "сотрудник":
+                    var dialog = new GetEmployeeIdDialog();
+                    if (dialog.ShowDialog() == true)
+                    {
+                        return dialog.EmployeeId;
+                    }
+                    break;
+                case "student":
+                    return -1;
+                default:
+                    return App.entities.Employee.FirstOrDefault(e => e.DomainName == Environment.UserName.ToLower()).Id;;
             }
-            else
-            {
-                return App.entities.Employee.FirstOrDefault(e => e.DomainName == Environment.UserName.ToLower()).Id;
-            }
-            return 0;
+            return -1;
         }
     }
 }

@@ -4,14 +4,11 @@ using InkTrack_Report.Windows;
 using InkTrack_Report.Windows.Dialog;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using NPetrovich;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Reflection;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
@@ -31,7 +28,7 @@ namespace InkTrack_Report
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
 
-        public TrayIcon trayIcon;
+        public static TrayIcon trayIcon;
         /// <summary>
         /// Метод который выполняется при нажатии любой клавишой миши по иконке в трее
         /// </summary>
@@ -67,7 +64,6 @@ namespace InkTrack_Report
             {
                 Logger.Log("Error", "Ошибочка...", ex);
             }
-            
         }
         
         /// <summary>
@@ -183,48 +179,24 @@ namespace InkTrack_Report
         /// <summary>
         /// Метод для инициализации программы
         /// </summary>
-        void InitApplication() {
-            int EmployeeId = User.GetID();
-
-            List<PrintoutData> printoutDatas = new List<PrintoutData>() 
+        void InitApplication()
+        {
+            try
             {
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-03-20")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-04-21")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-02-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-                new PrintoutData(){ NameDocument = "Документ лютый", FIOWhoPrinting = "Зелтынь Никита Станиславович ", CountPages = 10, Date = DateTime.Parse("2025-01-10")},
-            };
-
-            GenerateFiles(printoutDatas);
-
-            LoginedEmployee = entities.Employee.FirstOrDefault(Employee => Employee.Id == EmployeeId);
-            StartPrintWatchers();
-            trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
+                int UserId = User.GetID();
+                switch (UserId)
+                {
+                    case -1: Shutdown(); break;
+                }
+                LoginedEmployee = entities.Employee.FirstOrDefault(Employee => Employee.Id == UserId);
+                StartPrintWatchers();
+                trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Error", "Получено исключение", ex);
+            }
+            
         }        
         /// <summary>
         /// Проверка на подключение к базе данным
@@ -250,7 +222,6 @@ namespace InkTrack_Report
                 return false;
             }
         }
-        
         /// <summary>
         /// Метод который проверяет наличие папок в системе, если таковых нет, то создает
         /// </summary>
@@ -259,8 +230,6 @@ namespace InkTrack_Report
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs");
             }
         }
-
-
         public static void ResetPrintoutDataHistory(Printer printer)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<PrintoutData>));
@@ -329,36 +298,16 @@ namespace InkTrack_Report
             base.OnExit(e);
         }
 
-        public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
+        public void GenerateResultPrintingFiles(List<PrintoutData> listOfPrintedDocuments)
         {
-            string dbFIO = "Зелтынь Никита Станиславович";
-            var fioParts = dbFIO.Split(' ');
-
-            string lastName = fioParts.Length > 0 ? fioParts[0] : "";
-            string firstName = fioParts.Length > 1 ? fioParts[1] : "";
-            string middleName = fioParts.Length > 2 ? fioParts[2] : "";
-
-            var petrovich = new Petrovich()
-            {
-                LastName = lastName,
-                FirstName = firstName,
-                MiddleName = middleName,
-                AutoDetectGender = true
-            };
-
-            var inflectedFIO = petrovich.InflectTo(Case.Genitive);
-
-            // Если отчества нет, просто не включаем его в строку
-            string GenetiveFIO = string.IsNullOrWhiteSpace(inflectedFIO.MiddleName)
-                ? $"{inflectedFIO.LastName} {inflectedFIO.FirstName}"
-                : $"{inflectedFIO.LastName} {inflectedFIO.FirstName} {inflectedFIO.MiddleName}";
-
             // Create document with A4 size and margins (approximately 2-3cm)
             Document document = new Document(PageSize.A4);
 
+            int CartridgeIDInstalled = entities.Device.First(d => d.Id == 15).Printer.Cartridge.Id;
+            string NumberCartridge = entities.Cartridge.First(cartridge => cartridge.Id == CartridgeIDInstalled).Number;
 
-            string pathToDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string pathToSavePdf = Path.Combine(pathToDesktop, $"Заявка на заправку картриджа от {DateTime.Now.ToShortDateString()}.pdf");
+            string pathToDesktop = "\\\\zabgc-rabota\\LIT\\8. doc\\Отчеты картриджей";
+            string pathToSavePdf = Path.Combine(pathToDesktop, $"Отчет картриджа №{NumberCartridge} от {DateTime.Now.ToShortDateString()}.pdf");
 
 
 
@@ -371,86 +320,81 @@ namespace InkTrack_Report
             Font titleFont = new Font(baseFont, 14, Font.NORMAL);
 
 
-            // Header Section
-            Paragraph header = new Paragraph();
-            header.Alignment = Element.ALIGN_LEFT;
-            header.SpacingAfter = 10f;
-            header.IndentationLeft = 325;
-            Phrase headerPhrase = new Phrase($"Директору ГАПОУ\n«Забайкальский горный колледж имени И.М. Агошкова»\nН.В. Зыкову\nот {GenetiveFIO}", regularFont);
-            headerPhrase.Leading = 1; // Высота строки = размер шрифта (12)
-            header.Add(headerPhrase);
-            document.Add(header);
-
-            Paragraph title = new Paragraph("Заявка", titleFont);
-            title.Alignment = Element.ALIGN_CENTER;
-            title.SpacingAfter = 10f;
-            document.Add(title);
-
-            int CartridgeIDInstalled = entities.Device.First(d => d.Id == 15).Printer.Cartridge.Id;
-            string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.Id == CartridgeIDInstalled).Number;
-            string PrinterName = entities.Device.First(d => d.Id == 15).DeviceNameNoId;
-            string CabinetName = entities.Device.First(d => d.Id == 15).Room.Name;
 
 
-            Paragraph request = new Paragraph(
-                $"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}",
+            Paragraph tableName = new Paragraph(
+                $"Отчет работы картриджа №{NumberCartridge}",
                 regularFont
             );
-            request.IndentationLeft = 20;
-            request.IndentationRight = 20;
-            request.Alignment = Element.ALIGN_JUSTIFIED;
-            request.SpacingAfter = 20f;
-            document.Add(request);
+            tableName.Alignment = Element.ALIGN_CENTER;
+            tableName.SpacingAfter = 10f;
+            document.Add(tableName);
 
-            // Table Section
-            PdfPTable table = new PdfPTable(3);
-            table.WidthPercentage = 100;
-            table.SetWidths(new float[] { 50, 10, 20 }); // Proportional column widths
 
-            // Header Row
-            string[] headers = {"Наименование документов", "Дата", "Количество страниц" };
-            foreach (string headerText in headers)
+            int totalRows = listOfPrintedDocuments.Count;
+            int rowIndex = 0;
+
+            while (rowIndex < totalRows)
             {
-                PdfPCell cell = new PdfPCell(new Phrase(headerText, regularFont));
-                cell.HorizontalAlignment = headerText == "Наименование документов" ? Element.ALIGN_LEFT : Element.ALIGN_CENTER;
-                table.AddCell(cell);
+                // Добавляем новую страницу (но не перед самой первой)
+                if (rowIndex != 0)
+                {
+                    document.NewPage();
+                }
+
+                // Создание новой таблицы
+                PdfPTable table = new PdfPTable(3);
+                table.WidthPercentage = 80;
+                table.SetWidths(new float[] { 50, 10, 20 }); // Ширины колонок
+
+                // Заголовок таблицы
+                string[] headers = { "Наименование документов", "Дата", "Количество страниц" };
+                foreach (string headerText in headers)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(headerText, regularFont));
+                    cell.HorizontalAlignment = headerText == "Наименование документов" ? Element.ALIGN_LEFT : Element.ALIGN_CENTER;
+                    table.AddCell(cell);
+                }
+
+                // Определяем, сколько строк выводить на этой странице
+                int rowsOnThisPage = (rowIndex == 0) ? 40 : 45;
+                int rowsToPrint = Math.Min(rowsOnThisPage, totalRows - rowIndex);
+
+                // Добавляем строки
+                for (int i = 0; i < rowsToPrint; i++)
+                {
+                    var doc = listOfPrintedDocuments[rowIndex];
+
+                    table.AddCell(new PdfPCell(new Phrase(doc.NameDocument, regularFont)) { HorizontalAlignment = Element.ALIGN_LEFT });
+                    table.AddCell(new PdfPCell(new Phrase(doc.Date.ToString("dd.MM.yy"), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                    table.AddCell(new PdfPCell(new Phrase(doc.CountPages.ToString(), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+
+                    rowIndex++;
+                }
+
+                // Добавляем таблицу на текущую страницу
+                document.Add(table);
             }
 
-            // Data Rows from listOfPrintedDocuments
+            // Финальная строка "Итого:"
+            PdfPTable totalTable = new PdfPTable(3);
+            totalTable.WidthPercentage = 80;
+            totalTable.SetWidths(new float[] { 50, 10, 20 });
 
-
-            for (int numRow = 0; numRow < listOfPrintedDocuments.Count; numRow++)
-            {
-                table.AddCell(new PdfPCell(new Phrase(listOfPrintedDocuments[numRow].NameDocument, regularFont)) { HorizontalAlignment = Element.ALIGN_LEFT });
-                table.AddCell(new PdfPCell(new Phrase(listOfPrintedDocuments[numRow].Date.ToString("dd.MM.yy"), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
-                table.AddCell(new PdfPCell(new Phrase(listOfPrintedDocuments[numRow].CountPages.ToString(), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
-            }
-
-            // Total Row
-            int totalPages = listOfPrintedDocuments.Sum(x => x.CountPages);
             PdfPCell totalLabel = new PdfPCell(new Phrase("Итого:", regularFont));
             totalLabel.Colspan = 2;
             totalLabel.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(totalLabel);
+            totalTable.AddCell(totalLabel);
 
+            int totalPages = listOfPrintedDocuments.Sum(x => x.CountPages);
             PdfPCell totalValue = new PdfPCell(new Phrase(totalPages.ToString(), regularFont));
             totalValue.HorizontalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(totalValue);
+            totalTable.AddCell(totalValue);
 
-            document.Add(table);
-
-            // Footer Section
-
-            Paragraph footer = new Paragraph($"{DateTime.Now.ToLongDateString()}\n________________\nподпись", regularFont);
-            footer.IndentationLeft = 400;
-            footer.Alignment = Element.ALIGN_CENTER;
-            footer.SpacingBefore = 20f;
-            document.Add(footer);
+            document.Add(totalTable);
 
 
             document.Close();
-
-            Process.Start(new ProcessStartInfo(pathToSavePdf) { UseShellExecute = true });
         }
     }
 }

@@ -22,53 +22,5 @@ namespace InkTrack_Report.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SelectedCabinetID {
-            get {
-                return ((int)(this["SelectedCabinetID"]));
-            }
-            set {
-                this["SelectedCabinetID"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SelectedEmployeeID {
-            get {
-                return ((int)(this["SelectedEmployeeID"]));
-            }
-            set {
-                this["SelectedEmployeeID"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SelectedPrinterID {
-            get {
-                return ((int)(this["SelectedPrinterID"]));
-            }
-            set {
-                this["SelectedPrinterID"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool isFirstStartup {
-            get {
-                return ((bool)(this["isFirstStartup"]));
-            }
-            set {
-                this["isFirstStartup"] = value;
-            }
-        }
     }
 }

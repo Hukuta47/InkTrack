@@ -5,19 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InkTrack_Report.Windows.Dialog"
         mc:Ignorable="d"
-		WindowStartupLocation="CenterScreen"
 		WindowStyle="None"
-        Title="GetEmployeeIdDialog" Height="450" Width="800">
-    <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition/>
-			<RowDefinition Height="auto"/>
-		</Grid.RowDefinitions>
+        Title="Окно подтверждения сотрудника"
+		AllowsTransparency="True"
+		Background="Transparent"
+		WindowStartupLocation="CenterScreen" 
+		SizeToContent="WidthAndHeight"
+		ResizeMode="NoResize" Loaded="Window_Loaded">
+	<Border Background="White" CornerRadius="16" Width="634" Height="453" Margin="20,20,20,30" RenderTransformOrigin="0.5,0.5">
+		<Border.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1"/>
+				<SkewTransform/>
+				<RotateTransform/>
+				<TranslateTransform/>
+			</TransformGroup>
+		</Border.RenderTransform>
+		<Border.Effect>
+			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
+		</Border.Effect>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="56"/>
+				<RowDefinition/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
 
-		<ComboBox Name="Combobox_SelectEmployee" SelectedValuePath="EmployeeID" DisplayMemberPath="FIO"/>
+			<Grid Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
 
-		<StackPanel Grid.Row="1">
-			<Button Content="Ок" Click="Ok_Click"/>
-		</StackPanel>
-	</Grid>
+
+				<Rectangle Grid.ColumnSpan="2" Fill="Transparent" Panel.ZIndex="1" Name="PanelDrag" MouseDown="PanelDrag_MouseDown"/>
+				<TextBlock Text="Окно подтверждения сотрудника" FontSize="24" VerticalAlignment="Center" Margin="16,0,16,0" FontFamily="{StaticResource Proletarsk}"/>
+			</Grid>
+
+			<StackPanel Grid.Row="1" Margin="16">
+
+				<StackPanel Margin="10">
+					<TextBlock Text="Укажите, кто сейчас сидит за этим компьютером:"/>
+					<Rectangle Height="16"/>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition Width="10"/>
+							<ColumnDefinition Width="auto"/>
+						</Grid.ColumnDefinitions>
+						<TextBox Grid.Column="0" Name="Textbox_Search" TextChanged="Textbox_Search_TextChanged"/>
+						<Image Grid.Column="2" Source="/Resources/Search.png" Width="32"/>
+					</Grid>
+					<Rectangle Height="20"/>
+					<ListBox Name="ListBox_SelectEmployee" Height="150" DisplayMemberPath="FullName" SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+				</StackPanel>
+			</StackPanel>
+
+			<Grid Grid.Row="2" HorizontalAlignment="Center" Margin="8">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="16"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+				<Button Grid.Column="0" Content="Подтвердить" Click="Ok_Click"/>
+
+			</Grid>
+
+		</Grid>
+
+
+
+
+	</Border>
 </Window>

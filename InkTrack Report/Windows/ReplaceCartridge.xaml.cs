@@ -59,33 +59,135 @@ namespace InkTrack_Report.Windows
         private void Cancel_Click(object sender, RoutedEventArgs e) => CloseWindow_Click();
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            GenerateFiles(App.GetPrintOutDataList(SelectedPrinter.Printer));
-
-            Cartridge cartridge = SelectedPrinter.Printer.Cartridge;
-            cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;
-
-            cartridge.StatusId = 3;
-
-            Cartridge SelectedCartridge = Combobox_CartridgeOnReplace.SelectedItem as Cartridge;
-
-            CartridgeReplacement_Log cartridgeReplacement_Log = new CartridgeReplacement_Log()
+            try 
             {
-                OldCartridgeId = SelectedPrinter.Printer.Cartridge.Id,
-                NewCartridgeId = (int)Combobox_CartridgeOnReplace.SelectedValue,
-                PrinterId = SelectedPrinter.Id,
-                EmployeeLitId = (int)Combobox_WhoReplaced.SelectedValue,
-                ReasonId = (int)Listbox_CauseReplaceCartridge.SelectedValue,
-                Comment = Textbox_Description.Text
-            };
-            App.entities.CartridgeReplacement_Log.Add(cartridgeReplacement_Log);
-            SelectedPrinter.Printer.Cartridge = SelectedCartridge;
-            SelectedCartridge.StatusId = 1;
+                GenerateRequestPDF(App.GetPrintOutDataList(SelectedPrinter.Printer));
+                GenerateResultPrintingFiles(App.GetPrintOutDataList(SelectedPrinter.Printer));
 
-            App.ResetPrintoutDataHistory(SelectedPrinter.Printer);
+                Cartridge cartridge = SelectedPrinter.Printer.Cartridge;
+                cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;
 
-            MessageBox.Show("Картридж заменен.");
+                cartridge.StatusId = 3;
+
+                Cartridge SelectedCartridge = Combobox_CartridgeOnReplace.SelectedItem as Cartridge;
+
+                CartridgeReplacement_Log cartridgeReplacement_Log = new CartridgeReplacement_Log()
+                {
+                    OldCartridgeId = SelectedPrinter.Printer.Cartridge.Id,
+                    NewCartridgeId = (int)Combobox_CartridgeOnReplace.SelectedValue,
+                    PrinterId = SelectedPrinter.Id,
+                    EmployeeLitId = (int)Combobox_WhoReplaced.SelectedValue,
+                    ReasonId = (int)Listbox_CauseReplaceCartridge.SelectedValue
+                };
+                App.entities.CartridgeReplacement_Log.Add(cartridgeReplacement_Log);
+                SelectedPrinter.Printer.Cartridge = SelectedCartridge;
+                SelectedCartridge.StatusId = 1;
+
+                App.ResetPrintoutDataHistory(SelectedPrinter.Printer);
+
+                MessageBox.Show("Картридж заменен.");
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Error", "Получено исключение", ex);
+            }
         }
-        public void GenerateFiles(List<PrintoutData> listOfPrintedDocuments)
+        public void GenerateResultPrintingFiles(List<PrintoutData> listOfPrintedDocuments)
+        {
+            // Create document with A4 size and margins (approximately 2-3cm)
+            Document document = new Document(PageSize.A4);
+
+            int CartridgeIDInstalled = SelectedPrinter.Printer.Cartridge.Id;
+            string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.Id == CartridgeIDInstalled).Number;
+
+            string pathToDesktop = "\\\\zabgc-rabota\\LIT\\8. doc\\Отчеты картриджей";
+            string pathToSavePdf = Path.Combine(pathToDesktop, $"Отчет картриджа №{NumberCartridge} от {DateTime.Now.ToShortDateString()}.pdf");
+
+            PdfWriter.GetInstance(document, new FileStream(pathToSavePdf, FileMode.Create));
+            document.Open();
+
+            // Define font with Cyrillic support
+            BaseFont baseFont = BaseFont.CreateFont("C:\\Windows\\Fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font regularFont = new Font(baseFont, 12);
+            Font boldFont = new Font(baseFont, 12, Font.BOLD);
+            Font titleFont = new Font(baseFont, 14, Font.BOLD);
+
+
+            Paragraph tableName = new Paragraph(
+                $"Отчет работы картриджа №{NumberCartridge}",
+                regularFont
+            );
+            tableName.Alignment = Element.ALIGN_CENTER;
+            tableName.SpacingAfter = 10f;
+            document.Add(tableName);
+
+
+            int totalRows = listOfPrintedDocuments.Count;
+            int rowIndex = 0;
+
+            while (rowIndex < totalRows)
+            {
+                // Добавляем новую страницу (но не перед самой первой)
+                if (rowIndex != 0)
+                {
+                    document.NewPage();
+                }
+
+                // Создание новой таблицы
+                PdfPTable table = new PdfPTable(3);
+                table.WidthPercentage = 80;
+                table.SetWidths(new float[] { 50, 10, 20 }); // Ширины колонок
+
+                // Заголовок таблицы
+                string[] headers = { "Наименование документов", "Дата", "Количество страниц" };
+                foreach (string headerText in headers)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(headerText, regularFont));
+                    cell.HorizontalAlignment = headerText == "Наименование документов" ? Element.ALIGN_LEFT : Element.ALIGN_CENTER;
+                    table.AddCell(cell);
+                }
+
+                // Определяем, сколько строк выводить на этой странице
+                int rowsOnThisPage = (rowIndex == 0) ? 40 : 45;
+                int rowsToPrint = Math.Min(rowsOnThisPage, totalRows - rowIndex);
+
+                // Добавляем строки
+                for (int i = 0; i < rowsToPrint; i++)
+                {
+                    var doc = listOfPrintedDocuments[rowIndex];
+
+                    table.AddCell(new PdfPCell(new Phrase(doc.NameDocument, regularFont)) { HorizontalAlignment = Element.ALIGN_LEFT });
+                    table.AddCell(new PdfPCell(new Phrase(doc.Date.ToString("dd.MM.yy"), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                    table.AddCell(new PdfPCell(new Phrase(doc.CountPages.ToString(), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+
+                    rowIndex++;
+                }
+
+                // Добавляем таблицу на текущую страницу
+                document.Add(table);
+            }
+
+            // Финальная строка "Итого:"
+            PdfPTable totalTable = new PdfPTable(3);
+            totalTable.WidthPercentage = 80;
+            totalTable.SetWidths(new float[] { 50, 10, 20 });
+
+            PdfPCell totalLabel = new PdfPCell(new Phrase("Итого:", regularFont));
+            totalLabel.Colspan = 2;
+            totalLabel.HorizontalAlignment = Element.ALIGN_LEFT;
+            totalTable.AddCell(totalLabel);
+
+            int totalPages = listOfPrintedDocuments.Sum(x => x.CountPages);
+            PdfPCell totalValue = new PdfPCell(new Phrase(totalPages.ToString(), regularFont));
+            totalValue.HorizontalAlignment = Element.ALIGN_CENTER;
+            totalTable.AddCell(totalValue);
+
+            document.Add(totalTable);
+
+
+            document.Close();
+        }
+        public void GenerateRequestPDF(List<PrintoutData> listOfPrintedDocuments)
         {
             string dbFIO = App.LoginedEmployee.FullName;
             var fioParts = dbFIO.Split(' ');
@@ -124,8 +226,7 @@ namespace InkTrack_Report.Windows
             // Define font with Cyrillic support
             BaseFont baseFont = BaseFont.CreateFont("C:\\Windows\\Fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font regularFont = new Font(baseFont, 12);
-            Font boldFont = new Font(baseFont, 12, Font.BOLD);
-            Font titleFont = new Font(baseFont, 14, Font.BOLD);
+            Font titleFont = new Font(baseFont, 14, Font.NORMAL);
 
 
             // Header Section
@@ -147,50 +248,21 @@ namespace InkTrack_Report.Windows
             string NumberCartridge = App.entities.Cartridge.First(cartridge => cartridge.Id == CartridgeIDInstalled).Number;
             string PrinterName = GetDeviceName(SelectedPrinter.Id);
             string CabinetName = SelectedPrinter.Room.Name;
+            int totalPages = listOfPrintedDocuments.Sum(x => x.CountPages);
 
 
-            Paragraph request = new Paragraph(
-                $"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}",
-                regularFont
-            );
-            request.Alignment = Element.ALIGN_CENTER;
+            Paragraph request;
+
+            if (totalPages == 1) { request = new Paragraph( $"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страница.", regularFont); }
+            else if (totalPages > 1 && totalPages < 5) { request = new Paragraph($"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страници.", regularFont); }
+            else { request = new Paragraph($"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страниц.", regularFont); }
+
+            request.IndentationLeft = 20;
+            request.IndentationRight = 20;
+            request.Alignment = Element.ALIGN_JUSTIFIED;
             request.SpacingAfter = 20f;
             document.Add(request);
 
-            // Table Section
-            PdfPTable table = new PdfPTable(4);
-            table.WidthPercentage = 100;
-            table.SetWidths(new float[] { 4, 50, 10, 20 }); // Proportional column widths
-
-            // Header Row
-            string[] headers = { "№", "Наименование документов", "Дата", "Количество страниц" };
-            foreach (string headerText in headers)
-            {
-                PdfPCell cell = new PdfPCell(new Phrase(headerText, boldFont));
-                cell.HorizontalAlignment = headerText == "Наименование документов" ? Element.ALIGN_LEFT : Element.ALIGN_CENTER;
-                table.AddCell(cell);
-            }
-
-            // Data Rows from listOfPrintedDocuments
-            foreach (var item in listOfPrintedDocuments)
-            {
-                table.AddCell(new PdfPCell(new Phrase(item.NameDocument, regularFont)) { HorizontalAlignment = Element.ALIGN_LEFT });
-                table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd.MM.yy"), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
-                table.AddCell(new PdfPCell(new Phrase(item.CountPages.ToString(), regularFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
-            }
-
-            // Total Row
-            int totalPages = listOfPrintedDocuments.Sum(x => x.CountPages);
-            PdfPCell totalLabel = new PdfPCell(new Phrase("Итого:", regularFont));
-            totalLabel.Colspan = 3;
-            totalLabel.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(totalLabel);
-
-            PdfPCell totalValue = new PdfPCell(new Phrase(totalPages.ToString(), regularFont));
-            totalValue.HorizontalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(totalValue);
-
-            document.Add(table);
 
             // Footer Section
 
