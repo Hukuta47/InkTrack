@@ -57,7 +57,7 @@
           <Property Name="PrinterId" Type="int" Nullable="false" />
           <Property Name="EmployeeLitId" Type="int" Nullable="false" />
           <Property Name="ReasonId" Type="int" Nullable="false" />
-          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CartridgeStatus">
           <Key>
@@ -611,7 +611,7 @@
           <Property Name="PrinterId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeLitId" Type="Int32" Nullable="false" />
           <Property Name="ReasonId" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Printer" Relationship="LitModel.FK_CartridgeReplacement_Log_Printer" FromRole="CartridgeReplacement_Log" ToRole="Printer" />
           <NavigationProperty Name="ReasonForRelpacement" Relationship="LitModel.FK_CartridgeReplacement_Log_ReasonForRelpacement" FromRole="CartridgeReplacement_Log" ToRole="ReasonForRelpacement" />
         </EntityType>

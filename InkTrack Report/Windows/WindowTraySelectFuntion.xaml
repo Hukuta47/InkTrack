@@ -27,10 +27,9 @@
 		<Border.Effect>
 			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
 		</Border.Effect>
-		<StackPanel >
+		<StackPanel ClipToBounds="True">
 			<Button Content="Сервис" Click="OpenServiceButtons_Click" Name="Button_Service" Width="365"/>
 			<StackPanel Name="ServiceButtons" Visibility="Collapsed">
-				<Rectangle Height="10"/>
 				<Button Content="Замена картриджа" Click="OpenReplaceCartridge" >
 				</Button>
 				<Rectangle Height="10"/>

@@ -25,7 +25,6 @@ namespace InkTrack_Report.Database
         public string Manufacturer { get; set; }
         public string Model { get; set; }
         public int DeviceTypeId { get; set; }
-        
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Device> Device { get; set; }

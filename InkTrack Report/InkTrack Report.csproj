@@ -66,7 +66,7 @@
     <ManifestKeyFile>Request Refill_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -178,12 +178,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DatabaseActionHelper.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Classes\Logger.cs" />
+    <Compile Include="Helpers\PrinterHelper.cs" />
     <Compile Include="Classes\PrintoutData.cs" />
     <Compile Include="Classes\ThemeDetector.cs" />
     <Compile Include="Classes\TrayIcon.cs" />
-    <Compile Include="Classes\User.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Database\Building.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -247,9 +248,6 @@
     <Compile Include="Windows\Dialog\AdminAuthDialog.xaml.cs">
       <DependentUpon>AdminAuthDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Dialog\GetEmployeeIdDialog.xaml.cs">
-      <DependentUpon>GetEmployeeIdDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Dialog\PageCountDialog.xaml.cs">
       <DependentUpon>PageCountDialog.xaml</DependentUpon>
     </Compile>
@@ -297,10 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Windows\Dialog\AdminAuthDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\Dialog\GetEmployeeIdDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,4 @@
-﻿using InkTrack_Report.Classes;
-using InkTrack_Report.Windows.Dialog;
+﻿using InkTrack_Report.Windows.Dialog;
 using System;
 using System.Windows;
 using System.Windows.Media;

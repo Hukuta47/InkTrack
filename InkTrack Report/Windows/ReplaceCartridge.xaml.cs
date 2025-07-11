@@ -1,6 +1,7 @@
 ﻿using InkTrack_Report.Classes;
 using InkTrack_Report.Database;
 using iTextSharp.text;
+using InkTrack_Report.Helpers;
 using iTextSharp.text.pdf;
 using NPetrovich;
 using System;
@@ -24,20 +25,32 @@ namespace InkTrack_Report.Windows
 
         public ReplaceCartridge()
         {
-            List<Device> printers = new List<Device>();
-            foreach (string Printer in PrinterSettings.InstalledPrinters.Cast<string>().ToArray())
+            try
             {
-                int index = Printer.IndexOf("#") + 1;
-                string printerInventoryNumber = Printer.Substring(index);
-                printers.Add(App.entities.Device.First(Device => Device.InventoryNumber == printerInventoryNumber));
-            }
-            
-            InitializeComponent();
-            Combobox_SelectPrinter.ItemsSource = printers;
+                List<Device> printers = new List<Device>();
+                foreach (string Printer in PrinterSettings.InstalledPrinters.Cast<string>().ToArray())
+                {
+                    if (Printer.Contains("#"))
+                    {
+                        int index = Printer.IndexOf("#") + 1;
+                        string printerInventoryNumber = Printer.Substring(index);
+                        printers.Add(App.entities.Device.First(Device => Device.InventoryNumber == printerInventoryNumber));
+                    }
+                }
+                InitializeComponent();
+                Combobox_SelectPrinter.ItemsSource = printers;
 
-            Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForRelpacement.ToList();
-            Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
-            Combobox_WhoReplaced.ItemsSource = App.entities.Employee.Where(Employee => Employee.EmployeePosition.Any(Po => Po.Name == "ГПХ" || Po.Name == "Лаборант ЛИТ" || Po.Name == "Техник ЛИТ" || Po.Name == "Начальник ЛИТ")).ToList();
+                Listbox_CauseReplaceCartridge.ItemsSource = App.entities.ReasonForRelpacement.ToList();
+                Combobox_CartridgeOnReplace.ItemsSource = ListCartritgesForReplace;
+                Combobox_WhoReplaced.ItemsSource = App.entities.Employee.Where(Employee => Employee.EmployeePosition.Any(Po => Po.Name == "ГПХ" || Po.Name == "Лаборант ЛИТ" || Po.Name == "Техник ЛИТ" || Po.Name == "Начальник ЛИТ")).ToList();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Check", "Ошибка", ex);
+            }
+
+
+            
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -61,13 +74,15 @@ namespace InkTrack_Report.Windows
         {
             try 
             {
-                GenerateRequestPDF(DatabaseActionHelper.GetPrintOutDataList(SelectedPrinter.Printer));
-                GenerateResultPrintingFiles(DatabaseActionHelper.GetPrintOutDataList(SelectedPrinter.Printer));
+                GenerateRequestPDF(DatabaseHelper.GetPrintOutDataList(SelectedPrinter.Printer));
+                GenerateResultPrintingFiles(DatabaseHelper.GetPrintOutDataList(SelectedPrinter.Printer));
 
                 Cartridge cartridge = SelectedPrinter.Printer.Cartridge;
                 cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;
 
+
                 cartridge.StatusId = 3;
+                SelectedPrinter.Printer.CartridgeReplacementDate = DateTime.Now;
 
                 Cartridge SelectedCartridge = Combobox_CartridgeOnReplace.SelectedItem as Cartridge;
 
@@ -83,7 +98,7 @@ namespace InkTrack_Report.Windows
                 SelectedPrinter.Printer.Cartridge = SelectedCartridge;
                 SelectedCartridge.StatusId = 1;
 
-                DatabaseActionHelper.ResetPrintoutDataHistory(SelectedPrinter.Printer);
+                DatabaseHelper.ResetPrintoutDataHistory(SelectedPrinter.Printer);
 
                 MessageBox.Show("Картридж заменен.");
             }
@@ -103,7 +118,19 @@ namespace InkTrack_Report.Windows
             string pathToDesktop = "\\\\zabgc-rabota\\LIT\\8. doc\\Отчеты картриджей";
             string pathToSavePdf = Path.Combine(pathToDesktop, $"Отчет картриджа №{NumberCartridge} от {DateTime.Now.ToShortDateString()}.pdf");
 
-            PdfWriter.GetInstance(document, new FileStream(pathToSavePdf, FileMode.Create));
+
+            try
+            {
+                PdfWriter.GetInstance(document, new FileStream(pathToSavePdf, FileMode.Create));
+            }
+            catch (DirectoryNotFoundException DNFE)
+            {
+                pathToDesktop = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                pathToSavePdf = Path.Combine(pathToDesktop, $"Отчет картриджа №{NumberCartridge} от {DateTime.Now.ToShortDateString()}.pdf");
+
+                PdfWriter.GetInstance(document, new FileStream(pathToSavePdf, FileMode.Create));
+            }
+
             document.Open();
 
             // Define font with Cyrillic support
@@ -254,7 +281,7 @@ namespace InkTrack_Report.Windows
             Paragraph request;
 
             if (totalPages == 1) { request = new Paragraph( $"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страница.", regularFont); }
-            else if (totalPages > 1 && totalPages < 5) { request = new Paragraph($"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страници.", regularFont); }
+            else if (totalPages > 1 && totalPages < 5) { request = new Paragraph($"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страницы.", regularFont); }
             else { request = new Paragraph($"Прошу произвести заправку картриджа №{NumberCartridge} для принтера {PrinterName} в кабинете {CabinetName}. На картридже №{NumberCartridge} было распечатано {totalPages} страниц.", regularFont); }
 
             request.IndentationLeft = 20;

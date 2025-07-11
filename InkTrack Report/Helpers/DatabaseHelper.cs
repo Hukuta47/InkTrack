@@ -1,11 +1,12 @@
 ﻿using InkTrack_Report.Database;
+using InkTrack_Report.Classes;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace InkTrack_Report.Classes
+namespace InkTrack_Report.Helpers
 {
-    public struct DatabaseActionHelper
+    public struct DatabaseHelper
     {
         public static void SavePrintDataToDatabase(PrintoutData printoutData, Printer printer)
         {
@@ -23,7 +24,6 @@ namespace InkTrack_Report.Classes
                     printoutDatas = (List<PrintoutData>)serializer.Deserialize(stringReader);
                 }
             }
-
             printoutDatas.Add(printoutData);
 
             serializer = new XmlSerializer(typeof(List<PrintoutData>));
