@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InkTrack_Report.Database
+namespace InkTrack.Database
 {
     using System;
     using System.Data.Entity;

@@ -13,7 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace InkTrack_Report.Windows.Dialog
+namespace InkTrack.Windows.Dialog
 {
     public partial class PageCountDialog : Window
     {

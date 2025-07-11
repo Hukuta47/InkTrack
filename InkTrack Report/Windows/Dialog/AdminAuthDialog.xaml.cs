@@ -1,7 +1,7 @@
 ﻿using System.DirectoryServices.AccountManagement;
 using System.Windows;
 
-namespace InkTrack_Report.Windows.Dialog
+namespace InkTrack.Windows.Dialog
 {
     public partial class AdminAuthDialog : Window
     {

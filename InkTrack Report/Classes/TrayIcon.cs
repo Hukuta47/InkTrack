@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace InkTrack_Report.Classes
+namespace InkTrack.Classes
 {
     public class TrayIcon
     {

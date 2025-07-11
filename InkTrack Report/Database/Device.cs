@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InkTrack_Report.Database
+namespace InkTrack.Database
 {
     using System;
     using System.Collections.Generic;
@@ -21,20 +21,7 @@ namespace InkTrack_Report.Database
         public string SerialNumber { get; set; }
         public Nullable<int> RoomId { get; set; }
         public Nullable<int> DeviceModelId { get; set; }
-        public string DeviceName
-        {
-            get
-            {
-                return $"{this.DeviceModel.Manufacturer} {this.DeviceModel.Model} ({Id})";
-            }
-        }
-        public string DeviceNameNoId
-        {
-            get
-            {
-                return $"{this.DeviceModel.Manufacturer} {this.DeviceModel.Model}";
-            }
-        }
+    
         public virtual DeviceModel DeviceModel { get; set; }
         public virtual DeviceType DeviceType { get; set; }
         public virtual Room Room { get; set; }

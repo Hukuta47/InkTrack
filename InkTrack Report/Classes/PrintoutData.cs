@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InkTrack_Report.Classes
+namespace InkTrack.Classes
 {
     public struct PrintoutData
     {

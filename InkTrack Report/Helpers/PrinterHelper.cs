@@ -1,13 +1,13 @@
-﻿using InkTrack_Report.Classes;
-using InkTrack_Report.Database;
-using InkTrack_Report.Windows.Dialog;
+﻿using InkTrack.Classes;
+using InkTrack.Database;
+using InkTrack.Windows.Dialog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Windows;
 
-namespace InkTrack_Report.Helpers
+namespace InkTrack.Helpers
 {
     public class PrinterHelper
     {

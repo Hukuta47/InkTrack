@@ -1,7 +1,7 @@
-﻿using InkTrack_Report.Classes;
-using InkTrack_Report.Database;
+﻿using InkTrack.Classes;
+using InkTrack.Database;
 using iTextSharp.text;
-using InkTrack_Report.Helpers;
+using InkTrack.Helpers;
 using iTextSharp.text.pdf;
 using NPetrovich;
 using System;
@@ -14,7 +14,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
-namespace InkTrack_Report.Windows
+namespace InkTrack.Windows
 {
     public partial class ReplaceCartridge : Window
     {
@@ -47,10 +47,7 @@ namespace InkTrack_Report.Windows
             catch (Exception ex)
             {
                 Logger.Log("Check", "Ошибка", ex);
-            }
-
-
-            
+            } 
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

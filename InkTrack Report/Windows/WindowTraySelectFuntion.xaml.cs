@@ -1,11 +1,11 @@
-﻿using InkTrack_Report.Windows.Dialog;
+﻿using InkTrack.Windows.Dialog;
 using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 
-namespace InkTrack_Report.Windows
+namespace InkTrack.Windows
 {
 
     public partial class WindowTraySelectFuntion : Window

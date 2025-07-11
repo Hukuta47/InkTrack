@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 
-namespace InkTrack_Report.Classes
+namespace InkTrack.Classes
 {
     public enum AppTheme
     {

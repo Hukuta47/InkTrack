@@ -1,7 +1,7 @@
-﻿<Application x:Class="InkTrack_Report.App"
+﻿<Application x:Class="InkTrack.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:InkTrack_Report">
+             xmlns:local="clr-namespace:InkTrack">
 	<Application.Resources>
 		
 		<FontFamily x:Key="Proletarsk">

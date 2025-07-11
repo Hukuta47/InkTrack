@@ -1,10 +1,10 @@
-﻿using InkTrack_Report.Database;
-using InkTrack_Report.Windows.Dialog;
+﻿using InkTrack.Database;
+using InkTrack.Windows.Dialog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace InkTrack_Report.Helpers
+namespace InkTrack.Helpers
 {
     public struct UserHelper
     {

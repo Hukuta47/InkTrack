@@ -1,10 +1,10 @@
-﻿using InkTrack_Report.Database;
-using InkTrack_Report.Classes;
+﻿using InkTrack.Database;
+using InkTrack.Classes;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace InkTrack_Report.Helpers
+namespace InkTrack.Helpers
 {
     public struct DatabaseHelper
     {

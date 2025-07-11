@@ -1,7 +1,7 @@
-﻿using InkTrack_Report.Classes;
-using InkTrack_Report.Helpers;
-using InkTrack_Report.Database;
-using InkTrack_Report.Windows;
+﻿using InkTrack.Classes;
+using InkTrack.Helpers;
+using InkTrack.Database;
+using InkTrack.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
 
-namespace InkTrack_Report
+namespace InkTrack
 {
     public partial class App : System.Windows.Application
     {

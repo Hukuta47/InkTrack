@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace InkTrack_Report.Classes
+namespace InkTrack.Classes
 {
     public struct Logger
     {
