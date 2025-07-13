@@ -254,6 +254,12 @@
     <Compile Include="Windows\ReplaceCartridge.xaml.cs">
       <DependentUpon>ReplaceCartridge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ReplaceCartridgePages\PageEnterInformationForReplaceCartridge.xaml.cs">
+      <DependentUpon>PageEnterInformationForReplaceCartridge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ReplaceCartridgePages\PageFullNameEnter.xaml.cs">
+      <DependentUpon>PageFullNameEnter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WindowTraySelectFuntion.xaml.cs">
       <DependentUpon>WindowTraySelectFuntion.xaml</DependentUpon>
     </Compile>
@@ -306,6 +312,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\ReplaceCartridgePages\PageEnterInformationForReplaceCartridge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ReplaceCartridgePages\PageFullNameEnter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\WindowTraySelectFuntion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -341,6 +355,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Check circle.png" />
     <Resource Include="Resources\Search.png" />
   </ItemGroup>
   <ItemGroup>

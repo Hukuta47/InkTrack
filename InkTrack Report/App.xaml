@@ -563,7 +563,7 @@
 			<Setter Property="BorderBrush" Value="#3b62ed"/>
 			<Setter Property="Background" Value="#ffffff"/>
 			<Setter Property="BorderThickness" Value="2"/>
-			<Setter Property="Padding" Value="12"/>
+			<Setter Property="Padding" Value="8"/>
 			<Style.Resources>
 				<Style TargetType="Border">
 					<Setter Property="CornerRadius" Value="16"/>
@@ -593,8 +593,8 @@
 			<Setter Property="BorderBrush" Value="{StaticResource DefaultColor}"/>
 			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
 			<Setter Property="BorderThickness" Value="2"/>
-			<Setter Property="Padding" Value="16"/>
-			<Setter Property="FontSize" Value="18"/>
+			<Setter Property="Padding" Value="7"/>
+			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
 			<Setter Property="HorizontalContentAlignment" Value="Left"/>
 			<Setter Property="FocusVisualStyle" Value="{x:Null}"/>

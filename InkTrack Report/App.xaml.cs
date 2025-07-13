@@ -15,12 +15,18 @@ namespace InkTrack
 {
     public partial class App : System.Windows.Application
     {
+
+
+
+
+
+
         static public LitEntities entities = new LitEntities();
+        static public bool userKnown;
 
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
         
-        private HashSet<int> _loggedJobIds = new HashSet<int>();
         static public Employee LoginedEmployee;
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
@@ -76,14 +82,14 @@ namespace InkTrack
             try
             {
                 trayIcon.NotifyIcon.MouseClick -= DefaultNotifyIcon_MouseClick;
+
                 int UserId = UserHelper.GetID();
                 switch (UserId)
                 {
                     case -1: Shutdown(); break;
+                    case 0: break;
+                    default: userKnown = true; LoginedEmployee = entities.Employee.FirstOrDefault(Employee => Employee.Id == UserId); break;
                 }
-                
-                LoginedEmployee = entities.Employee.FirstOrDefault(Employee => Employee.Id == UserId);
-
                 new PrinterHelper().StartPrintWatchers();
                 trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
             }

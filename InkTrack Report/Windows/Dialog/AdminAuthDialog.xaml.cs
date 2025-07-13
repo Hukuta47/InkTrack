@@ -5,6 +5,7 @@ namespace InkTrack.Windows.Dialog
 {
     public partial class AdminAuthDialog : Window
     {
+
         public string Username => Textbox_Login.Text;
         public string Password => Passwordbox_Password.Password;
         public AdminAuthDialog()

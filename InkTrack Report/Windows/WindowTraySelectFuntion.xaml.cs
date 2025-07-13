@@ -10,7 +10,8 @@ namespace InkTrack.Windows
 
     public partial class WindowTraySelectFuntion : Window
     {
-        int SumPagesPrintouts;
+
+
         public WindowTraySelectFuntion(bool ServiceOn)
         {
             InitializeComponent();
@@ -47,13 +48,15 @@ namespace InkTrack.Windows
                 Duration = new Duration(TimeSpan.FromSeconds(1)) // Можно изменить время
             };
             this.BeginAnimation(OpacityProperty, fadeIn);
+
+            Focus();
         }
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
             Deactivated -= Window_Deactivated;
             Application.Current.Shutdown();
         }
-        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge().Show();
+        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge(App.userKnown).ShowReplaceCartridge();
         private void Window_Deactivated(object sender, EventArgs e)
         {
             Close();

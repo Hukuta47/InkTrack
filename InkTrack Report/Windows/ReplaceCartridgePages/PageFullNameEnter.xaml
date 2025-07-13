@@ -1,0 +1,40 @@
+﻿<Page x:Class="InkTrack.Windows.ReplaceCartridgePages.PageFullNameEnter"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:InkTrack.Windows.ReplaceCartridgePages"
+      mc:Ignorable="d"
+      Title="PageFullNameEnter" 
+	  d:DesignWidth="480" >
+
+	<StackPanel Name="StackPanel_Main">
+		<StackPanel Margin="16">
+			<StackPanel>
+				<TextBlock Text="Имя"/>
+				<Rectangle Height="8"/>
+				<TextBox Name="TextBox_FirstName" TextChanged="TextBox_TextChanged"/>
+			</StackPanel>
+			<Rectangle Height="16"/>
+			<StackPanel>
+				<TextBlock Text="Фамилия"/>
+				<Rectangle Height="8"/>
+				<TextBox Name="TextBox_LastName" TextChanged="TextBox_TextChanged"/>
+			</StackPanel>
+			<Rectangle Height="16"/>
+			<StackPanel>
+				<TextBlock Text="Отчество"/>
+				<Rectangle Height="8"/>
+				<TextBox Name="TextBox_Patronymic" TextChanged="TextBox_TextChanged"/>
+			</StackPanel>
+		</StackPanel>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="auto"/>
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="1" Content="Далее" Width="187" Margin="8" Click="Next_Click" IsDefault="True"/>
+		</Grid>
+	</StackPanel>
+</Page>

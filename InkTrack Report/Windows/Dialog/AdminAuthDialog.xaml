@@ -49,12 +49,12 @@
 					
 				</Grid.ColumnDefinitions>
 
-				<Button Grid.Column="0" Style="{StaticResource AcceptButton}" Width="230" Click="Accept_Click" Name="Button_Accept">
+				<Button Grid.Column="0" Style="{StaticResource AcceptButton}" Width="230" Click="Accept_Click" Name="Button_Accept" IsDefault="True">
 					<Button.Content>
 						<TextBlock Text="Подтвердить"/>
 					</Button.Content>
 				</Button>
-				<Button Grid.Column="2" Content="Отмена" Style="{StaticResource CancelButton}" Width="230" Click="Cancel_Click" Name="Button_Cancel"/>
+				<Button Grid.Column="2" Content="Отмена" Style="{StaticResource CancelButton}" Width="230" Click="Cancel_Click" Name="Button_Cancel" IsCancel="True"/>
 			</Grid>
 
 		</Grid>
