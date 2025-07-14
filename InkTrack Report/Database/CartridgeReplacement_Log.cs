@@ -15,7 +15,7 @@ namespace InkTrack.Database
     public partial class CartridgeReplacement_Log
     {
         public int Id { get; set; }
-        public int OldCartridgeId { get; set; }
+        public Nullable<int> OldCartridgeId { get; set; }
         public int NewCartridgeId { get; set; }
         public int PrinterId { get; set; }
         public int EmployeeLitId { get; set; }

@@ -250,6 +250,7 @@
 								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
 
+							
 							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
 						</Border>
 					</ControlTemplate>

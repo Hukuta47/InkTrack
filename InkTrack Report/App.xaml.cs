@@ -1,9 +1,10 @@
 ﻿using InkTrack.Classes;
-using InkTrack.Helpers;
 using InkTrack.Database;
+using InkTrack.Helpers;
 using InkTrack.Windows;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -16,13 +17,10 @@ namespace InkTrack
     public partial class App : System.Windows.Application
     {
 
-
-
-
-
-
         static public LitEntities entities = new LitEntities();
         static public bool userKnown;
+        static public bool ProgramWork;
+
 
         private ManagementEventWatcher _creationWatcher;
         private ManagementEventWatcher _modificationWatcher;
@@ -30,6 +28,7 @@ namespace InkTrack
         static public Employee LoginedEmployee;
 
         System.Timers.Timer timerConnection = new System.Timers.Timer(20 * 1000);
+        System.Timers.Timer timerCheckPrinters = new System.Timers.Timer(10 * 1000);
 
         public static TrayIcon trayIcon;
         /// <summary>
@@ -49,6 +48,8 @@ namespace InkTrack
                 trayIcon = new TrayIcon();
                 CheckInitilizationData();
                 timerConnection.Elapsed += TimerConnection_Elapsed;
+                timerCheckPrinters.Elapsed += TimerCheckPrinters_Elapsed;
+
 
                 if (CheckConnectionToDatabase(true))
                 {
@@ -56,16 +57,55 @@ namespace InkTrack
                     InitApplication();
                     trayIcon.ChangeIcon(TrayIcon.StatusIcon.Idle);
                     timerConnection.Start();
+                    CheckListPrinters();
+                    timerCheckPrinters.Start();
                 }
                 else
                 {
                     Logger.Log("SQL", "Ошибка поключения к SQL базе данным");
                     timerConnection.Start();
+                    CheckListPrinters();
+                    timerCheckPrinters.Start();
                 }
+                
             }
             catch (Exception ex)
             {
                 Logger.Log("Error", "Ошибочка...", ex);
+            }
+        }
+
+        private void TimerCheckPrinters_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            CheckListPrinters();
+        }
+        void CheckListPrinters()
+        {
+            trayIcon.NotifyIcon.MouseClick -= DefaultNotifyIcon_MouseClick;
+            List<Device> printers = new List<Device>();
+            foreach (string Printer in PrinterSettings.InstalledPrinters.Cast<string>().ToArray())
+            {
+                if (Printer.Contains("#"))
+                {
+                    int index = Printer.IndexOf("#") + 1;
+                    string printerInventoryNumber = Printer.Substring(index);
+                    if (entities.Device.Any(Device => Device.InventoryNumber == printerInventoryNumber))
+                    {
+                        printers.Add(entities.Device.First(Device => Device.InventoryNumber == printerInventoryNumber));
+                    }
+                }
+            }
+            if (printers.Count == 0)
+            {
+                trayIcon.ChangeIcon(TrayIcon.StatusIcon.DataError, "Принтеры не найдены, работа программы приостановлена.");
+                
+                ProgramWork = false;
+            }
+            else
+            {
+                trayIcon.ChangeIcon(TrayIcon.StatusIcon.Idle);
+                trayIcon.NotifyIcon.MouseClick += DefaultNotifyIcon_MouseClick;
+                ProgramWork = true;
             }
         }
 
@@ -97,7 +137,6 @@ namespace InkTrack
             {
                 Logger.Log("Error", "Получено исключение", ex);
             }
-            
         }        
 
         /// <summary>

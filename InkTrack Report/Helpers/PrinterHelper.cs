@@ -48,8 +48,12 @@ namespace InkTrack.Helpers
         /// </summary>
         private void OnPrintJobEvent(object sender, EventArrivedEventArgs e)
         {
-            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            HandlePrintJob(job);
+            if (App.ProgramWork)
+            {
+                var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+                HandlePrintJob(job);
+            }
+            
         }
 
         /// <summary>
@@ -57,8 +61,11 @@ namespace InkTrack.Helpers
         /// </summary>
         private void OnPrintJobModified(object sender, EventArrivedEventArgs e)
         {
-            var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            HandlePrintJob(job);
+            if (App.ProgramWork)
+            {
+                var job = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+                HandlePrintJob(job);
+            }
         }
 
         /// <summary>

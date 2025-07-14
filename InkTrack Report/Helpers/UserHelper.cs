@@ -16,7 +16,7 @@ namespace InkTrack.Helpers
                 case "student":
                     return -1;
                 default:
-                List<Employee> Employees = App.entities.Employee.Where(Employee => Employee.DomainName.Contains(UserName)).ToList();
+                List<Employee> Employees = App.entities.Employee.Where(Employee => Employee.DomainName == UserName).ToList();
                 if (Employees.Count == 0)
                 {
                     return 0;

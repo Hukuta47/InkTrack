@@ -56,7 +56,7 @@ namespace InkTrack.Windows
             Deactivated -= Window_Deactivated;
             Application.Current.Shutdown();
         }
-        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge(App.userKnown).ShowReplaceCartridge();
+        private void OpenReplaceCartridge(object sender, RoutedEventArgs e) => new ReplaceCartridge(App.userKnown).Show();
         private void Window_Deactivated(object sender, EventArgs e)
         {
             Close();

@@ -57,7 +57,7 @@
 
 				<Rectangle Grid.ColumnSpan="2" Fill="Transparent" Panel.ZIndex="1" Name="PanelDrag" MouseDown="PanelDrag_MouseDown"/>
 				<TextBlock Text="Замена картриджа" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,0,16,0" FontFamily="{StaticResource Proletarsk}"/>
-				<Button Grid.Column="2" Margin="8,8,0,8" Width="40" Height="40" Padding="0" Panel.ZIndex="50">
+				<Button Grid.Column="2" Margin="8,8,0,8" Width="40" Height="40" Padding="0" Panel.ZIndex="50" Click="FAQ_Click">
 					<Button.Content>
 						<Image Source="/Resources/Help circle.png" Width="24" />
 					</Button.Content>

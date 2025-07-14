@@ -25,10 +25,16 @@ namespace InkTrack.Database
         {
             get
             {
+                return $"{this.DeviceModel.Manufacturer} {this.DeviceModel.Model}";
+            }
+        }
+        public string DeviceNameWithId
+        {
+            get
+            {
                 return $"{this.DeviceModel.Manufacturer} {this.DeviceModel.Model} ({Id})";
             }
         }
-
 
         public virtual DeviceModel DeviceModel { get; set; }
         public virtual DeviceType DeviceType { get; set; }

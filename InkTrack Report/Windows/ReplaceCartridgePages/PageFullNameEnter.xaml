@@ -5,21 +5,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:InkTrack.Windows.ReplaceCartridgePages"
       mc:Ignorable="d"
-      Title="PageFullNameEnter" 
+      Title="pageFullName" 
 	  d:DesignWidth="480" >
 
 	<StackPanel Name="StackPanel_Main">
 		<StackPanel Margin="16">
-			<StackPanel>
-				<TextBlock Text="Имя"/>
-				<Rectangle Height="8"/>
-				<TextBox Name="TextBox_FirstName" TextChanged="TextBox_TextChanged"/>
-			</StackPanel>
-			<Rectangle Height="16"/>
+			
 			<StackPanel>
 				<TextBlock Text="Фамилия"/>
 				<Rectangle Height="8"/>
 				<TextBox Name="TextBox_LastName" TextChanged="TextBox_TextChanged"/>
+			</StackPanel>
+			<Rectangle Height="16"/>
+			<StackPanel>
+				<TextBlock Text="Имя"/>
+				<Rectangle Height="8"/>
+				<TextBox Name="TextBox_FirstName" TextChanged="TextBox_TextChanged"/>
 			</StackPanel>
 			<Rectangle Height="16"/>
 			<StackPanel>

@@ -20,8 +20,8 @@
           <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="TypeId" Type="int" Nullable="false" />
-          <Property Name="Capacity" Type="int" />
-          <Property Name="NumberOfRefills" Type="int" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="NumberOfRefills" Type="int" Nullable="false" />
           <Property Name="LastDateOfRefill" Type="date" />
         </EntityType>
         <EntityType Name="Cartridge_CartridgeModel">
@@ -45,14 +45,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="CartridgeReplacement_Log">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OldCartridgeId" Type="int" Nullable="false" />
+          <Property Name="OldCartridgeId" Type="int" />
           <Property Name="NewCartridgeId" Type="int" Nullable="false" />
           <Property Name="PrinterId" Type="int" Nullable="false" />
           <Property Name="EmployeeLitId" Type="int" Nullable="false" />
@@ -584,8 +584,8 @@
           <Property Name="Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <Property Name="Capacity" Type="Int32" />
-          <Property Name="NumberOfRefills" Type="Int32" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfRefills" Type="Int32" Nullable="false" />
           <Property Name="LastDateOfRefill" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CartridgeStatus" Relationship="LitModel.FK_Cartridge_CartridgeStatus" FromRole="Cartridge" ToRole="CartridgeStatus" />
           <NavigationProperty Name="CartridgeType" Relationship="LitModel.FK_Cartridge_CartridgeType" FromRole="Cartridge" ToRole="CartridgeType" />
@@ -597,7 +597,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cartridge" Relationship="LitModel.Cartridge_CartridgeModel" FromRole="CartridgeModel" ToRole="Cartridge" />
           <NavigationProperty Name="DeviceModel" Relationship="LitModel.CartridgeCompatibility" FromRole="CartridgeModel" ToRole="DeviceModel" />
         </EntityType>
@@ -606,7 +606,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OldCartridgeId" Type="Int32" Nullable="false" />
+          <Property Name="OldCartridgeId" Type="Int32" />
           <Property Name="NewCartridgeId" Type="Int32" Nullable="false" />
           <Property Name="PrinterId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeLitId" Type="Int32" Nullable="false" />

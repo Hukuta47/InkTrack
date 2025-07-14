@@ -5,14 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:InkTrack.Windows.ReplaceCartridgePages"
       mc:Ignorable="d" 
-      Title="PageEnterInformationForReplaceCartridge" d:DesignWidth="480">
+      Title="PageEIFRC" d:DesignWidth="480">
 
 	<StackPanel Name="StackPanel_Main">
 		<StackPanel Margin="16">
 			<StackPanel Name="StackPanel_SectionSelectionPrinter">
 				<TextBlock Text="Принтер"/>
 				<Rectangle Height="8"/>
-				<ComboBox Name="Combobox_SelectPrinter" SelectionChanged="Combobox_SelectPrinter_SelectionChanged" DisplayMemberPath="DeviceName"/>
+				<TextBlock Text="(Название)" Name="TextBlock_PrinterName" Foreground="gray" Visibility="Collapsed"/>
+				<ComboBox Name="Combobox_SelectPrinter" SelectionChanged="Combobox_SelectPrinter_SelectionChanged" DisplayMemberPath="DeviceNameWithId"/>
 				<Rectangle Height="16"/>
 			</StackPanel>
 			<StackPanel>

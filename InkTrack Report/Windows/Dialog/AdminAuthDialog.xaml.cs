@@ -1,5 +1,7 @@
-﻿using System.DirectoryServices.AccountManagement;
+﻿using System;
+using System.DirectoryServices.AccountManagement;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace InkTrack.Windows.Dialog
 {
@@ -12,6 +14,17 @@ namespace InkTrack.Windows.Dialog
         {
             InitializeComponent();
             Textbox_Login.Focus();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeIn = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 1.0,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                Duration = new Duration(TimeSpan.FromSeconds(1))
+            };
+            this.BeginAnimation(OpacityProperty, fadeIn);
         }
         private void Accept_Click(object sender, RoutedEventArgs e)
         {

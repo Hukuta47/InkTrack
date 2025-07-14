@@ -23,8 +23,10 @@ namespace InkTrack.Windows.ReplaceCartridgePages
     public partial class PageFullNameEnter : Page
     {
         public string FullName;
-        public PageFullNameEnter()
+        ReplaceCartridge ParrentWindow;
+        public PageFullNameEnter(ReplaceCartridge ParrentWindow)
         {
+            this.ParrentWindow = ParrentWindow;
             InitializeComponent();
         }
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -43,19 +45,18 @@ namespace InkTrack.Windows.ReplaceCartridgePages
             {
                 stringBuilder.AppendLine("Поле \"Отчество\" не должно быть пустым.");
             }
-            if (string.IsNullOrEmpty(stringBuilder.ToString()))
-            {
+            if(string.IsNullOrEmpty(stringBuilder.ToString()))
+    {
                 string FirstName = TextBox_FirstName.Text;
                 string LastName = TextBox_LastName.Text;
                 string Patronymic = TextBox_Patronymic.Text;
-
                 FullName = $"{FirstName} {LastName} {Patronymic}";
 
-                ReplaceCartridge.SetpageEnterInformationForReplaceCartridge();
+                ParrentWindow.SetpageEnterInformationForReplaceCartridge();
             }
             else 
             {
-                MessageBox.Show(stringBuilder.ToString());
+                MessageBox.Show(stringBuilder.ToString(), "Ввод данных", MessageBoxButton.OK, MessageBoxImage.Warning);
             } 
         }
 

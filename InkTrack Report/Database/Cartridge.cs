@@ -25,8 +25,8 @@ namespace InkTrack.Database
         public string Number { get; set; }
         public int StatusId { get; set; }
         public int TypeId { get; set; }
-        public Nullable<int> Capacity { get; set; }
-        public Nullable<int> NumberOfRefills { get; set; }
+        public int Capacity { get; set; }
+        public int NumberOfRefills { get; set; }
         public Nullable<System.DateTime> LastDateOfRefill { get; set; }
     
         public virtual CartridgeStatus CartridgeStatus { get; set; }
