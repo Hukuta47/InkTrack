@@ -1,0 +1,63 @@
+﻿<Window x:Class="InkTrack.Windows.Dialog.AdminAuthDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InkTrack.Windows.Dialog"
+        mc:Ignorable="d"
+        Title="AdminAuthDialog"
+		WindowStyle="None"
+		AllowsTransparency="True"
+		Background="Transparent"
+		WindowStartupLocation="CenterScreen" 
+		SizeToContent="WidthAndHeight"
+		ResizeMode="NoResize" Loaded="Window_Loaded" Topmost="True">
+	<Border Background="White" CornerRadius="20" Width="484" Height="auto" Margin="20,20,20,30">
+		<Border.Effect>
+			<DropShadowEffect Direction="270" Opacity="0.25" Color="#000000" BlurRadius="20" ShadowDepth="10"/>
+		</Border.Effect>
+
+
+
+		<Grid ClipToBounds="True">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="76"/>
+			</Grid.RowDefinitions>
+
+			<StackPanel Grid.Row="0" Margin="32,32,32,8">
+				<StackPanel>
+					<TextBlock Text="Логин"/>
+					<Rectangle Height="8"/>
+					<TextBox Name="Textbox_Login"/>
+				</StackPanel>
+				<Rectangle Height="16"/>
+				<StackPanel>
+					<TextBlock Text="Пароль" />
+					<Rectangle Height="8"/>
+					<PasswordBox Name="Passwordbox_Password"/>
+					<Rectangle Height="8"/>
+					<TextBlock Text="*Ошибка*" TextAlignment="Center" Foreground="Red" Name="Textblock_Message" Visibility="Hidden"/>
+				</StackPanel>
+			</StackPanel>
+
+			<Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="8"/>
+					<ColumnDefinition/>
+					
+				</Grid.ColumnDefinitions>
+
+				<Button Grid.Column="0" Style="{StaticResource AcceptButton}" Width="230" Click="Accept_Click" Name="Button_Accept" IsDefault="True">
+					<Button.Content>
+						<TextBlock Text="Подтвердить"/>
+					</Button.Content>
+				</Button>
+				<Button Grid.Column="2" Content="Отмена" Style="{StaticResource CancelButton}" Width="230" Click="Cancel_Click" Name="Button_Cancel" IsCancel="True"/>
+			</Grid>
+
+		</Grid>
+
+	</Border>
+</Window>
