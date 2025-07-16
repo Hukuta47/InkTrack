@@ -42,7 +42,7 @@ namespace InkTrack.Classes
             _timer.AutoReset = false;
             _timer.Start();
         }
-        public void ChangeIcon(StatusIcon statusIcon, string text = "Ink Track Report")
+        public void ChangeIcon(StatusIcon statusIcon, string text = "Ink Track")
         {
             bool isLightTheme = ThemeDetector.GetWindowsTheme() == AppTheme.Light;
             string suffix = isLightTheme ? "_B" : "_W";

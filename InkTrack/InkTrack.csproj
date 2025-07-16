@@ -377,7 +377,7 @@
     <None Include="Resources\DataError W.ico" />
     <None Include="Resources\CancelByUser B.ico" />
     <None Include="Resources\CancelByUser W.ico" />
-    <None Include="Resources\Request replace cartrige.docx">
+    <None Include="Request replace cartrige.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Write W.ico" />

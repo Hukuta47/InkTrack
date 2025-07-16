@@ -15,7 +15,7 @@ namespace UnitTest_InkTrack
             bool expected = true;
 
             // Act
-            WordHelper wh = new WordHelper("C:\\Users\\hk\\Desktop\\LIT-Program-solution\\InkTrack\\bin\\Debug\\Resources\\Request replace cartrige.docx");
+            WordHelper wh = new WordHelper("C:\\Users\\hk\\Desktop\\LIT-Program-solution\\InkTrack\\bin\\Debug\\Request replace cartrige.docx");
             wh.GenerateFileWord(
                 FULL_NAME: "Зелтынь Никита Станиславович",
                 CARTRIDGE_NUMBER: "0001",

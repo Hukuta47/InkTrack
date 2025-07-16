@@ -142,8 +142,8 @@ namespace InkTrack.Windows.ReplaceCartridgePages
                 WhoReplacedId = (int)Combobox_WhoReplaced.SelectedValue;
                 SelectedCartridgeToReplace = (Cartridge)Combobox_CartridgeOnReplace.SelectedItem;
                 ReasonToReplaceId = (int)Combobox_CauseReplaceCartridge.SelectedValue;
-
                 Button_ReplaceCartridge.Content = "Думаю...";
+
                 _parentWindow.Replace_Click();
             }
             else

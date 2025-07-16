@@ -122,6 +122,7 @@ namespace InkTrack.Windows
 
 
                     List<PrintoutData> printoutDatas = DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer);
+                    
                     string FullName = FullNameHelper.GetGenetiveFullName(_FullName);
                     string CartridgeNumber = _pageEIFRC.SelectedPrinter.Printer.Cartridge.Number;
                     string DeviceName = _pageEIFRC.SelectedPrinter.DeviceName;
@@ -135,8 +136,8 @@ namespace InkTrack.Windows
 
 
 
-
-                    new WordHelper("Resources\\Request replace cartrige.docx").GenerateFileWord(FullName, CartridgeNumber, DeviceName, RoomName, Suggection);
+                    new PdfHelper().GenerateRequestPDF(printoutDatas, _pageEIFRC.SelectedPrinter, _FullName);
+                    //new WordHelper("Request replace cartrige.docx").GenerateFileWord(FullName, CartridgeNumber, DeviceName, RoomName, Suggection);
                     new PdfHelper().GenerateResultPrintingFiles(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageEIFRC.SelectedPrinter);
 
                     cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;

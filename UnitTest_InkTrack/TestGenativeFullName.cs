@@ -8,7 +8,7 @@ namespace UnitTest_InkTrack
     public class TestGenativeFullName
     {
         [TestMethod]
-        public void TestGetGenetiveFIO()
+        public void TestGetGenetiveFullName()
         {
             // Arrange
             string expectFullName = "Розетки Вилки Питаниковича";
