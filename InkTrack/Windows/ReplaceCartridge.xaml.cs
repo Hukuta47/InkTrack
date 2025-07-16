@@ -117,7 +117,7 @@ namespace InkTrack.Windows
 
                 if (cartridge != null)
                 {
-                    new WordHelper().GenerateRequestWord(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageFullName, _pageEIFRC);
+                    //new WordHelper().GenerateRequestWord(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageFullName, _pageEIFRC);
                     new PdfHelper().GenerateResultPrintingFiles(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageEIFRC.SelectedPrinter);
 
                     cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;

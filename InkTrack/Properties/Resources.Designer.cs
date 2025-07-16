@@ -191,6 +191,16 @@ namespace InkTrack.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] Request_replace_cartrige {
+            get {
+                object obj = ResourceManager.GetObject("Request_replace_cartrige", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon Save_B {
