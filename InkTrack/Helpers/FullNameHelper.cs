@@ -6,9 +6,9 @@ namespace InkTrack.Helpers
     {
         static public string GetGenetiveFullName(string FullName)
         {
-            string dbFIO = App.LoginedEmployee?.FullName ?? FullName;
+            
 
-            var fioParts = dbFIO.Split(' ');
+            var fioParts = FullName.Split(' ');
             string lastName = fioParts.Length > 0 ? fioParts[0] : "";
             string firstName = fioParts.Length > 1 ? fioParts[1] : "";
             string middleName = fioParts.Length > 2 ? fioParts[2] : "";

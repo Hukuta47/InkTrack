@@ -1,4 +1,5 @@
-﻿using InkTrack.Classes;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using InkTrack.Classes;
 using InkTrack.Database;
 using InkTrack.Helpers;
 using InkTrack.Windows.ReplaceCartridgePages;
@@ -117,7 +118,25 @@ namespace InkTrack.Windows
 
                 if (cartridge != null)
                 {
-                    //new WordHelper().GenerateRequestWord(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageFullName, _pageEIFRC);
+                    string _FullName = App.LoginedEmployee?.FullName ?? _pageFullName.FullName;
+
+
+                    List<PrintoutData> printoutDatas = DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer);
+                    string FullName = FullNameHelper.GetGenetiveFullName(_FullName);
+                    string CartridgeNumber = _pageEIFRC.SelectedPrinter.Printer.Cartridge.Number;
+                    string DeviceName = _pageEIFRC.SelectedPrinter.DeviceName;
+                    string RoomName = _pageEIFRC.SelectedPrinter.Room.Name;
+                    int sumPages = printoutDatas.Sum(s => s.CountPages);
+                    string Suggection = string.Empty;
+
+                    if (sumPages == 1) { Suggection = $"На картридже №{CartridgeNumber} была распечатана 1 страница"; }
+                    else if (sumPages > 1) { Suggection = $"На картридже №{CartridgeNumber} было распечатано {sumPages} страниц"; }
+                    else if (sumPages > 4) { Suggection = $"На картридже №{CartridgeNumber} было распечатано {sumPages} страниц"; }
+
+
+
+
+                    new WordHelper("Resources\\Request replace cartrige.docx").GenerateFileWord(FullName, CartridgeNumber, DeviceName, RoomName, Suggection);
                     new PdfHelper().GenerateResultPrintingFiles(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageEIFRC.SelectedPrinter);
 
                     cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;

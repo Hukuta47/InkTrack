@@ -23,7 +23,7 @@ namespace InkTrack.Helpers
             }
             else
             {
-                throw new FileNotFoundException($"Файл \"{filePath}\" не найден в директории программы, переустановите программу для восстановления.");
+                throw new FileNotFoundException($"Файл \"{Directory.GetCurrentDirectory()}\\Resources\\{filePath}\" не найден в директории программы, переустановите программу для восстановления.");
             }
         }
 
