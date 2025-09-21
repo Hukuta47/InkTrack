@@ -1,18 +1,10 @@
-﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
-using InkTrack.Classes;
+﻿using InkTrack.Classes;
 using InkTrack.Database;
 using InkTrack.Helpers;
 using InkTrack.Windows.ReplaceCartridgePages;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using NPetrovich;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -137,7 +129,6 @@ namespace InkTrack.Windows
 
 
                     new PdfHelper().GenerateRequestPDF(printoutDatas, _pageEIFRC.SelectedPrinter, _FullName);
-                    //new WordHelper("Request replace cartrige.docx").GenerateFileWord(FullName, CartridgeNumber, DeviceName, RoomName, Suggection);
                     new PdfHelper().GenerateResultPrintingFiles(DatabaseHelper.GetPrintOutDataList(_pageEIFRC.SelectedPrinter.Printer), _pageEIFRC.SelectedPrinter);
 
                     cartridge.Capacity = cartridge.Capacity <= SumPagesPrintouts ? SumPagesPrintouts : cartridge.Capacity;

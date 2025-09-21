@@ -82,8 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestGenativeFullName.cs" />
-    <Compile Include="WordHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestLoggerClass.cs" />
+    <Compile Include="TestThemeDetector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -20,5 +20,19 @@ namespace InkTrack.Classes
                 File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\InkTrack Report Logs\\{DateTime.Now.ToShortDateString()} InkTrack Report_Log.txt", $"\n{DateTime.Now.ToLongTimeString()} | {category} | {text} ИСКЛЮЧЕНИЕ: ( Message: {exception.Message}, Source: {exception.Source} );");
             }
         }
+        public static string LogText(string category, string text, Exception exception = null)
+        {
+            string Text;
+            if (exception == null)
+            {
+                Text = $"{DateTime.Now.ToLongTimeString()} | {category} | {text}";
+                return Text;
+            }
+            else
+            {
+                Text = $"{DateTime.Now.ToLongTimeString()} | {category} | {text}";
+                return Text;
+            }
+        }
     }
 }

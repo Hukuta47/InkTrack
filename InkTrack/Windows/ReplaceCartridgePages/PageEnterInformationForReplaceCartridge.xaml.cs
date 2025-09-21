@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace InkTrack.Windows.ReplaceCartridgePages
 {
